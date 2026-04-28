@@ -68,13 +68,13 @@ export function HeroSlideshow() {
         initial={{ height: 0 }}
         animate={{ height: 200 }}
         transition={{ delay: 1.2, duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-        className="absolute top-[15%] right-[12%] w-px bg-gradient-to-b from-teal-400/40 to-transparent hidden lg:block"
+        className="absolute top-[15%] right-[12%] w-px bg-gradient-to-b from-coral-400/40 to-transparent hidden lg:block"
       />
       <motion.div
         initial={{ width: 0 }}
         animate={{ width: 200 }}
         transition={{ delay: 1.5, duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-        className="absolute top-[45%] right-[18%] h-px bg-gradient-to-r from-teal-400/30 to-transparent hidden lg:block"
+        className="absolute top-[45%] right-[18%] h-px bg-gradient-to-r from-coral-400/30 to-transparent hidden lg:block"
       />
 
       {/* Content */}
@@ -94,9 +94,9 @@ export function HeroSlideshow() {
               initial={{ width: 0 }}
               animate={{ width: 48 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="h-px bg-teal-400"
+              className="h-px bg-coral-400"
             />
-            <span className="text-teal-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
+            <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
               Northwest Indiana &amp; Chicagoland
             </span>
           </motion.div>
@@ -154,7 +154,7 @@ export function HeroSlideshow() {
               {'Done Right'.split('').map((char, i) => (
                 <motion.span
                   key={`d-${i}`}
-                  className="inline-block text-teal-400 teal-glow-text"
+                  className="inline-block text-coral-400 coral-glow-text"
                   initial={{ y: '110%', opacity: 0 }}
                   animate={{ y: '0%', opacity: 1 }}
                   transition={{
@@ -190,7 +190,7 @@ export function HeroSlideshow() {
             <MagneticButton>
               <Link
                 href="/properties"
-                className="group inline-flex items-center gap-3 bg-teal-400 hover:bg-teal-300 text-charcoal-950 px-8 py-4 text-sm tracking-[0.15em] uppercase font-semibold transition-all duration-500 hover:shadow-lg hover:shadow-teal-400/20"
+                className="group inline-flex items-center gap-3 bg-coral-400 hover:bg-coral-300 text-charcoal-950 px-8 py-4 text-sm tracking-[0.15em] uppercase font-semibold transition-all duration-500 hover:shadow-lg hover:shadow-coral-400/20"
               >
                 View Properties
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -201,7 +201,7 @@ export function HeroSlideshow() {
             <MagneticButton>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-3 border border-cream-50/20 text-cream-100 hover:border-teal-400/50 hover:text-teal-400 px-8 py-4 text-sm tracking-[0.15em] uppercase font-semibold transition-all duration-500"
+                className="inline-flex items-center gap-3 border border-cream-50/20 text-cream-100 hover:border-coral-400/50 hover:text-coral-400 px-8 py-4 text-sm tracking-[0.15em] uppercase font-semibold transition-all duration-500"
               >
                 Connect With Us
               </Link>
@@ -228,10 +228,10 @@ export function HeroSlideshow() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.5 }}
-              className="glass border-l-2 border-teal-400 px-5 py-4 max-w-[320px]"
+              className="glass border-l-2 border-coral-400 px-5 py-4 max-w-[320px]"
             >
               <div className="flex items-center gap-2 mb-2">
-                <span className="font-mono text-[10px] tracking-[0.25em] text-teal-400 uppercase">
+                <span className="font-mono text-[10px] tracking-[0.25em] text-coral-400 uppercase">
                   {slide.status} · {slide.year}
                 </span>
               </div>
@@ -242,7 +242,7 @@ export function HeroSlideshow() {
                 {slide.city.toUpperCase()}, {slide.state} · {slide.type.toUpperCase()}
               </div>
               <div className="flex items-center justify-between pt-3 border-t border-cream-50/10">
-                <span className="font-mono text-base text-teal-400 font-semibold">
+                <span className="font-mono text-base text-coral-400 font-semibold">
                   {slide.priceLabel}
                 </span>
                 <span className="font-mono text-[11px] text-charcoal-500">
@@ -277,7 +277,7 @@ export function HeroSlideshow() {
                   duration: i === active ? SLIDE_MS / 1000 : 0,
                   ease: 'linear',
                 }}
-                className="absolute inset-0 bg-teal-400 origin-left"
+                className="absolute inset-0 bg-coral-400 origin-left"
               />
             </button>
           ))}
@@ -303,7 +303,7 @@ export function HeroSlideshow() {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-px h-8 bg-gradient-to-b from-teal-400/50 to-transparent"
+          className="w-px h-8 bg-gradient-to-b from-coral-400/50 to-transparent"
         />
       </motion.div>
     </section>

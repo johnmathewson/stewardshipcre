@@ -32,8 +32,8 @@ export default function ContactPage() {
             transition={{ duration: 0.8 }}
           >
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-px bg-teal-400" />
-              <span className="text-teal-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
+              <div className="w-12 h-px bg-coral-400" />
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
                 Contact
               </span>
             </div>
@@ -41,7 +41,7 @@ export default function ContactPage() {
               className="font-display text-cream-50 mb-6 leading-[0.95]"
               style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)' }}
             >
-              Let&apos;s <span className="text-teal-400 teal-glow-text">Connect</span>
+              Let&apos;s <span className="text-coral-400 coral-glow-text">Connect</span>
             </h1>
             <p className="text-xl text-charcoal-400 max-w-xl leading-relaxed">
               Tell us a sentence about what you need. We respond within 24 hours.
@@ -57,7 +57,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-charcoal-800/50">
             {/* SHORT FORM — left */}
             <div className="bg-charcoal-900 p-8 md:p-12">
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-teal-400 mb-3">
+              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral-400 mb-3">
                 Option 01 · Send us a note
               </p>
               <h2
@@ -71,9 +71,9 @@ export default function ContactPage() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="border-l-2 border-teal-400 pl-6 py-4"
+                  className="border-l-2 border-coral-400 pl-6 py-4"
                 >
-                  <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-teal-400 mb-2">
+                  <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral-400 mb-2">
                     Message Received
                   </p>
                   <p className="text-cream-100 text-lg">
@@ -113,7 +113,7 @@ export default function ContactPage() {
                     <button
                       type="submit"
                       disabled={pending}
-                      className="group inline-flex items-center gap-3 bg-teal-400 hover:bg-teal-300 text-charcoal-950 px-7 py-4 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-500 disabled:opacity-50"
+                      className="group inline-flex items-center gap-3 bg-coral-400 hover:bg-coral-300 text-charcoal-950 px-7 py-4 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-500 disabled:opacity-50"
                     >
                       {pending ? 'Sending...' : 'Send Message'}
                       <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,7 +127,7 @@ export default function ContactPage() {
 
             {/* CALENDAR — right */}
             <div className="bg-charcoal-900 p-8 md:p-12 flex flex-col">
-              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-teal-400 mb-3">
+              <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral-400 mb-3">
                 Option 02 · Book a call
               </p>
               <h2
@@ -140,8 +140,8 @@ export default function ContactPage() {
               {/* Calendar embed placeholder — swap with Calendly/SavvyCal iframe when ready */}
               <div className="flex-1 flex flex-col gap-4">
                 <div className="border border-charcoal-800 bg-charcoal-950/40 px-6 py-8 flex-1 flex flex-col justify-center items-center text-center min-h-[280px]">
-                  <div className="w-12 h-12 border border-teal-400/40 flex items-center justify-center mb-4">
-                    <svg className="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-12 h-12 border border-coral-400/40 flex items-center justify-center mb-4">
+                    <svg className="w-5 h-5 text-coral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                     </svg>
                   </div>
@@ -155,7 +155,7 @@ export default function ContactPage() {
                       href="https://calendly.com/stewardship-cre/intro"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 border border-teal-400 text-teal-400 hover:bg-teal-400 hover:text-charcoal-950 px-7 py-4 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-500"
+                      className="inline-flex items-center gap-3 border border-coral-400 text-coral-400 hover:bg-coral-400 hover:text-charcoal-950 px-7 py-4 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-500"
                     >
                       Book 15 Minutes
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -171,7 +171,7 @@ export default function ContactPage() {
                     <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-charcoal-500 mb-1.5">
                       Email
                     </p>
-                    <a href="mailto:info@stewardshipcre.com" className="text-sm text-cream-100 hover:text-teal-400 transition-colors">
+                    <a href="mailto:info@stewardshipcre.com" className="text-sm text-cream-100 hover:text-coral-400 transition-colors">
                       info@stewardshipcre.com
                     </a>
                   </div>
@@ -179,7 +179,7 @@ export default function ContactPage() {
                     <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-charcoal-500 mb-1.5">
                       Phone
                     </p>
-                    <a href="tel:+12195550100" className="text-sm text-cream-100 hover:text-teal-400 transition-colors">
+                    <a href="tel:+12195550100" className="text-sm text-cream-100 hover:text-coral-400 transition-colors">
                       (219) 555-0100
                     </a>
                   </div>
@@ -210,9 +210,9 @@ function MinimalInput({
 }) {
   return (
     <label className="block group">
-      <span className="block font-mono text-[10px] tracking-[0.3em] uppercase text-charcoal-500 mb-2 group-focus-within:text-teal-400 transition-colors">
+      <span className="block font-mono text-[10px] tracking-[0.3em] uppercase text-charcoal-500 mb-2 group-focus-within:text-coral-400 transition-colors">
         {label}
-        {required && <span className="text-teal-400">*</span>}
+        {required && <span className="text-coral-400">*</span>}
       </span>
       <input
         type={type}
@@ -220,7 +220,7 @@ function MinimalInput({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         required={required}
-        className="w-full bg-transparent text-cream-100 text-base border-b border-charcoal-700 focus:border-teal-400 outline-none py-3 transition-colors duration-300 placeholder:text-charcoal-600"
+        className="w-full bg-transparent text-cream-100 text-base border-b border-charcoal-700 focus:border-coral-400 outline-none py-3 transition-colors duration-300 placeholder:text-charcoal-600"
       />
     </label>
   )
@@ -243,9 +243,9 @@ function MinimalTextarea({
 }) {
   return (
     <label className="block group">
-      <span className="block font-mono text-[10px] tracking-[0.3em] uppercase text-charcoal-500 mb-2 group-focus-within:text-teal-400 transition-colors">
+      <span className="block font-mono text-[10px] tracking-[0.3em] uppercase text-charcoal-500 mb-2 group-focus-within:text-coral-400 transition-colors">
         {label}
-        {required && <span className="text-teal-400">*</span>}
+        {required && <span className="text-coral-400">*</span>}
       </span>
       <textarea
         value={value}
@@ -253,7 +253,7 @@ function MinimalTextarea({
         placeholder={placeholder}
         required={required}
         rows={rows}
-        className="w-full bg-transparent text-cream-100 text-base border-b border-charcoal-700 focus:border-teal-400 outline-none py-3 transition-colors duration-300 placeholder:text-charcoal-600 resize-none"
+        className="w-full bg-transparent text-cream-100 text-base border-b border-charcoal-700 focus:border-coral-400 outline-none py-3 transition-colors duration-300 placeholder:text-charcoal-600 resize-none"
       />
     </label>
   )

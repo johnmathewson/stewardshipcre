@@ -42,7 +42,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
           transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
         >
           <motion.span
-            className="font-heading text-teal-400 text-xl md:text-2xl tracking-[0.35em]"
+            className="font-heading text-coral-400 text-xl md:text-2xl tracking-[0.35em]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 0, y: -20 }}
             exit={{ opacity: 1, y: 0 }}

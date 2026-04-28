@@ -20,7 +20,25 @@
   --color-cream-300: #E5E0D8;
   --color-cream-400: #D4CEC4;
 
-  /* ── Brand Teal (Stewardship) ── */
+  /* ── Brand Coral (Stewardship — primary accent, matches internal CRM) ── */
+  --color-coral-50:  #FCF1EE;
+  --color-coral-100: #F8DBD2;
+  --color-coral-200: #F2BCAB;
+  --color-coral-300: #EA9A82;
+  --color-coral-400: #E07A5F;
+  --color-coral-500: #C66648;
+  --color-coral-600: #A55236;
+  --color-coral-700: #843E27;
+  --color-coral-800: #5F2C1B;
+  --color-coral-900: #3A1A10;
+
+  /* ── Steward (deep teal-charcoal background tints, matches internal CRM) ── */
+  --color-steward-base:  #0A1615;
+  --color-steward-dark:  #0D1F1E;
+  --color-steward-mid:   #142827;
+  --color-steward-panel: #1A2726;
+
+  /* ── Brand Teal (kept as secondary/data accent — same role as CRM "Earned" line) ── */
   --color-teal-50: #EDFAF8;
   --color-teal-100: #D0F4EE;
   --color-teal-200: #A3E8DD;
@@ -114,14 +132,15 @@ html {
 body {
   font-family: var(--font-body);
   color: var(--color-cream-100);
-  background-color: var(--color-charcoal-950);
+  background: linear-gradient(160deg, var(--color-steward-base) 0%, var(--color-steward-dark) 30%, var(--color-steward-mid) 60%, var(--color-steward-base) 100%);
+  background-attachment: fixed;
   overflow-x: hidden;
 }
 
 /* ── Selection ── */
 ::selection {
-  background-color: var(--color-teal-400);
-  color: var(--color-charcoal-950);
+  background-color: var(--color-coral-400);
+  color: var(--color-cream-50);
 }
 
 /* ── Scrollbar ── */
@@ -129,14 +148,14 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-charcoal-950);
+  background: var(--color-steward-base);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-teal-600);
+  background: var(--color-coral-600);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-teal-400);
+  background: var(--color-coral-400);
 }
 
 /* ── Grain texture overlay ── */
@@ -171,7 +190,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--color-teal-600), var(--color-teal-400), var(--color-teal-600));
+  background: linear-gradient(90deg, var(--color-coral-600), var(--color-coral-400), var(--color-coral-600));
   transform-origin: 0%;
   z-index: 10000;
 }
@@ -229,7 +248,7 @@ h1, h2, h3, h4, h5, h6 {
   inset: 0;
   padding: 1px;
   border-radius: inherit;
-  background: linear-gradient(135deg, var(--color-teal-400), transparent 40%, transparent 60%, var(--color-teal-700));
+  background: linear-gradient(135deg, var(--color-coral-400), transparent 40%, transparent 60%, var(--color-teal-700));
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   -webkit-mask-composite: xor;
@@ -247,7 +266,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   width: 100%;
   height: 1px;
-  background: var(--color-teal-400);
+  background: var(--color-coral-400);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -281,7 +300,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   width: 0%;
   height: 1px;
-  background: var(--color-teal-400);
+  background: var(--color-coral-400);
   transition: width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 .animated-underline:hover::after {
@@ -297,11 +316,11 @@ h1, h2, h3, h4, h5, h6 {
   clip-path: inset(0% 0 0 0);
 }
 
-/* ── Teal glow effects ── */
-.teal-glow {
-  box-shadow: 0 0 40px rgba(78, 205, 196, 0.15), 0 0 80px rgba(78, 205, 196, 0.05);
+/* ── Coral glow effects ── */
+.coral-glow {
+  box-shadow: 0 0 40px rgba(224, 122, 95, 0.18), 0 0 80px rgba(224, 122, 95, 0.06);
 }
 
-.teal-glow-text {
-  text-shadow: 0 0 40px rgba(78, 205, 196, 0.3);
+.coral-glow-text {
+  text-shadow: 0 0 40px rgba(224, 122, 95, 0.35);
 }

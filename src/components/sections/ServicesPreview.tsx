@@ -76,8 +76,8 @@ export function ServicesPreview() {
             transition={{ duration: 0.8 }}
           >
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-px bg-teal-400" />
-              <span className="text-teal-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
+              <div className="w-12 h-px bg-coral-400" />
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
                 What We Do
               </span>
             </div>
@@ -115,16 +115,16 @@ export function ServicesPreview() {
               className="group bg-charcoal-950 p-10 md:p-12 relative overflow-hidden hover:bg-charcoal-900/50 transition-colors duration-700 cursor-pointer"
             >
               {/* Hover accent line */}
-              <div className="absolute top-0 left-0 w-0 h-px bg-teal-400 group-hover:w-full transition-all duration-700" />
+              <div className="absolute top-0 left-0 w-0 h-px bg-coral-400 group-hover:w-full transition-all duration-700" />
 
               <div className="flex items-start justify-between mb-8">
                 <span className="font-mono text-xs text-charcoal-600 tracking-wider">{service.number}</span>
-                <div className="text-charcoal-600 group-hover:text-teal-400 transition-colors duration-500">
+                <div className="text-charcoal-600 group-hover:text-coral-400 transition-colors duration-500">
                   {service.icon}
                 </div>
               </div>
 
-              <h3 className="font-heading text-xl md:text-2xl tracking-[0.08em] uppercase text-cream-100 mb-4 group-hover:text-teal-400 transition-colors duration-500">
+              <h3 className="font-heading text-xl md:text-2xl tracking-[0.08em] uppercase text-cream-100 mb-4 group-hover:text-coral-400 transition-colors duration-500">
                 {service.title}
               </h3>
               <p className="text-sm text-charcoal-400 leading-relaxed max-w-sm">
@@ -133,7 +133,7 @@ export function ServicesPreview() {
 
               {/* Hover arrow */}
               <div className="mt-8 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
-                <svg className="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-coral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
                 </svg>
               </div>

@@ -39,10 +39,10 @@ export function Header() {
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="group flex flex-col">
-            <span className="font-display text-teal-400 text-lg tracking-[0.3em] font-semibold leading-none">
+            <span className="font-display text-coral-400 text-lg tracking-[0.3em] font-semibold leading-none">
               STEWARDSHIP
             </span>
-            <span className="text-[10px] tracking-[0.35em] text-charcoal-400 uppercase mt-1 group-hover:text-teal-400/60 transition-colors duration-500 font-mono">
+            <span className="text-[10px] tracking-[0.35em] text-charcoal-400 uppercase mt-1 group-hover:text-coral-400/60 transition-colors duration-500 font-mono">
               Commercial Real Estate
             </span>
           </Link>
@@ -65,7 +65,7 @@ export function Header() {
             <MagneticButton>
               <Link
                 href="/contact"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 text-[12px] tracking-[0.2em] uppercase font-medium border border-teal-400/30 text-teal-400 hover:bg-teal-400 hover:text-charcoal-950 transition-all duration-500"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 text-[12px] tracking-[0.2em] uppercase font-medium border border-coral-400/30 text-coral-400 hover:bg-coral-400 hover:text-charcoal-950 transition-all duration-500"
               >
                 <span>Get Started</span>
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -118,7 +118,7 @@ export function Header() {
                   <Link
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className="block text-3xl md:text-4xl font-display tracking-[0.15em] text-cream-100 hover:text-teal-400 transition-colors duration-300 py-3"
+                    className="block text-3xl md:text-4xl font-display tracking-[0.15em] text-cream-100 hover:text-coral-400 transition-colors duration-300 py-3"
                   >
                     {link.label}
                   </Link>
@@ -134,7 +134,7 @@ export function Header() {
               <Link
                 href="/contact"
                 onClick={() => setMobileOpen(false)}
-                className="inline-flex items-center gap-2 px-8 py-4 border border-teal-400 text-teal-400 text-sm tracking-[0.2em] uppercase hover:bg-teal-400 hover:text-charcoal-950 transition-all duration-500"
+                className="inline-flex items-center gap-2 px-8 py-4 border border-coral-400 text-coral-400 text-sm tracking-[0.2em] uppercase hover:bg-coral-400 hover:text-charcoal-950 transition-all duration-500"
               >
                 Get Started
               </Link>

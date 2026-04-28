@@ -44,7 +44,7 @@ export function PropertySearch() {
           className="flex items-center gap-4 lg:gap-6 flex-wrap lg:flex-nowrap"
         >
           {/* Eyebrow */}
-          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-teal-400 hidden md:block whitespace-nowrap">
+          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral-400 hidden md:block whitespace-nowrap">
             Find a Property
           </span>
 
@@ -76,7 +76,7 @@ export function PropertySearch() {
           <MagneticButton>
             <button
               onClick={handleSearch}
-              className="group inline-flex items-center gap-3 bg-teal-400 hover:bg-teal-300 text-charcoal-950 px-7 py-4 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-500 whitespace-nowrap"
+              className="group inline-flex items-center gap-3 bg-coral-400 hover:bg-coral-300 text-charcoal-950 px-7 py-4 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-500 whitespace-nowrap"
             >
               Search
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +103,7 @@ function SelectField({
 }) {
   return (
     <label className="bg-charcoal-900 px-5 py-3 cursor-pointer block hover:bg-charcoal-900/80 transition-colors duration-300 group">
-      <span className="block font-mono text-[9px] tracking-[0.3em] uppercase text-charcoal-500 mb-1 group-hover:text-teal-400 transition-colors duration-300">
+      <span className="block font-mono text-[9px] tracking-[0.3em] uppercase text-charcoal-500 mb-1 group-hover:text-coral-400 transition-colors duration-300">
         {label}
       </span>
       <div className="relative">

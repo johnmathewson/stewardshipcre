@@ -185,6 +185,41 @@ lead_messages
 - `src/data/portfolio.ts` — static listing data (placeholder Unsplash; replace with real photos in Phase 1)
 - `src/components/sections/` — composed homepage sections (HeroSlideshow, FeaturedListings, CaseStudies, ServicesPinned, etc.)
 
+## SEO content layer (deliberately separate visual world)
+
+156 static-HTML SEO pages live in `public/`, organized by category. They serve at clean URLs through Next.js's static-asset pipeline:
+
+```
+public/
+├── markets/[slug]/index.html       (1 — NW Indiana regional hub)
+├── counties/[slug]/index.html      (3 — Lake, Porter, LaPorte)
+├── cities/[slug]/index.html        (28 — every NW Indiana city we cover)
+├── property-types/[slug]/index.html (16 — office, industrial, retail, flex, etc.)
+├── services/[slug]/index.html      (14 — BOV, leasing, advisory, etc.)
+├── investments/[slug]/index.html   (8 — NNN, gas station, car wash, etc.)
+├── insights/[slug]/index.html      (86 — long-tail Q&A briefs)
+└── assets/css/style.css            (shared SEO-page stylesheet)
+```
+
+**Visual identity:** The SEO pages have their **own** simple header/nav/footer using `public/assets/css/style.css` — they don't share the cinematic brand system of the main marketing site. This is intentional: the SEO content layer is supposed to be "discreet but indexable" — not fight the homepage. Clicking the brand wordmark / "Hub" link on any SEO page returns the user to `/` (the cinematic homepage).
+
+**Schema markup:** Every page already includes `BreadcrumbList` + `FAQPage` JSON-LD per the SEO protocol (`stewardship-commercial-seo-pages/SEO-page-protocol.md` in the source folder). Canonical URLs point to `https://www.stewardshipcre.com/[category]/[slug]/`.
+
+**Discovery + indexing:**
+- `src/app/sitemap.ts` — dynamically reads `public/` at build time and emits every category/slug combo into `/sitemap.xml` (currently 162 URLs: 7 main app routes + 155 SEO pages).
+- `src/app/robots.ts` — allows all, points crawlers to `/sitemap.xml`, blocks `/api/` and `/admin/`.
+- `Footer.tsx` — 4th column "Markets" with 6 anchor links to high-value money pages so the SEO layer isn't orphaned (Google devalues orphan pages).
+
+**Source content lives outside the repo:** The original Codex-generated source is at `/Users/stewardship/Documents/New project/stewardship-commercial-seo-pages/`. To regenerate or add new pages, edit there and re-copy `pages/` + `assets/` into `public/`. The sitemap will auto-pick up new URLs at next build.
+
+**To add a new SEO page:**
+1. Drop a new `index.html` into `public/[category]/[slug]/` (must be valid HTML with title, description, canonical, schema)
+2. Make sure internal "Hub" links point to `/` (not `../../../index.html`)
+3. Optionally add an anchor link in `Footer.tsx` `FOOTER_LINKS.Markets` if it's a money page
+4. Push — sitemap auto-updates at build time
+
+**Visual style is deliberately different from the main site.** Don't restyle SEO pages to match the cinematic brand — that's the wrong instinct. They're a separate content layer.
+
 ---
 
 ## Open threads (as of this write)

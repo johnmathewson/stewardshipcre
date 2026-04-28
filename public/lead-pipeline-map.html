@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stewardship Lead Pipeline · Architecture Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #1a1a1a;
+      --surface-2: #282828;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-teal: rgba(78, 205, 196, 0.25);
+      --text: #f7f7f7;
+      --text-2: #c8c8c8;
+      --text-3: #a4a4a4;
+      --text-4: #818181;
+      --teal: #4ecdc4;
+      --teal-soft: rgba(78, 205, 196, 0.1);
+      --teal-glow: rgba(78, 205, 196, 0.45);
+      --amber: #f5b54a;
+      --rose: #e2718e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+      font-size: 15px;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(78, 205, 196, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(78, 205, 196, 0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap {
+      position: relative;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 80px 32px 120px;
+      z-index: 1;
+    }
+
+    /* ---- Header ---- */
+    header { margin-bottom: 64px; }
+    .eyebrow {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      color: var(--teal);
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 1px;
+      background: var(--teal);
+    }
+    h1 {
+      font-family: "Cinzel", serif;
+      font-weight: 600;
+      font-size: clamp(36px, 5vw, 56px);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    h1 .accent { color: var(--teal); }
+    .lede {
+      color: var(--text-3);
+      font-size: 17px;
+      max-width: 720px;
+    }
+
+    /* ---- Sections ---- */
+    section { margin-top: 88px; }
+    h2 {
+      font-family: "Cinzel", serif;
+      font-weight: 600;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .sub {
+      color: var(--text-3);
+      font-size: 15px;
+      margin-bottom: 36px;
+      max-width: 720px;
+    }
+    h3 {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+
+    /* ---- Big-picture two-column ---- */
+    .ecosystem {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      align-items: stretch;
+    }
+    .ecosystem .col {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 24px;
+    }
+    .ecosystem .col.public {
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    .ecosystem .col.crm {
+      border-color: var(--border-teal);
+      background: linear-gradient(180deg, rgba(78, 205, 196, 0.04), var(--surface));
+    }
+    .col-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .col-tag {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-4);
+    }
+    .col-tag.gated { color: var(--teal); }
+    .col-title {
+      font-family: "Cinzel", serif;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+    .col-desc {
+      font-size: 13px;
+      color: var(--text-3);
+      margin-bottom: 20px;
+    }
+    .col ul { list-style: none; }
+    .col li {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      color: var(--text-2);
+      padding: 8px 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .col li::before {
+      content: "›";
+      color: var(--teal);
+      font-family: "Cinzel", serif;
+      font-size: 14px;
+    }
+    .col li.new {
+      color: var(--teal);
+    }
+    .col li.new::before { content: "+"; }
+
+    .ecosystem .arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .arrow-line {
+      width: 40px;
+      height: 1px;
+      background: var(--teal);
+      position: relative;
+    }
+    .arrow-line::after {
+      content: "›";
+      position: absolute;
+      right: -10px;
+      top: -12px;
+      color: var(--teal);
+      font-size: 18px;
+      font-family: "Cinzel", serif;
+    }
+    .arrow-label {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 9px;
+      color: var(--text-4);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-align: center;
+      max-width: 90px;
+      line-height: 1.4;
+    }
+
+    /* ---- Flow stepper ---- */
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0;
+      margin-top: 32px;
+    }
+    .step {
+      position: relative;
+      padding: 22px 18px 22px 0;
+    }
+    .step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 30px;
+      right: -8px;
+      width: 16px;
+      height: 1px;
+      background: var(--teal);
+      opacity: 0.5;
+    }
+    .step-num {
+      font-family: "Cinzel", serif;
+      font-size: 14px;
+      color: var(--teal);
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .step-time {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: var(--text-4);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .step-title {
+      font-family: "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .step-desc {
+      font-size: 12px;
+      color: var(--text-3);
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1000px) {
+      .flow { grid-template-columns: repeat(3, 1fr); }
+      .ecosystem { grid-template-columns: 1fr; }
+      .ecosystem .arrow { flex-direction: row; padding: 16px 0; }
+    }
+
+    /* ---- Schema cards ---- */
+    .schema-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .table-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .table-card.new {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 1px var(--teal-soft), 0 8px 32px rgba(78, 205, 196, 0.08);
+      background: linear-gradient(180deg, rgba(78, 205, 196, 0.05), var(--surface));
+    }
+    .table-card.new .table-name {
+      color: var(--teal);
+    }
+    .table-name {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .badge {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 8px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--teal);
+      color: var(--bg);
+      font-weight: 600;
+    }
+    .badge.exists {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-3);
+    }
+    .table-cols {
+      padding: 12px 18px 18px;
+    }
+    .col-row {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      color: var(--text-2);
+      padding: 4px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .col-row .col-type {
+      color: var(--text-4);
+    }
+    .col-row .col-fk {
+      color: var(--teal);
+    }
+
+    /* ---- Build steps ---- */
+    .build-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .build-step {
+      display: grid;
+      grid-template-columns: 56px 110px 1fr;
+      gap: 20px;
+      padding: 18px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      align-items: center;
+    }
+    .build-step.you {
+      border-left: 3px solid var(--amber);
+    }
+    .build-step.me {
+      border-left: 3px solid var(--teal);
+    }
+    .build-step.shared {
+      border-left: 3px solid var(--rose);
+    }
+    .build-num {
+      font-family: "Cinzel", serif;
+      font-size: 28px;
+      color: var(--text-3);
+    }
+    .build-step.me .build-num { color: var(--teal); }
+    .build-owner {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-align: center;
+      align-self: center;
+      width: fit-content;
+    }
+    .build-step.you .build-owner {
+      background: rgba(245, 181, 74, 0.15);
+      color: var(--amber);
+    }
+    .build-step.me .build-owner {
+      background: rgba(78, 205, 196, 0.15);
+      color: var(--teal);
+    }
+    .build-step.shared .build-owner {
+      background: rgba(226, 113, 142, 0.15);
+      color: var(--rose);
+    }
+    .build-title {
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .build-desc {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    /* ---- Decision callout ---- */
+    .decision {
+      background: var(--surface);
+      border: 1px solid var(--border-teal);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-top: 16px;
+    }
+    .decision .q {
+      font-family: "Cinzel", serif;
+      font-size: 18px;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+    .decision .body {
+      color: var(--text-2);
+      font-size: 14px;
+    }
+    .decision .opts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .opt {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      padding: 8px 14px;
+      background: rgba(78, 205, 196, 0.05);
+      border: 1px solid var(--border-teal);
+      border-radius: 6px;
+      color: var(--text-2);
+    }
+    .opt.recommend {
+      background: var(--teal);
+      color: var(--bg);
+      font-weight: 600;
+    }
+
+    /* ---- Footer note ---- */
+    .footer-note {
+      margin-top: 96px;
+      padding: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-align: center;
+      color: var(--text-3);
+      font-size: 14px;
+    }
+    .footer-note strong { color: var(--teal); font-weight: 500; }
+
+    /* ---- Legend ---- */
+    .legend {
+      display: flex;
+      gap: 24px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="eyebrow">Architecture Map · Inbound Lead Pipeline</div>
+      <h1>How leads <span class="accent">flow</span> through the ecosystem</h1>
+      <p class="lede">A visual map of where the new lead-response system lives, what gets added to the existing CRM, and the order we'd build it. Marketing site stays public and read-only. Operations live behind the CRM auth wall.</p>
+    </header>
+
+    <!-- ============ ECOSYSTEM ============ -->
+    <section>
+      <h2>The two-app architecture</h2>
+      <p class="sub">Separation of concerns: the marketing site sells; the CRM operates. They talk to each other through one endpoint.</p>
+
+      <div class="ecosystem">
+        <div class="col public">
+          <div class="col-header">
+            <span class="col-tag">Public · Marketing</span>
+          </div>
+          <div class="col-title">Stewardship CRE Site</div>
+          <div class="col-desc">stewardshipcre.com (Netlify · Next.js 16). Read-only public face — listings, services, team, contact form.</div>
+          <ul>
+            <li>Hero + listings display</li>
+            <li>Properties browse</li>
+            <li>Case studies</li>
+            <li>Contact form (POSTs to CRM)</li>
+            <li>About / Services / Team</li>
+          </ul>
+        </div>
+
+        <div class="arrow">
+          <div class="arrow-label">POST<br/>/api/leads/intake</div>
+          <div class="arrow-line"></div>
+        </div>
+
+        <div class="col crm">
+          <div class="col-header">
+            <span class="col-tag gated">Gated · Operations</span>
+          </div>
+          <div class="col-title">Stewardship CRM</div>
+          <div class="col-desc">Auth-walled (just you). Next.js 14 + Supabase + Claude already wired. The lead inbox lives here.</div>
+          <ul>
+            <li>Dashboard</li>
+            <li>Properties · Contacts · Deals</li>
+            <li>Intake (rent rolls, comps)</li>
+            <li>Reports</li>
+            <li class="new">Inbox (NEW — lead review &amp; send)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FLOW ============ -->
+    <section>
+      <h2>What happens when a lead emails in</h2>
+      <p class="sub">Six steps. The first two happen automatically inside 60 seconds. You only touch step 5.</p>
+
+      <div class="flow">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-time">Trigger</div>
+          <div class="step-title">Lead emails in</div>
+          <div class="step-desc">CREXi · LoopNet · Buildout · website form · direct email — all routed to inquiries@stewardshipcre.com</div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-time">~30 sec</div>
+          <div class="step-title">Apps Script catches it</div>
+          <div class="step-desc">Polls the inbox every 60s, POSTs each new email to /api/leads/intake on the CRM</div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-time">~5 sec</div>
+          <div class="step-title">Claude extracts</div>
+          <div class="step-desc">Sender · property · intent · qualifiers · urgency. Saved to leads table; matched to existing properties row if possible.</div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-time">&lt;60 sec</div>
+          <div class="step-title">Auto-ack fires</div>
+          <div class="step-desc">"Got your inquiry on [property]. I'm running right now — will follow up personally within the hour. — John"</div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">05</div>
+          <div class="step-time">SMS to you</div>
+          <div class="step-title">Twilio pings you</div>
+          <div class="step-desc">"Hot lead on 53 W Jefferson · Sarah Chen · 1031 buyer · $4M. Draft ready → [link to /inbox/abc123]"</div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">06</div>
+          <div class="step-time">Your tap</div>
+          <div class="step-title">You review &amp; send</div>
+          <div class="step-desc">Open /inbox/[id], read AI draft, edit if needed, attach OM, hit Send. Reply goes from john@stewardshipcre.com.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCHEMA ============ -->
+    <section>
+      <h2>What gets added to the database</h2>
+      <p class="sub">The CRM already has 8 tables. We add 2 more, and they hook into your existing properties / contacts / deals so leads can be promoted into your pipeline.</p>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background: rgba(255,255,255,0.15);"></div>
+          Already exists
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: var(--teal);"></div>
+          New table
+        </div>
+      </div>
+
+      <h3 style="margin-top: 36px;">Existing tables (no changes)</h3>
+      <div class="schema-grid">
+        <div class="table-card">
+          <div class="table-name">properties <span class="badge exists">Existing</span></div>
+          <div class="table-cols">
+            <div class="col-row"><span>id</span><span class="col-type">uuid pk</span></div>
+            <div class="col-row"><span>name, address, city, state</span><span class="col-type">text</span></div>
+            <div class="col-row"><span>asset_type, status</span><span class="col-type">text</span></div>
+            <div class="col-row"><span>asking_price, sqft</span><span class="col-type">numeric</span></div>
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="table-name">contacts <span class="badge exists">Existing</span></div>
+          <div class="table-cols">
+            <div class="col-row"><span>id</span><span class="col-type">uuid pk</span></div>
+            <div class="col-row"><span>full_name, email, phone</span><span class="col-type">text</span></div>
+            <div class="col-row"><span>contact_type, warmth</span><span class="col-type">text</span></div>
+            <div class="col-row"><span>last_conversation</span><span class="col-type">timestamptz</span></div>
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="table-name">deals <span class="badge exists">Existing</span></div>
+          <div class="table-cols">
+            <div class="col-row"><span>id, deal_name</span><span class="col-type">uuid · text</span></div>
+            <div class="col-row"><span>price, commission_pct</span><span class="col-type">numeric</span></div>
+            <div class="col-row"><span>probability_pct</span><span class="col-type">numeric</span></div>
+            <div class="col-row"><span>property_id</span><span class="col-fk">→ properties</span></div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 32px;">New tables</h3>
+      <div class="schema-grid">
+        <div class="table-card new">
+          <div class="table-name">leads <span class="badge">New</span></div>
+          <div class="table-cols">
+            <div class="col-row"><span>id, created_at</span><span class="col-type">uuid · time</span></div>
+            <div class="col-row"><span>source</span><span class="col-type">crexi · loopnet · web…</span></div>
+            <div class="col-row"><span>sender_name, email, phone</span><span class="col-type">text</span></div>
+            <div class="col-row"><span>property_id</span><span class="col-fk">→ properties</span></div>
+            <div class="col-row"><span>property_label</span><span class="col-type">text · "Joliet bldg"</span></div>
+            <div class="col-row"><span>intent · urgency</span><span class="col-type">enum · enum</span></div>
+            <div class="col-row"><span>qualifier_summary</span><span class="col-type">text</span></div>
+            <div class="col-row"><span>raw_email_body</span><span class="col-type">text</span></div>
+            <div class="col-row"><span>claude_extraction</span><span class="col-type">jsonb</span></div>
+            <div class="col-row"><span>auto_ack_sent_at</span><span class="col-type">timestamptz</span></div>
+            <div class="col-row"><span>draft_reply</span><span class="col-type">text</span></div>
+            <div class="col-row"><span>final_reply, final_sent_at</span><span class="col-type">text · time</span></div>
+            <div class="col-row"><span>status</span><span class="col-type">new · drafted · sent…</span></div>
+            <div class="col-row"><span>linked_contact_id</span><span class="col-fk">→ contacts</span></div>
+            <div class="col-row"><span>linked_deal_id</span><span class="col-fk">→ deals</span></div>
+          </div>
+        </div>
+
+        <div class="table-card new">
+          <div class="table-name">lead_messages <span class="badge">New</span></div>
+          <div class="table-cols">
+            <div class="col-row"><span>id, sent_at</span><span class="col-type">uuid · time</span></div>
+            <div class="col-row"><span>lead_id</span><span class="col-fk">→ leads</span></div>
+            <div class="col-row"><span>direction</span><span class="col-type">inbound · outbound</span></div>
+            <div class="col-row"><span>subject, body</span><span class="col-type">text</span></div>
+            <div class="col-row"><span>attachments</span><span class="col-type">jsonb · OM links</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BUILD ORDER ============ -->
+    <section>
+      <h2>Build order</h2>
+      <p class="sub">Five phases. Color shows who does what — yellow = your task, teal = my code, pink = handoff.</p>
+
+      <div class="build-steps">
+        <div class="build-step you">
+          <div class="build-num">01</div>
+          <div class="build-owner">You</div>
+          <div>
+            <div class="build-title">Provision inquiries@stewardshipcre.com + rotate Twilio token</div>
+            <div class="build-desc">Set up the dedicated mailbox in Workspace. Forward old johnmathewson.co lead emails as safety net. Rotate the leaked Twilio auth token.</div>
+          </div>
+        </div>
+
+        <div class="build-step me">
+          <div class="build-num">02</div>
+          <div class="build-owner">Me</div>
+          <div>
+            <div class="build-title">Add leads + lead_messages tables to Supabase</div>
+            <div class="build-desc">Write SQL migration. You run it once in Supabase Studio (~10 min). Schema becomes reproducible going forward.</div>
+          </div>
+        </div>
+
+        <div class="build-step me">
+          <div class="build-num">03</div>
+          <div class="build-owner">Me</div>
+          <div>
+            <div class="build-title">Build /api/leads/intake endpoint on the CRM</div>
+            <div class="build-desc">Receives email POSTs. Calls Claude Haiku to extract structured data, Sonnet to draft reply. Inserts row, fires auto-ack via Gmail API, fires Twilio SMS to your cell. End-to-end "10-min SLA" goes live here.</div>
+          </div>
+        </div>
+
+        <div class="build-step me">
+          <div class="build-num">04</div>
+          <div class="build-owner">Me</div>
+          <div>
+            <div class="build-title">Build /inbox UI inside CRM</div>
+            <div class="build-desc">List view + split detail page. Editable draft. Send / Archive / Promote-to-Deal buttons. Adds one nav tab next to Reports.</div>
+          </div>
+        </div>
+
+        <div class="build-step shared">
+          <div class="build-num">05</div>
+          <div class="build-owner">Both</div>
+          <div>
+            <div class="build-title">Wire external triggers</div>
+            <div class="build-desc">I write Apps Script to watch the inbox + post to /api/leads/intake. You install it in Workspace and update CREXi/LoopNet/Buildout to forward to inquiries@stewardshipcre.com. Public site contact form points to the same endpoint.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DECISIONS ============ -->
+    <section>
+      <h2>Two decisions before I write code</h2>
+      <p class="sub">Both small, both easy. Just want a yes/no so I don't guess.</p>
+
+      <div class="decision">
+        <div class="q">1. Schema migrations — how do we manage them?</div>
+        <div class="body">The CRM has no <code>supabase/migrations/</code> folder today. We can keep editing schema in the Supabase Studio UI, or start a discipline of writing SQL files in the repo. The second is cheap and means six months from now you can rebuild the database from scratch in 30 seconds.</div>
+        <div class="opts">
+          <span class="opt">A · Keep doing it in Supabase Studio</span>
+          <span class="opt recommend">B · Adopt supabase/migrations/ folder · recommended</span>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div class="q">2. Anthropic API key — already in env?</div>
+        <div class="body">Existing CRM routes call <code>api.anthropic.com</code>, so <code>ANTHROPIC_API_KEY</code> should already be set in Netlify. Just confirming so I don't bake a different env var name into the new endpoint.</div>
+        <div class="opts">
+          <span class="opt">Confirm: yes, ANTHROPIC_API_KEY is set</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      Once you give me the green light on those two, I write the SQL migration + the <strong>/api/leads/intake</strong> endpoint as the first deliverables. Then the <strong>/inbox</strong> UI. Then we wire the external triggers and you're live.
+    </div>
+
+  </div>
+</body>
+</html>

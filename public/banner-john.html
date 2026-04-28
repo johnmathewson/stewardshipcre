@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>John Mathewson — Banner Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --charcoal-950: #0d0d0d;
+      --charcoal-300: #a4a4a4;
+      --charcoal-400: #818181;
+      --teal-400: #4ecdc4;
+      --teal-500: #3cb8ad;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: #1a1a1a;
+      font-family: "JetBrains Mono", monospace;
+      color: white;
+      padding: 40px;
+    }
+
+    .label {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--charcoal-300);
+      margin: 24px 0 8px;
+    }
+
+    /* ---------- Banner shell ---------- */
+    .banner {
+      position: relative;
+      background: var(--charcoal-950);
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      color: white;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(78, 205, 196, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(78, 205, 196, 0.06) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse at 30% 50%, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at 30% 50%, black 30%, transparent 80%);
+    }
+
+    .banner::after {
+      /* subtle vignette to add depth */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(78, 205, 196, 0.05), transparent 60%);
+      pointer-events: none;
+    }
+
+    /* ---------- Left wordmark block ---------- */
+    .wordmark {
+      flex: 0 0 65%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 9%;
+      padding-right: 4%;
+      z-index: 2;
+    }
+
+    .accent-bar {
+      position: absolute;
+      top: 50%;
+      left: calc(9% - 32px);
+      transform: translateY(-50%);
+      width: 4px;
+      height: 38%;
+      background: var(--teal-400);
+      box-shadow: 0 0 24px rgba(78, 205, 196, 0.5);
+    }
+
+    .name {
+      font-family: "Cinzel", serif;
+      font-weight: 600;
+      color: var(--teal-400);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+      text-shadow: 0 0 32px rgba(78, 205, 196, 0.18);
+    }
+
+    .divider {
+      width: 64px;
+      height: 1px;
+      background: var(--teal-400);
+      opacity: 0.7;
+    }
+
+    .role {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      color: var(--charcoal-300);
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+    }
+
+    .region {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 400;
+      color: var(--charcoal-400);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .license {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 400;
+      color: var(--charcoal-400);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      opacity: 0.55;
+    }
+
+    /* ---------- Right data plate ---------- */
+    .plate {
+      flex: 0 0 35%;
+      position: relative;
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      align-items: center;
+      padding: 8% 6%;
+      z-index: 2;
+    }
+
+    .plate-divider {
+      position: absolute;
+      top: 12%;
+      bottom: 12%;
+      left: 0;
+      width: 1px;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(78, 205, 196, 0.6) 30%,
+        rgba(78, 205, 196, 0.6) 70%,
+        transparent 100%
+      );
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .stat-num {
+      font-family: "Cinzel", serif;
+      font-weight: 600;
+      color: var(--teal-400);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      color: var(--charcoal-300);
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    /* ---------- 2000x500 CREXi ---------- */
+    .crexi {
+      width: 2000px;
+      height: 500px;
+    }
+    .crexi .name { font-size: 92px; }
+    .crexi .accent-bar { height: 38%; }
+    .crexi .divider { margin: 28px 0 22px; }
+    .crexi .role { font-size: 16px; margin-bottom: 10px; }
+    .crexi .region { font-size: 13px; margin-bottom: 18px; }
+    .crexi .license { font-size: 11px; }
+    .crexi .stat-num { font-size: 56px; }
+    .crexi .stat-label { font-size: 11px; }
+
+    /* ---------- 1584x396 LinkedIn ---------- */
+    .linkedin {
+      width: 1584px;
+      height: 396px;
+    }
+    .linkedin .name { font-size: 72px; }
+    .linkedin .divider { margin: 22px 0 18px; }
+    .linkedin .role { font-size: 13px; margin-bottom: 8px; }
+    .linkedin .region { font-size: 11px; margin-bottom: 14px; }
+    .linkedin .license { font-size: 10px; }
+    .linkedin .stat-num { font-size: 44px; }
+    .linkedin .stat-label { font-size: 10px; }
+
+    .help {
+      max-width: 760px;
+      color: #c8c8c8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      line-height: 1.55;
+      font-size: 14px;
+      padding: 24px;
+      background: #0d0d0d;
+      border: 1px solid #383838;
+      border-radius: 8px;
+      margin-top: 32px;
+    }
+    .help h2 {
+      font-family: "Cinzel", serif;
+      color: var(--teal-400);
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .help code {
+      background: #1a1a1a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--teal-400);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+    }
+    .help ol { padding-left: 20px; }
+    .help li { margin: 6px 0; }
+  </style>
+</head>
+<body>
+
+  <p class="label">CREXi · 2000 × 500</p>
+  <div class="banner crexi">
+    <div class="wordmark">
+      <span class="accent-bar"></span>
+      <h1 class="name">John&nbsp;Mathewson</h1>
+      <div class="divider"></div>
+      <div class="role">Commercial Real Estate</div>
+      <div class="region">Northwest Indiana · Chicagoland</div>
+      <div class="license">Licensed in Indiana · RB14051634</div>
+    </div>
+    <div class="plate">
+      <span class="plate-divider"></span>
+      <div class="stat">
+        <span class="stat-num">$50M+</span>
+        <span class="stat-label">Closed</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">750K</span>
+        <span class="stat-label">Square Feet</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">12 YR</span>
+        <span class="stat-label">Experience</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="label">LinkedIn · 1584 × 396</p>
+  <div class="banner linkedin">
+    <div class="wordmark">
+      <span class="accent-bar"></span>
+      <h1 class="name">John&nbsp;Mathewson</h1>
+      <div class="divider"></div>
+      <div class="role">Commercial Real Estate</div>
+      <div class="region">Northwest Indiana · Chicagoland</div>
+      <div class="license">Licensed in Indiana · RB14051634</div>
+    </div>
+    <div class="plate">
+      <span class="plate-divider"></span>
+      <div class="stat">
+        <span class="stat-num">$50M+</span>
+        <span class="stat-label">Closed</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">750K</span>
+        <span class="stat-label">Square Feet</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">12 YR</span>
+        <span class="stat-label">Experience</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="help">
+    <h2>How to export a clean PNG</h2>
+    <ol>
+      <li>Open this file in Chrome (drag-drop into a tab, or <code>file://</code> path).</li>
+      <li>Open DevTools: <code>⌘ + ⌥ + I</code></li>
+      <li>Open Command palette: <code>⌘ + ⇧ + P</code></li>
+      <li>Type <strong>"Capture node screenshot"</strong> — it appears in the dropdown.</li>
+      <li>In the Elements panel, click the <code>&lt;div class="banner crexi"&gt;</code> (or <code>linkedin</code>) so it's selected, then run the command.</li>
+      <li>Chrome saves a pixel-perfect PNG at the exact div dimensions — 2000×500 or 1584×396 — regardless of your screen size.</li>
+    </ol>
+  </div>
+
+</body>
+</html>

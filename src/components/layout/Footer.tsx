@@ -25,13 +25,21 @@ const FOOTER_LINKS = {
     { href: '/services#management', label: 'Property Management' },
     { href: '/services#investment', label: 'Investment Sales' },
   ],
+  Markets: [
+    { href: '/markets/commercial-real-estate-nw-indiana/', label: 'Northwest Indiana' },
+    { href: '/counties/commercial-real-estate-lake-county-in/', label: 'Lake County' },
+    { href: '/cities/commercial-real-estate-crown-point/', label: 'Crown Point' },
+    { href: '/cities/commercial-real-estate-merrillville/', label: 'Merrillville' },
+    { href: '/investments/investment-property-nw-indiana/', label: 'Investment Property' },
+    { href: '/services/broker-opinion-of-value-nw-indiana/', label: 'Broker Opinion of Value' },
+  ],
 }
 
 export function Footer() {
   return (
     <footer className="bg-charcoal-950 text-cream-300 border-t border-charcoal-800/50">
       <Container className="py-16 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block mb-6 group">

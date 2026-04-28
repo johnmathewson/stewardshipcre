@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { readdirSync, statSync, existsSync } from 'fs'
 import path from 'path'
 
-const SITE_URL = 'https://www.stewardshipcre.com'
+const SITE_URL = 'https://stewardshipcre.com'
 
 // Main site routes (Next.js app routes)
 const APP_ROUTES: MetadataRoute.Sitemap = [

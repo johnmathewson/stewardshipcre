@@ -147,9 +147,9 @@ function ServiceSlide({
         {/* Text */}
         <motion.div style={{ y: yPct }} className="relative z-10 flex flex-col justify-center">
           <div className="flex items-center gap-4 mb-6">
-            <span className="font-mono text-xs text-teal-400 tracking-[0.3em]">{service.number}</span>
-            <div className="w-12 h-px bg-teal-400/40" />
-            <span className="text-teal-400 text-[10px] tracking-[0.3em] uppercase font-mono">
+            <span className="font-mono text-xs text-coral-400 tracking-[0.3em]">{service.number}</span>
+            <div className="w-12 h-px bg-coral-400/40" />
+            <span className="text-coral-400 text-[10px] tracking-[0.3em] uppercase font-mono">
               Service {index + 1} / {total}
             </span>
           </div>
@@ -165,7 +165,7 @@ function ServiceSlide({
           <ul className="space-y-3 mb-10">
             {service.bullets.map((b) => (
               <li key={b} className="flex items-center gap-3 text-sm text-charcoal-400">
-                <span className="w-6 h-px bg-teal-400/60" />
+                <span className="w-6 h-px bg-coral-400/60" />
                 <span className="tracking-wider uppercase text-[11px]">{b}</span>
               </li>
             ))}
@@ -174,7 +174,7 @@ function ServiceSlide({
 
         {/* Image */}
         <motion.div style={{ y: yPct }} className="relative hidden md:block">
-          <div className="relative aspect-[4/5] overflow-hidden border border-teal-400/10">
+          <div className="relative aspect-[4/5] overflow-hidden border border-coral-400/10">
             <motion.div style={{ scale: imageScale }} className="absolute inset-0">
               <img
                 src={service.image}
@@ -183,7 +183,7 @@ function ServiceSlide({
               />
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/40 to-transparent" />
-            <div className="absolute top-6 left-6 font-mono text-[10px] tracking-[0.3em] text-teal-400/80">
+            <div className="absolute top-6 left-6 font-mono text-[10px] tracking-[0.3em] text-coral-400/80">
               STEWARDSHIP / {service.title.toUpperCase()}
             </div>
           </div>
@@ -240,8 +240,8 @@ export function ServicesPinned() {
           <Container>
             <div className="flex items-center justify-between flex-wrap gap-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-px bg-teal-400" />
-                <span className="text-teal-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
+                <div className="w-12 h-px bg-coral-400" />
+                <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
                   What We Do
                 </span>
               </div>
@@ -280,20 +280,20 @@ export function ServicesPinned() {
                 >
                   <span
                     className={`font-mono text-[10px] tracking-[0.3em] transition-colors duration-300 ${
-                      isActive ? 'text-teal-400' : 'text-charcoal-600 group-hover:text-charcoal-300'
+                      isActive ? 'text-coral-400' : 'text-charcoal-600 group-hover:text-charcoal-300'
                     }`}
                   >
                     {s.number}
                   </span>
                   <span
                     className={`block h-px transition-all duration-500 ${
-                      isActive ? 'w-12 bg-teal-400' : 'w-6 bg-charcoal-700 group-hover:w-9 group-hover:bg-charcoal-500'
+                      isActive ? 'w-12 bg-coral-400' : 'w-6 bg-charcoal-700 group-hover:w-9 group-hover:bg-charcoal-500'
                     }`}
                   />
                   <span
                     className={`text-[10px] tracking-[0.25em] uppercase transition-all duration-500 ${
                       isActive
-                        ? 'text-teal-400 opacity-100'
+                        ? 'text-coral-400 opacity-100'
                         : 'text-charcoal-600 opacity-0 group-hover:opacity-100 group-hover:text-charcoal-300'
                     }`}
                   >
@@ -314,7 +314,7 @@ export function ServicesPinned() {
                 <div className="relative flex-1 max-w-md h-px bg-charcoal-800 overflow-hidden">
                   <motion.div
                     style={{ width: progressWidth }}
-                    className="absolute inset-y-0 left-0 bg-teal-400"
+                    className="absolute inset-y-0 left-0 bg-coral-400"
                   />
                 </div>
               </div>

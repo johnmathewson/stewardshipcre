@@ -79,8 +79,8 @@ export function CaseStudies() {
         >
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-px bg-teal-400" />
-              <span className="text-teal-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
+              <div className="w-12 h-px bg-coral-400" />
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
                 Selected Work
               </span>
             </div>
@@ -126,7 +126,7 @@ export function CaseStudies() {
                   <div className="lg:col-span-7 p-8 md:p-12 lg:p-16 flex flex-col justify-center lg:[direction:ltr]">
                     {/* Asset header */}
                     <div className="flex items-center gap-3 mb-6 flex-wrap">
-                      <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-teal-400">
+                      <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral-400">
                         Case · {String(i + 1).padStart(2, '0')}
                       </span>
                       <span className="text-charcoal-700">·</span>
@@ -166,13 +166,13 @@ export function CaseStudies() {
                     <div className="border-t border-charcoal-800 pt-8 flex items-end justify-between flex-wrap gap-6">
                       <div className="flex items-baseline gap-4">
                         <span
-                          className="font-display text-teal-400 leading-none teal-glow-text"
+                          className="font-display text-coral-400 leading-none coral-glow-text"
                           style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4rem)' }}
                         >
                           {cs.outcomeMetric}
                         </span>
                         <div>
-                          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-teal-400">
+                          <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral-400">
                             Outcome
                           </p>
                           <p className="text-sm text-cream-100 mt-1">{cs.outcomeLabel}</p>

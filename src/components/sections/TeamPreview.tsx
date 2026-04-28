@@ -50,8 +50,8 @@ export function TeamPreview() {
         >
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-px bg-teal-400" />
-              <span className="text-teal-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
+              <div className="w-12 h-px bg-coral-400" />
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
                 Our People
               </span>
             </div>
@@ -95,7 +95,7 @@ export function TeamPreview() {
 
                   {/* Name + title overlay */}
                   <div className="absolute bottom-6 left-6 right-6 z-10">
-                    <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-teal-400 mb-2">
+                    <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral-400 mb-2">
                       {member.title}
                     </p>
                     <h3 className="font-display text-cream-50 text-xl tracking-wide leading-tight">
@@ -103,12 +103,12 @@ export function TeamPreview() {
                     </h3>
                   </div>
 
-                  <div className="absolute bottom-0 left-0 w-0 h-px bg-teal-400 group-hover:w-full transition-all duration-700 pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 w-0 h-px bg-coral-400 group-hover:w-full transition-all duration-700 pointer-events-none" />
                 </div>
 
                 {/* Pull quote */}
                 <blockquote
-                  className="text-sm md:text-base text-charcoal-300 leading-snug border-l-2 border-teal-400/30 group-hover:border-teal-400 pl-4 italic transition-colors duration-500"
+                  className="text-sm md:text-base text-charcoal-300 leading-snug border-l-2 border-coral-400/30 group-hover:border-coral-400 pl-4 italic transition-colors duration-500"
                   dangerouslySetInnerHTML={{ __html: `&ldquo;${member.quote}&rdquo;` }}
                 />
 
@@ -117,7 +117,7 @@ export function TeamPreview() {
                   {member.specialties.map((s) => (
                     <span
                       key={s}
-                      className="text-[10px] tracking-[0.2em] uppercase text-teal-400/70 bg-teal-400/5 px-2.5 py-1 border border-teal-400/10 font-mono"
+                      className="text-[10px] tracking-[0.2em] uppercase text-coral-400/70 bg-coral-400/5 px-2.5 py-1 border border-coral-400/10 font-mono"
                     >
                       {s}
                     </span>

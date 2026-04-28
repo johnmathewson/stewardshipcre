@@ -34,8 +34,8 @@ export function FeaturedListings() {
         >
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-px bg-teal-400" />
-              <span className="text-teal-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
+              <div className="w-12 h-px bg-coral-400" />
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
                 Featured · Active Listings
               </span>
             </div>
@@ -63,7 +63,7 @@ export function FeaturedListings() {
           className="mb-6"
         >
           <Link href={`/properties/${FEATURE.slug}`} className="block group">
-            <div className="relative bg-charcoal-900 border border-charcoal-800 hover:border-teal-400/30 transition-all duration-700 overflow-hidden">
+            <div className="relative bg-charcoal-900 border border-charcoal-800 hover:border-coral-400/30 transition-all duration-700 overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-5">
                 {/* Image */}
                 <div className="lg:col-span-3 relative h-80 md:h-96 lg:h-[520px] overflow-hidden">
@@ -82,7 +82,7 @@ export function FeaturedListings() {
 
                   {/* Address overlay */}
                   <div className="absolute bottom-6 left-6 right-6 lg:hidden">
-                    <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-teal-400 mb-1">
+                    <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-coral-400 mb-1">
                       {FEATURE.city.toUpperCase()}, {FEATURE.state}
                     </p>
                     <h3 className="font-display text-cream-50 text-xl tracking-wide">
@@ -94,7 +94,7 @@ export function FeaturedListings() {
                 {/* Details panel */}
                 <div className="lg:col-span-2 p-8 md:p-10 lg:p-12 flex flex-col justify-between gap-8">
                   <div>
-                    <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-teal-400 mb-3 hidden lg:block">
+                    <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral-400 mb-3 hidden lg:block">
                       {FEATURE.city.toUpperCase()}, {FEATURE.state}
                     </p>
                     <h3
@@ -109,7 +109,7 @@ export function FeaturedListings() {
                         <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-charcoal-500 mb-1.5">
                           Price
                         </p>
-                        <p className="font-mono text-lg text-teal-400 font-semibold">
+                        <p className="font-mono text-lg text-coral-400 font-semibold">
                           {FEATURE.priceLabel}
                         </p>
                       </div>
@@ -136,7 +136,7 @@ export function FeaturedListings() {
                     </div>
 
                     {FEATURE.outcome && (
-                      <p className="text-sm text-charcoal-400 italic leading-relaxed border-l-2 border-teal-400/40 pl-4">
+                      <p className="text-sm text-charcoal-400 italic leading-relaxed border-l-2 border-coral-400/40 pl-4">
                         &ldquo;{FEATURE.outcome}&rdquo;
                       </p>
                     )}
@@ -144,7 +144,7 @@ export function FeaturedListings() {
 
                   <div>
                     <MagneticButton>
-                      <span className="inline-flex items-center gap-3 bg-teal-400 group-hover:bg-teal-300 text-charcoal-950 px-6 py-3.5 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-500">
+                      <span className="inline-flex items-center gap-3 bg-coral-400 group-hover:bg-coral-300 text-charcoal-950 px-6 py-3.5 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-500">
                         View Listing
                         <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -183,14 +183,14 @@ export function FeaturedListings() {
                   </div>
                 </div>
                 <div className="px-5 py-5">
-                  <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-teal-400/80 mb-1.5">
+                  <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-coral-400/80 mb-1.5">
                     {item.city.toUpperCase()}, {item.state} · {item.type}
                   </p>
-                  <h4 className="text-sm text-cream-100 font-medium mb-3 group-hover:text-teal-400 transition-colors duration-500">
+                  <h4 className="text-sm text-cream-100 font-medium mb-3 group-hover:text-coral-400 transition-colors duration-500">
                     {item.address}
                   </h4>
                   <div className="flex items-center justify-between pt-3 border-t border-charcoal-800/80">
-                    <span className="font-mono text-sm text-teal-400 font-semibold">
+                    <span className="font-mono text-sm text-coral-400 font-semibold">
                       {item.priceLabel}
                     </span>
                     <span className="font-mono text-[11px] text-charcoal-500">

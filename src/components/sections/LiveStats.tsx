@@ -46,8 +46,8 @@ export function LiveStats() {
         <Container className="py-3 flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-3">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-teal-400" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-coral-400 opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-coral-400" />
             </span>
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-charcoal-400">
               Live Inventory · Northwest Indiana &amp; Chicagoland
@@ -63,7 +63,7 @@ export function LiveStats() {
               className="flex items-center gap-3"
             >
               <span className="text-charcoal-400">{TICKS[tickIndex].label}</span>
-              <span className="text-teal-400">{TICKS[tickIndex].value}</span>
+              <span className="text-coral-400">{TICKS[tickIndex].value}</span>
             </motion.div>
           </div>
         </Container>
@@ -86,18 +86,18 @@ export function LiveStats() {
                 </span>
                 {stat.pulse && (
                   <span className="relative flex h-1.5 w-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75" />
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-teal-400" />
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-coral-400 opacity-75" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-coral-400" />
                   </span>
                 )}
               </div>
               <div
-                className="font-display text-teal-400 leading-none mb-3"
+                className="font-display text-coral-400 leading-none mb-3"
                 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}
               >
                 {stat.value}
               </div>
-              <div className="w-8 h-px bg-teal-400/30 mb-3 group-hover:w-16 group-hover:bg-teal-400/60 transition-all duration-700" />
+              <div className="w-8 h-px bg-coral-400/30 mb-3 group-hover:w-16 group-hover:bg-coral-400/60 transition-all duration-700" />
               <p className="text-xs text-charcoal-400 tracking-wide">
                 {stat.sublabel}
               </p>

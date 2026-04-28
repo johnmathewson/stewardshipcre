@@ -32,8 +32,8 @@ export function StatsBar() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(78,205,196,0.04),transparent_50%)]" />
 
       {/* Border lines */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-400/20 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-400/20 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-coral-400/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-coral-400/20 to-transparent" />
 
       <Container className="relative z-10">
         <motion.div style={{ y }}>
@@ -52,9 +52,9 @@ export function StatsBar() {
                     end={stat.value}
                     prefix={stat.prefix}
                     suffix={stat.suffix}
-                    className="font-mono text-4xl md:text-5xl font-bold text-teal-400"
+                    className="font-mono text-4xl md:text-5xl font-bold text-coral-400"
                   />
-                  <div className="w-8 h-px bg-teal-400/30 mx-auto my-3 group-hover:w-16 group-hover:bg-teal-400/60 transition-all duration-700" />
+                  <div className="w-8 h-px bg-coral-400/30 mx-auto my-3 group-hover:w-16 group-hover:bg-coral-400/60 transition-all duration-700" />
                   <p className="text-xs tracking-[0.2em] uppercase text-charcoal-400">
                     {stat.label}
                   </p>

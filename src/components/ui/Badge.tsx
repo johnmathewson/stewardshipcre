@@ -10,7 +10,7 @@ interface BadgeProps {
 
 const variants: Record<BadgeVariant, string> = {
   default: 'bg-charcoal-800/80 text-cream-200 border border-charcoal-700/50',
-  teal: 'bg-teal-400/10 text-teal-400 border border-teal-400/20',
+  teal: 'bg-coral-400/10 text-coral-400 border border-coral-400/20',
   navy: 'bg-navy-600/10 text-navy-300 border border-navy-600/20',
   outline: 'border border-charcoal-600 text-charcoal-300',
 }

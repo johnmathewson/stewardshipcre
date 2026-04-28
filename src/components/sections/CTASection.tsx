@@ -35,8 +35,8 @@ export function CTASection() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(78,205,196,0.08),transparent_60%)]" />
 
       {/* Border lines */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-400/30 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-400/30 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-coral-400/30 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-coral-400/30 to-transparent" />
 
       <Container className="relative z-10 text-center">
         <motion.div style={{ y: textY }}>
@@ -45,7 +45,7 @@ export function CTASection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-teal-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono block mb-6"
+            className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono block mb-6"
           >
             Ready to Start?
           </motion.span>
@@ -59,7 +59,7 @@ export function CTASection() {
             style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}
           >
             Let&apos;s Find Your Next
-            <span className="text-teal-400 teal-glow-text"> Opportunity</span>
+            <span className="text-coral-400 coral-glow-text"> Opportunity</span>
           </motion.h2>
 
           <motion.p

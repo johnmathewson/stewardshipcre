@@ -43,10 +43,10 @@ export function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block mb-6 group">
-              <span className="font-display text-xl tracking-[0.3em] text-teal-400 font-semibold block">
+              <span className="font-display text-xl tracking-[0.3em] text-coral-400 font-semibold block">
                 STEWARDSHIP
               </span>
-              <span className="text-[10px] tracking-[0.35em] text-charcoal-500 block mt-1 uppercase group-hover:text-teal-400/50 transition-colors duration-500 font-mono">
+              <span className="text-[10px] tracking-[0.35em] text-charcoal-500 block mt-1 uppercase group-hover:text-coral-400/50 transition-colors duration-500 font-mono">
                 Commercial Real Estate
               </span>
             </Link>
@@ -60,7 +60,7 @@ export function Footer() {
                 href="https://www.linkedin.com/company/stewardship-asset-group"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 flex items-center justify-center border border-charcoal-700 hover:border-teal-400 hover:text-teal-400 transition-all duration-300 text-charcoal-500"
+                className="w-10 h-10 flex items-center justify-center border border-charcoal-700 hover:border-coral-400 hover:text-coral-400 transition-all duration-300 text-charcoal-500"
                 aria-label="LinkedIn"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -81,7 +81,7 @@ export function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="animated-underline text-sm text-charcoal-500 hover:text-teal-400 transition-colors duration-300"
+                      className="animated-underline text-sm text-charcoal-500 hover:text-coral-400 transition-colors duration-300"
                     >
                       {link.label}
                     </Link>
@@ -100,10 +100,10 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Stewardship Asset Group. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link href="/privacy" className="text-xs text-charcoal-600 hover:text-teal-400 transition-colors duration-300">
+            <Link href="/privacy" className="text-xs text-charcoal-600 hover:text-coral-400 transition-colors duration-300">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-xs text-charcoal-600 hover:text-teal-400 transition-colors duration-300">
+            <Link href="/terms" className="text-xs text-charcoal-600 hover:text-coral-400 transition-colors duration-300">
               Terms of Service
             </Link>
           </div>

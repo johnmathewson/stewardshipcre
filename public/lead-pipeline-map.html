@@ -16,14 +16,14 @@
       --surface: #1a1a1a;
       --surface-2: #282828;
       --border: rgba(255, 255, 255, 0.06);
-      --border-teal: rgba(78, 205, 196, 0.25);
+      --border-coral: rgba(224, 122, 95, 0.25);
       --text: #f7f7f7;
       --text-2: #c8c8c8;
       --text-3: #a4a4a4;
       --text-4: #818181;
-      --teal: #4ecdc4;
-      --teal-soft: rgba(78, 205, 196, 0.1);
-      --teal-glow: rgba(78, 205, 196, 0.45);
+      --coral: #E07A5F;
+      --coral-soft: rgba(224, 122, 95, 0.1);
+      --coral-glow: rgba(224, 122, 95, 0.45);
       --amber: #f5b54a;
       --rose: #e2718e;
     }
@@ -44,8 +44,8 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(to right, rgba(78, 205, 196, 0.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(78, 205, 196, 0.04) 1px, transparent 1px);
+        linear-gradient(to right, rgba(224, 122, 95, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(224, 122, 95, 0.04) 1px, transparent 1px);
       background-size: 56px 56px;
       pointer-events: none;
       z-index: 0;
@@ -64,7 +64,7 @@
     .eyebrow {
       font-family: "JetBrains Mono", monospace;
       font-size: 11px;
-      color: var(--teal);
+      color: var(--coral);
       letter-spacing: 0.32em;
       text-transform: uppercase;
       display: inline-flex;
@@ -76,7 +76,7 @@
       content: "";
       width: 32px;
       height: 1px;
-      background: var(--teal);
+      background: var(--coral);
     }
     h1 {
       font-family: "Cinzel", serif;
@@ -87,7 +87,7 @@
       color: var(--text);
       margin-bottom: 16px;
     }
-    h1 .accent { color: var(--teal); }
+    h1 .accent { color: var(--coral); }
     .lede {
       color: var(--text-3);
       font-size: 17px;
@@ -136,8 +136,8 @@
       border-color: rgba(255, 255, 255, 0.08);
     }
     .ecosystem .col.crm {
-      border-color: var(--border-teal);
-      background: linear-gradient(180deg, rgba(78, 205, 196, 0.04), var(--surface));
+      border-color: var(--border-coral);
+      background: linear-gradient(180deg, rgba(224, 122, 95, 0.04), var(--surface));
     }
     .col-header {
       display: flex;
@@ -152,7 +152,7 @@
       text-transform: uppercase;
       color: var(--text-4);
     }
-    .col-tag.gated { color: var(--teal); }
+    .col-tag.gated { color: var(--coral); }
     .col-title {
       font-family: "Cinzel", serif;
       font-size: 18px;
@@ -177,12 +177,12 @@
     }
     .col li::before {
       content: "›";
-      color: var(--teal);
+      color: var(--coral);
       font-family: "Cinzel", serif;
       font-size: 14px;
     }
     .col li.new {
-      color: var(--teal);
+      color: var(--coral);
     }
     .col li.new::before { content: "+"; }
 
@@ -197,7 +197,7 @@
     .arrow-line {
       width: 40px;
       height: 1px;
-      background: var(--teal);
+      background: var(--coral);
       position: relative;
     }
     .arrow-line::after {
@@ -205,7 +205,7 @@
       position: absolute;
       right: -10px;
       top: -12px;
-      color: var(--teal);
+      color: var(--coral);
       font-size: 18px;
       font-family: "Cinzel", serif;
     }
@@ -238,13 +238,13 @@
       right: -8px;
       width: 16px;
       height: 1px;
-      background: var(--teal);
+      background: var(--coral);
       opacity: 0.5;
     }
     .step-num {
       font-family: "Cinzel", serif;
       font-size: 14px;
-      color: var(--teal);
+      color: var(--coral);
       letter-spacing: 0.05em;
       margin-bottom: 8px;
     }
@@ -289,12 +289,12 @@
       overflow: hidden;
     }
     .table-card.new {
-      border-color: var(--teal);
-      box-shadow: 0 0 0 1px var(--teal-soft), 0 8px 32px rgba(78, 205, 196, 0.08);
-      background: linear-gradient(180deg, rgba(78, 205, 196, 0.05), var(--surface));
+      border-color: var(--coral);
+      box-shadow: 0 0 0 1px var(--coral-soft), 0 8px 32px rgba(224, 122, 95, 0.08);
+      background: linear-gradient(180deg, rgba(224, 122, 95, 0.05), var(--surface));
     }
     .table-card.new .table-name {
-      color: var(--teal);
+      color: var(--coral);
     }
     .table-name {
       font-family: "JetBrains Mono", monospace;
@@ -315,7 +315,7 @@
       text-transform: uppercase;
       padding: 3px 8px;
       border-radius: 999px;
-      background: var(--teal);
+      background: var(--coral);
       color: var(--bg);
       font-weight: 600;
     }
@@ -339,7 +339,7 @@
       color: var(--text-4);
     }
     .col-row .col-fk {
-      color: var(--teal);
+      color: var(--coral);
     }
 
     /* ---- Build steps ---- */
@@ -362,7 +362,7 @@
       border-left: 3px solid var(--amber);
     }
     .build-step.me {
-      border-left: 3px solid var(--teal);
+      border-left: 3px solid var(--coral);
     }
     .build-step.shared {
       border-left: 3px solid var(--rose);
@@ -372,7 +372,7 @@
       font-size: 28px;
       color: var(--text-3);
     }
-    .build-step.me .build-num { color: var(--teal); }
+    .build-step.me .build-num { color: var(--coral); }
     .build-owner {
       font-family: "JetBrains Mono", monospace;
       font-size: 9px;
@@ -389,8 +389,8 @@
       color: var(--amber);
     }
     .build-step.me .build-owner {
-      background: rgba(78, 205, 196, 0.15);
-      color: var(--teal);
+      background: rgba(224, 122, 95, 0.15);
+      color: var(--coral);
     }
     .build-step.shared .build-owner {
       background: rgba(226, 113, 142, 0.15);
@@ -410,7 +410,7 @@
     /* ---- Decision callout ---- */
     .decision {
       background: var(--surface);
-      border: 1px solid var(--border-teal);
+      border: 1px solid var(--border-coral);
       border-radius: 12px;
       padding: 24px 28px;
       margin-top: 16px;
@@ -418,7 +418,7 @@
     .decision .q {
       font-family: "Cinzel", serif;
       font-size: 18px;
-      color: var(--teal);
+      color: var(--coral);
       margin-bottom: 8px;
     }
     .decision .body {
@@ -435,13 +435,13 @@
       font-family: "JetBrains Mono", monospace;
       font-size: 11px;
       padding: 8px 14px;
-      background: rgba(78, 205, 196, 0.05);
-      border: 1px solid var(--border-teal);
+      background: rgba(224, 122, 95, 0.05);
+      border: 1px solid var(--border-coral);
       border-radius: 6px;
       color: var(--text-2);
     }
     .opt.recommend {
-      background: var(--teal);
+      background: var(--coral);
       color: var(--bg);
       font-weight: 600;
     }
@@ -457,7 +457,7 @@
       color: var(--text-3);
       font-size: 14px;
     }
-    .footer-note strong { color: var(--teal); font-weight: 500; }
+    .footer-note strong { color: var(--coral); font-weight: 500; }
 
     /* ---- Legend ---- */
     .legend {
@@ -596,7 +596,7 @@
           Already exists
         </div>
         <div class="legend-item">
-          <div class="legend-dot" style="background: var(--teal);"></div>
+          <div class="legend-dot" style="background: var(--coral);"></div>
           New table
         </div>
       </div>

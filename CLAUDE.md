@@ -35,15 +35,20 @@ Sibling CRM stack (different): Next 14 + React 18 + Tailwind 3 + Supabase + raw 
 
 ## Brand system (lock these — they appear in every new asset)
 
+**Primary accent: CORAL** (matches internal CRM dashboard, differentiates from XPAND Commercial's teal). Teal kept as a secondary/data accent only.
+
 ```
-Charcoal-950 (page bg)        #0D0D0D
-Charcoal-900 (sections)       #1A1A1A
-Charcoal-800 (cards)          #282828
-Teal-400 (BRAND ACCENT)       #4ECDC4
-Teal-500 (hover)              #3CB8AD
-Cream-50 (hero text)          #FFFFFF
-Cream-100 (body on dark)      #FAF8F5
+Coral-400 (PRIMARY ACCENT)        #E07A5F
+Coral-500 (hover)                 #C66648
+Steward-base (body bg gradient)   #0A1615 → #0D1F1E → #142827 → #0A1615
+Charcoal-900 (sections)           #1A1A1A
+Charcoal-800 (cards)              #282828
+Cream-50 (hero text)              #FFFFFF
+Cream-100 (body on dark)          #FAF8F5
+Teal-400 (secondary/data accent)  #4ECDC4
 ```
+
+Body background uses a 4-stop diagonal gradient through the steward-* tints, matching the CRM's ambient feel.
 
 **Typography hierarchy:**
 - **Cinzel** — display only (wordmarks, hero accents, big numbers). Use sparingly.

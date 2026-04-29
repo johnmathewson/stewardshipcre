@@ -70,7 +70,9 @@ The site needs to do three things at once:
 
 ### Color Palette
 
-The site uses **teal-on-charcoal** as the brand foundation, with cream for soft contrast and JetBrains Mono for data labels. All colors are CSS custom properties exposed via Tailwind v4's `@theme` block.
+The site uses **coral-on-deep-teal-charcoal** as the brand foundation, with cream for soft contrast and JetBrains Mono for data labels. **Primary accent is coral `#E07A5F`** (matches the internal Stewardship CRM dashboard). Teal is retained as a *secondary* / data accent only — the same role it plays in the CRM's "Earned" chart line. All colors are CSS custom properties exposed via Tailwind v4's `@theme` block.
+
+> **Brand history:** the site originally used a gold + forest palette (early dev), migrated to teal-on-charcoal, then in April 2026 shifted to coral-on-charcoal to (a) match the internal CRM dashboard and (b) differentiate from XPAND Commercial's teal palette which dominated John's prior firm. See "Reference: Color Migration Notes" at the bottom.
 
 #### Charcoal (background, surfaces, body text)
 | Token | Hex | Use |
@@ -96,7 +98,31 @@ The site uses **teal-on-charcoal** as the brand foundation, with cream for soft 
 | `cream-300` | `#E5E0D8` | Cream variant |
 | `cream-400` | `#D4CEC4` | Muted cream |
 
-#### Teal (brand accent)
+#### Coral (PRIMARY brand accent)
+| Token | Hex | Use |
+|---|---|---|
+| `coral-50`  | `#FCF1EE` | Subtle coral tint backgrounds |
+| `coral-100` | `#F8DBD2` | Light surfaces |
+| `coral-200` | `#F2BCAB` | Disabled/light buttons |
+| `coral-300` | `#EA9A82` | Hover-light, secondary buttons |
+| `coral-400` | `#E07A5F` | **Primary brand accent** — CTAs, links, hero accents, active states |
+| `coral-500` | `#C66648` | Primary CTA hover |
+| `coral-600` | `#A55236` | Pressed state |
+| `coral-700` | `#843E27` | Deep accent |
+| `coral-800` | `#5F2C1B` | Dark variant |
+| `coral-900` | `#3A1A10` | Deepest |
+
+#### Steward (deep teal-charcoal background tints — matches internal CRM)
+| Token | Hex | Use |
+|---|---|---|
+| `steward-base`  | `#0A1615` | Body gradient endpoints |
+| `steward-dark`  | `#0D1F1E` | Body gradient (~30%) |
+| `steward-mid`   | `#142827` | Body gradient (~60%) |
+| `steward-panel` | `#1A2726` | Card surfaces in CRM-aligned components |
+
+The body uses `linear-gradient(160deg, steward-base 0%, steward-dark 30%, steward-mid 60%, steward-base 100%)` background-attachment fixed.
+
+#### Teal (secondary / data accent — same role as CRM's "Earned" chart line)
 | Token | Hex | Use |
 |---|---|---|
 | `teal-50` | `#EDFAF8` | Subtle teal tint backgrounds |

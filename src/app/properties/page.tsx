@@ -3,110 +3,135 @@ import { Container } from '@/components/layout/Container'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
-import { Button } from '@/components/ui/Button'
 import { StaggerChildren, StaggerItem } from '@/components/motion/StaggerChildren'
 import Link from 'next/link'
+import { fetchPublishedListings, type Listing } from '@/lib/supabase'
+import { PORTFOLIO } from '@/data/portfolio'
 
 export const metadata: Metadata = {
-  title: 'Properties',
-  description: 'Browse available commercial real estate listings — office, retail, industrial, multifamily, and land in Northwest Indiana and Chicagoland.',
+  title: 'Properties | Stewardship CRE',
+  description:
+    'Browse available commercial real estate listings — office, retail, industrial, multifamily, and land in Northwest Indiana and Chicagoland.',
 }
 
-const SAMPLE_PROPERTIES = [
-  {
-    slug: '53-w-jefferson-joliet',
-    title: '53 W Jefferson Street',
-    location: 'Joliet, IL',
-    type: 'Mixed-Use',
-    listingType: 'For Sale',
-    price: '$450,000',
-    size: '8,500 SF',
-    lotSize: '0.25 AC',
-    zoning: 'B-2 Commercial',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=500&fit=crop',
-  },
-  {
-    slug: '156-s-flynn-rd-westville',
-    title: '156 S Flynn Road',
-    location: 'Westville, IN',
-    type: 'Industrial',
-    listingType: 'For Sale',
-    price: '$275,000',
-    size: '12,000 SF',
-    lotSize: '2.5 AC',
-    zoning: 'Industrial',
-    image: 'https://images.unsplash.com/photo-1565610222536-ef125c59da2e?w=800&h=500&fit=crop',
-  },
-  {
-    slug: 'downtown-valparaiso-retail',
-    title: 'Downtown Retail Space',
-    location: 'Valparaiso, IN',
-    type: 'Retail',
-    listingType: 'For Lease',
-    price: '$18/SF/yr NNN',
-    size: '3,200 SF',
-    lotSize: null,
-    zoning: 'C-3 Downtown',
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=500&fit=crop',
-  },
-  {
-    slug: 'crown-point-office',
-    title: 'Professional Office Building',
-    location: 'Crown Point, IN',
-    type: 'Office',
-    listingType: 'For Lease',
-    price: '$22/SF/yr Gross',
-    size: '5,800 SF',
-    lotSize: '0.75 AC',
-    zoning: 'Professional Office',
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=500&fit=crop',
-  },
-  {
-    slug: 'portage-development-land',
-    title: 'Development Parcel',
-    location: 'Portage, IN',
-    type: 'Land',
-    listingType: 'For Sale',
-    price: '$180,000',
-    size: null,
-    lotSize: '5.0 AC',
-    zoning: 'R-3 Residential',
-    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=500&fit=crop',
-  },
-  {
-    slug: 'merrillville-multifamily',
-    title: '12-Unit Apartment Complex',
-    location: 'Merrillville, IN',
-    type: 'Multifamily',
-    listingType: 'For Sale',
-    price: '$950,000',
-    size: '14,400 SF',
-    lotSize: '1.2 AC',
-    zoning: 'R-4 Multi-Family',
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=500&fit=crop',
-  },
-]
+// Revalidate every 5 minutes so new listings appear quickly without a full deploy
+export const revalidate = 300
 
-export default function PropertiesPage() {
+// ─── Fallback: convert static portfolio data to the Listing shape ─────────────
+function portfolioToListings(): Listing[] {
+  return PORTFOLIO.map((p, i) => ({
+    id: `static-${i}`,
+    name: p.address,
+    address: p.address,
+    city: p.city,
+    state: p.state,
+    zip: null,
+    asset_type: p.type.toLowerCase().replace('-', '_'),
+    transaction_type: p.status === 'For Lease' ? 'lease' : 'sale',
+    status: p.status === 'Sold' ? 'sold' : p.status === 'Leased' ? 'leased' : 'listed',
+    asking_price: null,
+    lease_rate: null,
+    sqft: p.size ? parseInt(p.size.replace(/[^0-9]/g, '')) || null : null,
+    acreage: null,
+    year_built: p.year ? parseInt(p.year) || null : null,
+    parking_spaces: null,
+    parking_ratio: null,
+    zoning: null,
+    noi: null,
+    cap_rate: null,
+    price_per_sf: null,
+    occupancy_pct: null,
+    description: p.outcome || null,
+    highlights: null,
+    notes: null,
+    crexi_url: null,
+    publish_to_website: true,
+    your_role: 'listing_broker',
+    slug: p.slug,
+    priceLabel: p.priceLabel,
+    sizeLabel: p.size,
+    locationLabel: `${p.city}, ${p.state}`,
+    statusLabel: p.status,
+    typeLabel: p.type,
+  }))
+}
+
+const FILTER_TABS = ['All', 'Office', 'Retail', 'Industrial', 'Multifamily', 'Land', 'Mixed-Use']
+
+function statusVariant(status: string | null | undefined): 'teal' | 'navy' | 'default' {
+  if (!status) return 'default'
+  const s = status.toLowerCase()
+  if (s.includes('lease') || s.includes('coming')) return 'teal'
+  if (s.includes('contract') || s.includes('pending')) return 'navy'
+  return 'default'
+}
+
+export default async function PropertiesPage({
+  searchParams,
+}: {
+  searchParams: { type?: string; intent?: string; location?: string }
+}) {
+  let listings: Listing[] = []
+  let isLive = false
+
+  try {
+    const live = await fetchPublishedListings()
+    if (live.length > 0) {
+      listings = live
+      isLive = true
+    }
+  } catch {
+    // Supabase not configured — fall through to static data
+  }
+
+  if (!isLive) {
+    listings = portfolioToListings()
+  }
+
+  const typeFilter = searchParams.type?.toLowerCase() || 'all'
+  const filteredListings =
+    typeFilter === 'all'
+      ? listings
+      : listings.filter(
+          (l) =>
+            l.asset_type?.toLowerCase().includes(typeFilter) ||
+            l.typeLabel?.toLowerCase().includes(typeFilter)
+        )
+
+  const activeListings = filteredListings.filter(
+    (l) => !['sold', 'leased'].includes(l.status || '')
+  )
+  const closedListings = filteredListings.filter((l) =>
+    ['sold', 'leased'].includes(l.status || '')
+  )
+
   return (
     <>
       {/* Hero */}
-      <section className="bg-charcoal-950 pt-32 pb-12">
-        <Container>
+      <section className="pt-32 pb-16 bg-charcoal-950 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(224,122,95,0.06),transparent_60%)]" />
+        <Container className="relative z-10">
           <FadeIn>
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-px bg-gold-500" />
-              <span className="text-gold-500 text-xs tracking-[0.3em] uppercase font-semibold">Listings</span>
+            <div className="flex items-center gap-4 mb-5">
+              <div className="w-10 h-px bg-coral-400" />
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
+                Northwest Indiana · Chicagoland
+              </span>
             </div>
             <h1
               className="font-heading text-cream-100 mb-4"
               style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}
             >
-              Available <span className="text-gold-500">Properties</span>
+              Available <span className="text-coral-400">Properties</span>
             </h1>
-            <p className="text-charcoal-400 max-w-xl">
+            <p className="text-charcoal-400 max-w-xl text-sm leading-relaxed">
               Browse our current inventory of commercial real estate listings across
-              Northwest Indiana and the greater Chicagoland area.
+              Northwest Indiana and the greater Chicagoland area.{' '}
+              {isLive && (
+                <span className="text-coral-400/70">
+                  {activeListings.length} active listing{activeListings.length !== 1 ? 's' : ''}.
+                </span>
+              )}
             </p>
           </FadeIn>
         </Container>
@@ -116,75 +141,159 @@ export default function PropertiesPage() {
       <section className="bg-charcoal-900 border-y border-charcoal-800 py-4 sticky top-[60px] z-30">
         <Container>
           <div className="flex flex-wrap items-center gap-3">
-            {['All', 'Office', 'Retail', 'Industrial', 'Multifamily', 'Land'].map((type, i) => (
-              <button
-                key={type}
-                className={`px-4 py-2 text-xs tracking-[0.1em] uppercase font-semibold transition-all duration-300 ${
-                  i === 0
-                    ? 'bg-gold-500 text-charcoal-950'
-                    : 'text-charcoal-400 hover:text-cream-100 border border-charcoal-700 hover:border-charcoal-500'
-                }`}
-              >
-                {type}
-              </button>
-            ))}
-            <div className="ml-auto flex gap-2">
-              <button className="p-2 border border-charcoal-700 text-cream-300 hover:border-gold-500 transition-colors" aria-label="Grid view">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                </svg>
-              </button>
-              <button className="p-2 border border-charcoal-700 text-charcoal-500 hover:border-gold-500 hover:text-cream-300 transition-colors" aria-label="Map view">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                </svg>
-              </button>
+            {FILTER_TABS.map((tab) => {
+              const isActive =
+                tab === 'All' ? typeFilter === 'all' : typeFilter === tab.toLowerCase()
+              const href =
+                tab === 'All' ? '/properties' : `/properties?type=${tab.toLowerCase()}`
+              return (
+                <Link
+                  key={tab}
+                  href={href}
+                  className={`px-4 py-2 text-xs tracking-[0.1em] uppercase font-semibold transition-all duration-300 ${
+                    isActive
+                      ? 'bg-coral-400 text-white'
+                      : 'text-charcoal-400 hover:text-cream-100 border border-charcoal-700 hover:border-charcoal-500'
+                  }`}
+                >
+                  {tab}
+                </Link>
+              )
+            })}
+            <div className="ml-auto text-xs text-charcoal-500 font-mono">
+              {activeListings.length} listing{activeListings.length !== 1 ? 's' : ''}
             </div>
           </div>
         </Container>
       </section>
 
-      {/* Listings Grid */}
-      <section className="py-section-sm bg-cream-100">
-        <Container>
-          <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SAMPLE_PROPERTIES.map((property) => (
-              <StaggerItem key={property.slug}>
-                <Link href={`/properties/${property.slug}`} className="block group">
-                  <Card hover className="overflow-hidden h-full">
-                    <div className="relative h-52 overflow-hidden">
-                      <img
-                        src={property.image}
-                        alt={property.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/60 to-transparent" />
-                      <div className="absolute top-3 left-3 flex gap-2">
-                        <Badge variant="teal">{property.listingType}</Badge>
-                        <Badge>{property.type}</Badge>
+      {/* Active Listings Grid */}
+      {activeListings.length > 0 && (
+        <section className="py-section-sm bg-cream-100">
+          <Container>
+            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {activeListings.map((listing) => (
+                <StaggerItem key={listing.id}>
+                  <Link href={`/properties/${listing.slug}`} className="block group">
+                    <Card hover className="overflow-hidden h-full">
+                      <div className="relative h-52 overflow-hidden bg-charcoal-900">
+                        <div className="w-full h-full flex items-center justify-center text-charcoal-700">
+                          <svg className="w-12 h-12 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                          </svg>
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/60 to-transparent" />
+                        <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
+                          <Badge variant={statusVariant(listing.statusLabel)}>
+                            {listing.statusLabel}
+                          </Badge>
+                          {listing.typeLabel && <Badge>{listing.typeLabel}</Badge>}
+                        </div>
                       </div>
-                    </div>
-                    <div className="p-5">
-                      <h3 className="font-heading text-sm tracking-[0.1em] uppercase text-charcoal-900 mb-1 group-hover:text-gold-600 transition-colors">
-                        {property.title}
+                      <div className="p-5">
+                        <h3 className="font-heading text-sm tracking-[0.1em] uppercase text-charcoal-900 mb-1 group-hover:text-coral-500 transition-colors line-clamp-2">
+                          {listing.name || listing.address || 'Commercial Property'}
+                        </h3>
+                        <p className="text-xs text-charcoal-500 mb-3">
+                          {listing.locationLabel || '—'}
+                        </p>
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-charcoal-500 mb-4">
+                          {listing.sizeLabel && <span>{listing.sizeLabel}</span>}
+                          {listing.zoning && <span>{listing.zoning}</span>}
+                          {listing.year_built && <span>Built {listing.year_built}</span>}
+                          {listing.cap_rate && (
+                            <span className="text-coral-500 font-semibold">
+                              {listing.cap_rate}% Cap
+                            </span>
+                          )}
+                        </div>
+                        {listing.highlights && listing.highlights.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mb-4">
+                            {listing.highlights.slice(0, 2).map((h, i) => (
+                              <span key={i} className="text-[10px] px-2 py-0.5 bg-charcoal-100 text-charcoal-600 rounded">
+                                {h}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        <div className="pt-3 border-t border-cream-300">
+                          <span className="font-mono text-lg text-coral-500 font-semibold">
+                            {listing.priceLabel}
+                          </span>
+                        </div>
+                      </div>
+                    </Card>
+                  </Link>
+                </StaggerItem>
+              ))}
+            </StaggerChildren>
+          </Container>
+        </section>
+      )}
+
+      {activeListings.length === 0 && (
+        <section className="py-section bg-cream-100">
+          <Container>
+            <div className="text-center py-20">
+              <div className="text-6xl mb-6 opacity-30">🏢</div>
+              <h3 className="font-heading text-charcoal-700 text-xl mb-3">No listings found</h3>
+              <p className="text-charcoal-500 text-sm mb-8">
+                {typeFilter !== 'all'
+                  ? `No ${typeFilter} properties available right now.`
+                  : 'New listings are added regularly. Check back soon or contact us directly.'}
+              </p>
+              <Link href="/contact" className="inline-block px-6 py-3 bg-coral-400 text-white text-sm font-semibold tracking-wide hover:bg-coral-500 transition-colors">
+                Contact Us About Available Properties
+              </Link>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {closedListings.length > 0 && (
+        <section className="py-section-sm bg-charcoal-950">
+          <Container>
+            <div className="flex items-center gap-4 mb-10">
+              <div className="w-10 h-px bg-coral-400" />
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold font-mono">
+                Track Record
+              </span>
+            </div>
+            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {closedListings.map((listing) => (
+                <StaggerItem key={listing.id}>
+                  <div className="border border-charcoal-800 bg-charcoal-900 p-5 opacity-80">
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <h3 className="font-heading text-xs tracking-[0.1em] uppercase text-cream-300">
+                        {listing.name || listing.address}
                       </h3>
-                      <p className="text-xs text-charcoal-500 mb-3">{property.location}</p>
-                      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-charcoal-500 mb-4">
-                        {property.size && <span>{property.size}</span>}
-                        {property.lotSize && <span>{property.lotSize}</span>}
-                        {property.zoning && <span>{property.zoning}</span>}
-                      </div>
-                      <div className="pt-3 border-t border-cream-300">
-                        <span className="font-mono text-lg text-gold-600 font-semibold">
-                          {property.price}
-                        </span>
-                      </div>
+                      <Badge variant="default">{listing.statusLabel}</Badge>
                     </div>
-                  </Card>
-                </Link>
-              </StaggerItem>
-            ))}
-          </StaggerChildren>
+                    <p className="text-xs text-charcoal-500 mb-2">{listing.locationLabel}</p>
+                    {listing.typeLabel && <p className="text-xs text-charcoal-600">{listing.typeLabel}</p>}
+                    {listing.priceLabel && listing.priceLabel !== 'Price Upon Request' && (
+                      <p className="font-mono text-sm text-coral-400 font-semibold mt-3">{listing.priceLabel}</p>
+                    )}
+                    {listing.description && (
+                      <p className="text-xs text-charcoal-500 mt-2 italic line-clamp-2">{listing.description}</p>
+                    )}
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerChildren>
+          </Container>
+        </section>
+      )}
+
+      <section className="py-16 bg-charcoal-950 border-t border-charcoal-800">
+        <Container>
+          <div className="text-center">
+            <p className="text-charcoal-400 text-sm mb-2">Don&apos;t see what you&apos;re looking for?</p>
+            <h3 className="font-heading text-cream-100 text-2xl mb-6">We have off-market opportunities.</h3>
+            <Link href="/contact" className="inline-block px-8 py-3 bg-coral-400 text-white text-sm font-semibold tracking-wide hover:bg-coral-500 transition-colors">
+              Tell Us What You Need
+            </Link>
+          </div>
         </Container>
       </section>
     </>

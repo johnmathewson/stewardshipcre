@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { StaggerChildren, StaggerItem } from '@/components/motion/StaggerChildren'
 import Link from 'next/link'
-import { fetchPublishedListings, type Listing } from '@/lib/supabase'
+import { fetchPublishedListings, primaryImageUrl, type Listing } from '@/lib/supabase'
 import { PORTFOLIO } from '@/data/portfolio'
 
 export const metadata: Metadata = {
@@ -172,16 +172,27 @@ export default async function PropertiesPage({
         <section className="py-section-sm bg-cream-100">
           <Container>
             <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {activeListings.map((listing) => (
+              {activeListings.map((listing) => {
+                const heroImage = primaryImageUrl(listing)
+                return (
                 <StaggerItem key={listing.id}>
                   <Link href={`/properties/${listing.slug}`} className="block group">
                     <Card hover className="overflow-hidden h-full">
                       <div className="relative h-52 overflow-hidden bg-charcoal-900">
-                        <div className="w-full h-full flex items-center justify-center text-charcoal-700">
-                          <svg className="w-12 h-12 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                          </svg>
-                        </div>
+                        {heroImage ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={heroImage}
+                            alt={listing.headline || listing.name || 'Listing photo'}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-charcoal-700">
+                            <svg className="w-12 h-12 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                          </div>
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/60 to-transparent" />
                         <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
                           <Badge variant={statusVariant(listing.statusLabel)}>
@@ -192,7 +203,7 @@ export default async function PropertiesPage({
                       </div>
                       <div className="p-5">
                         <h3 className="font-heading text-sm tracking-[0.1em] uppercase text-charcoal-900 mb-1 group-hover:text-coral-500 transition-colors line-clamp-2">
-                          {listing.name || listing.address || 'Commercial Property'}
+                          {listing.headline || listing.name || listing.address || 'Commercial Property'}
                         </h3>
                         <p className="text-xs text-charcoal-500 mb-3">
                           {listing.locationLabel || '—'}
@@ -225,7 +236,8 @@ export default async function PropertiesPage({
                     </Card>
                   </Link>
                 </StaggerItem>
-              ))}
+                )
+              })}
             </StaggerChildren>
           </Container>
         </section>

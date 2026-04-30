@@ -11,9 +11,19 @@ export const supabase = supabaseUrl && supabaseAnonKey
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+export interface ListingImage {
+  url: string
+  alt?: string
+  order: number
+}
+
 export interface Listing {
   id: string
+  // CRM-managed slug (from migration 0004). Always present on real rows.
+  slug?: string | null
   name: string
+  // Marketing-friendly title shown on the public listing page (separate from internal name).
+  headline?: string | null
   address: string | null
   city: string | null
   state: string | null
@@ -35,12 +45,12 @@ export interface Listing {
   occupancy_pct: number | null
   description: string | null
   highlights: string[] | null
+  images?: ListingImage[] | null
   notes: string | null
   crexi_url: string | null
   publish_to_website: boolean | null
   your_role: string | null
-  // Derived / display helpers (computed below)
-  slug?: string
+  // Display helpers (computed by enrichListing)
   priceLabel?: string
   sizeLabel?: string
   locationLabel?: string
@@ -95,11 +105,13 @@ export function formatAssetType(type: string | null): string {
   return map[type] || type.replace(/_/g, ' ')
 }
 
+// Fallback slug generator for rows that somehow have no DB slug (shouldn't happen
+// after migration 0004 but defensive).
 export function listingToSlug(listing: Listing): string {
+  if (listing.slug) return listing.slug
   const parts = [
-    listing.name || listing.address || 'property',
+    listing.address || listing.name || 'property',
     listing.city,
-    listing.state,
   ]
     .filter(Boolean)
     .join(' ')
@@ -108,8 +120,13 @@ export function listingToSlug(listing: Listing): string {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .trim()
-  // Append the first 8 chars of the ID to ensure uniqueness
   return `${parts}-${listing.id.slice(0, 8)}`
+}
+
+export function primaryImageUrl(listing: Listing): string | null {
+  if (!listing.images || listing.images.length === 0) return null
+  const sorted = [...listing.images].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+  return sorted[0]?.url || null
 }
 
 export function enrichListing(listing: Listing): Listing {
@@ -139,12 +156,12 @@ export async function fetchPublishedListings(filters?: {
   let query = supabase
     .from('properties')
     .select(`
-      id, name, address, city, state, zip,
+      id, slug, name, headline, address, city, state, zip,
       asset_type, transaction_type, status,
       asking_price, lease_rate, sqft, acreage,
       year_built, parking_spaces, parking_ratio, zoning,
       noi, cap_rate, price_per_sf, occupancy_pct,
-      description, highlights, notes, crexi_url,
+      description, highlights, images, notes, crexi_url,
       publish_to_website, your_role
     `)
     .eq('publish_to_website', true)
@@ -177,10 +194,10 @@ export async function fetchClosedTransactions(): Promise<Listing[]> {
   const { data, error } = await supabase
     .from('properties')
     .select(`
-      id, name, address, city, state, zip,
+      id, slug, name, headline, address, city, state, zip,
       asset_type, transaction_type, status,
       asking_price, lease_rate, sqft, acreage,
-      year_built, description, highlights,
+      year_built, description, highlights, images,
       publish_to_website, your_role
     `)
     .in('status', ['sold', 'leased'])
@@ -197,23 +214,35 @@ export async function fetchClosedTransactions(): Promise<Listing[]> {
 }
 
 /**
- * Fetch a single listing by its slug (id prefix).
+ * Fetch a single listing by its DB slug column (migration 0004).
+ * Falls back to legacy id-prefix matching for any pre-migration links.
  */
 export async function fetchListingBySlug(slug: string): Promise<Listing | null> {
   if (!supabase) return null
-  // Slug format: {name-city-state}-{id[0:8]}
-  const idPrefix = slug.split('-').pop()
-  if (!idPrefix || idPrefix.length < 8) return null
 
+  // Primary: query by slug column.
   const { data, error } = await supabase
     .from('properties')
     .select('*')
-    .ilike('id', `${idPrefix}%`)
+    .eq('slug', slug)
     .eq('publish_to_website', true)
-    .single()
+    .maybeSingle()
 
-  if (error || !data) return null
-  return enrichListing(data as Listing)
+  if (!error && data) return enrichListing(data as Listing)
+
+  // Legacy fallback: support old slug format ending in 8-char id prefix.
+  const tail = slug.split('-').pop()
+  if (tail && /^[0-9a-f]{8}$/.test(tail)) {
+    const { data: legacy } = await supabase
+      .from('properties')
+      .select('*')
+      .ilike('id', `${tail}%`)
+      .eq('publish_to_website', true)
+      .maybeSingle()
+    if (legacy) return enrichListing(legacy as Listing)
+  }
+
+  return null
 }
 
 /**
@@ -224,10 +253,10 @@ export async function fetchFeaturedListings(limit = 7): Promise<Listing[]> {
   const { data, error } = await supabase
     .from('properties')
     .select(`
-      id, name, address, city, state, zip,
+      id, slug, name, headline, address, city, state, zip,
       asset_type, transaction_type, status,
       asking_price, lease_rate, sqft, acreage,
-      year_built, description, highlights,
+      year_built, description, highlights, images,
       publish_to_website, your_role
     `)
     .eq('publish_to_website', true)

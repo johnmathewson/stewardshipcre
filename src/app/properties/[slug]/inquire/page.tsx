@@ -6,18 +6,24 @@ import InquireFlow from '@/components/inquire-flow'
 
 export const revalidate = 300
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const listing = await fetchListingBySlug(params.slug)
+interface Props {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
+  const listing = await fetchListingBySlug(slug)
   return {
     title: listing
       ? `Request Information — ${listing.headline || listing.name} · Stewardship CRE`
       : 'Request Information · Stewardship CRE',
-    robots: { index: false, follow: false }, // gated content path; don't index
+    robots: { index: false, follow: false },
   }
 }
 
-export default async function InquirePage({ params }: { params: { slug: string } }) {
-  const listing = await fetchListingBySlug(params.slug)
+export default async function InquirePage({ params }: Props) {
+  const { slug } = await params
+  const listing = await fetchListingBySlug(slug)
   if (!listing) notFound()
 
   return (
@@ -25,7 +31,7 @@ export default async function InquirePage({ params }: { params: { slug: string }
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(224,122,95,0.06),transparent_60%)]" />
       <Container className="relative z-10 max-w-[640px]">
         <InquireFlow
-          slug={params.slug}
+          slug={slug}
           propertyName={listing.headline || listing.name || 'Listing'}
           propertyLocation={[listing.city, listing.state].filter(Boolean).join(', ')}
         />

@@ -7,11 +7,16 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function VaultPage({ params }: { params: { slug: string } }) {
+interface Props {
+  params: Promise<{ slug: string }>
+}
+
+export default async function VaultPage({ params }: Props) {
+  const { slug } = await params
   return (
     <section className="bg-charcoal-950 min-h-screen pt-32 pb-24">
       <Container className="max-w-[860px]">
-        <VaultView slug={params.slug} />
+        <VaultView slug={slug} />
       </Container>
     </section>
   )

@@ -11,15 +11,20 @@ import { fetchListingBySlug, primaryImageUrl } from "@/lib/supabase"
 
 export const dynamic = "force-dynamic"
 
-export async function GET(_req: Request, { params }: { params: { slug: string } }) {
+interface Ctx {
+  params: Promise<{ slug: string }>
+}
+
+export async function GET(_req: Request, { params }: Ctx) {
   try {
-    const listing = await fetchListingBySlug(params.slug)
+    const { slug } = await params
+    const listing = await fetchListingBySlug(slug)
     if (!listing) {
-      return NextResponse.json({ found: false, slug: params.slug })
+      return NextResponse.json({ found: false, slug })
     }
     return NextResponse.json({
       found: true,
-      slug: params.slug,
+      slug,
       hero: primaryImageUrl(listing),
       gallery_image_count: Array.isArray(listing.images) ? listing.images.length : null,
       images_type: typeof listing.images,

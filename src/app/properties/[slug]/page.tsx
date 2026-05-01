@@ -15,11 +15,13 @@ import {
 export const revalidate = 300
 
 interface Props {
-  params: { slug: string }
+  // Next.js 16 made params async — must be awaited inside the function body.
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const listing = await fetchListingBySlug(params.slug)
+  const { slug } = await params
+  const listing = await fetchListingBySlug(slug)
   if (!listing) return { title: 'Property Not Found · Stewardship CRE' }
   const title = listing.headline || listing.name || listing.address || 'Listing'
   const location = listing.locationLabel || ''
@@ -70,7 +72,8 @@ function StatBlock({ label, value }: { label: string; value: string }) {
 }
 
 export default async function PropertyDetailPage({ params }: Props) {
-  const listing = await fetchListingBySlug(params.slug)
+  const { slug } = await params
+  const listing = await fetchListingBySlug(slug)
   if (!listing) notFound()
 
   const title = listing.headline || listing.name || listing.address || 'Listing'
@@ -98,7 +101,7 @@ export default async function PropertyDetailPage({ params }: Props) {
   if (listing.parking_spaces) stats.push({ label: 'Parking', value: `${formatNumber(listing.parking_spaces)} spaces` })
   if (listing.zoning) stats.push({ label: 'Zoning', value: listing.zoning })
 
-  const inquirePath = `/properties/${params.slug}/inquire`
+  const inquirePath = `/properties/${slug}/inquire`
 
   return (
     <>

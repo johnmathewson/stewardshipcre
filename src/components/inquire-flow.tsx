@@ -176,10 +176,14 @@ export default function InquireFlow({ slug, propertyName, propertyLocation }: Pr
         </p>
 
         <div
-          className="bg-charcoal-900/60 border border-charcoal-800 rounded-sm p-5 max-h-[420px] overflow-y-auto text-charcoal-200 text-sm leading-relaxed whitespace-pre-line mb-6"
+          className="bg-charcoal-900/60 border border-charcoal-800 rounded-sm p-5 text-charcoal-200 text-sm leading-relaxed whitespace-pre-line mb-6"
+          style={{ maxHeight: '60vh', overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}
         >
           {submission.nda.body_md}
         </div>
+        <p className="text-[10.5px] text-charcoal-500 -mt-4 mb-6 text-center">
+          Scroll to read the full agreement before signing.
+        </p>
 
         <form onSubmit={onSignNda} className="space-y-4">
           <Field label="Your full legal name (typed signature)">

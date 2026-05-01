@@ -124,7 +124,9 @@ export function listingToSlug(listing: Listing): string {
 }
 
 export function primaryImageUrl(listing: Listing): string | null {
-  if (!listing.images || listing.images.length === 0) return null
+  // Defensive: jsonb column may come back as null OR a non-array if a
+  // malformed write happened. Treat anything that isn't an array as empty.
+  if (!Array.isArray(listing.images) || listing.images.length === 0) return null
   const sorted = [...listing.images].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
   return sorted[0]?.url || null
 }

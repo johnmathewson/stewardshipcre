@@ -77,7 +77,10 @@ export default async function PropertyDetailPage({ params }: Props) {
   const location = listing.locationLabel || ''
   const heroImage = primaryImageUrl(listing)
 
-  const galleryImages = (listing.images || [])
+  // Defensive: jsonb could come back as null, an array, or (in malformed
+  // legacy rows) a non-array. Normalize before sorting.
+  const safeImages = Array.isArray(listing.images) ? listing.images : []
+  const galleryImages = safeImages
     .slice()
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
     .slice(1) // hero is image 0

@@ -11,6 +11,7 @@ import {
   primaryImageUrl,
   type Listing,
 } from '@/lib/supabase'
+import PageViewTracker from '@/components/page-view-tracker'
 
 export const revalidate = 300
 
@@ -105,6 +106,7 @@ export default async function PropertyDetailPage({ params }: Props) {
 
   return (
     <>
+      <PageViewTracker slug={slug} />
       {/* Hero / breadcrumb / title */}
       <section className="pt-32 pb-12 bg-charcoal-950 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(224,122,95,0.06),transparent_60%)]" />

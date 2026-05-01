@@ -12,9 +12,15 @@ export interface WeeklyBucket {
   crexi_views: number
   loopnet_views: number
   site_views: number
+  // own-site (vault flow) signals
   inquiries: number
   nda_signatures: number
   om_downloads: number
+  // CREXi-platform deep-funnel signals (scraped from seller dashboard)
+  crexi_leads: number
+  crexi_opened_oms: number
+  crexi_executed_cas: number
+  crexi_offers: number
 }
 
 export interface OwnerProperty {
@@ -41,6 +47,10 @@ export interface OwnerProperty {
     site_views: number | null
     inquiries: number | null
     om_downloads: number | null
+    crexi_leads: number | null
+    crexi_opened_oms: number | null
+    crexi_executed_cas: number | null
+    crexi_offers: number | null
   } | null
   trend: WeeklyBucket[]
   recent_inquiries: string[]

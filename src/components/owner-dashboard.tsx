@@ -139,13 +139,41 @@ function PropertyCard({ property }: { property: OwnerProperty }) {
         </div>
       </div>
 
-      {/* Stat tiles */}
-      <div className="p-6 grid grid-cols-2 md:grid-cols-5 gap-4">
+      {/* Top row: traffic / interest */}
+      <div className="px-6 pt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
         <StatTile label="CREXi views" value={tw.crexi_views} delta={property.deltas?.crexi_views ?? null} />
         <StatTile label="LoopNet views" value={tw.loopnet_views} delta={property.deltas?.loopnet_views ?? null} />
         <StatTile label="Website views" value={tw.site_views} delta={property.deltas?.site_views ?? null} />
-        <StatTile label="Inquiries" value={tw.inquiries} delta={property.deltas?.inquiries ?? null} accent="coral" />
-        <StatTile label="OMs downloaded" value={tw.om_downloads} delta={property.deltas?.om_downloads ?? null} accent="coral" />
+      </div>
+
+      {/* Second row: deep-funnel engagement signals.
+          CREXi seller dashboard surfaces Leads / Opened OMs / Executed CAs / Offers —
+          these merge with own-site vault-flow numbers where they're the same thing. */}
+      <div className="p-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <StatTile
+          label="Inquiries"
+          value={tw.inquiries + tw.crexi_leads}
+          delta={property.deltas?.crexi_leads ?? property.deltas?.inquiries ?? null}
+          accent="coral"
+        />
+        <StatTile
+          label="OMs opened"
+          value={tw.om_downloads + tw.crexi_opened_oms}
+          delta={property.deltas?.crexi_opened_oms ?? property.deltas?.om_downloads ?? null}
+          accent="coral"
+        />
+        <StatTile
+          label="NDAs executed"
+          value={tw.nda_signatures + tw.crexi_executed_cas}
+          delta={property.deltas?.crexi_executed_cas ?? null}
+          accent="coral"
+        />
+        <StatTile
+          label="Offers"
+          value={tw.crexi_offers}
+          delta={property.deltas?.crexi_offers ?? null}
+          accent="coral"
+        />
       </div>
 
       {/* Trend chart */}

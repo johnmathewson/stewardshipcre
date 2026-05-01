@@ -95,11 +95,7 @@ export default async function PropertyDetailPage({ params }: Props) {
   if (listing.parking_spaces) stats.push({ label: 'Parking', value: `${formatNumber(listing.parking_spaces)} spaces` })
   if (listing.zoning) stats.push({ label: 'Zoning', value: listing.zoning })
 
-  const inquirySubject = encodeURIComponent(`Inquiry: ${title}`)
-  const inquiryBody = encodeURIComponent(
-    `Hi John,\n\nI'm interested in the listing at ${title}${location ? ` (${location})` : ''}.\n\nCould you send over more details?\n\nThanks,\n`
-  )
-  const mailtoHref = `mailto:inquiries@stewardshipcre.com?subject=${inquirySubject}&body=${inquiryBody}`
+  const inquirePath = `/properties/${params.slug}/inquire`
 
   return (
     <>
@@ -246,9 +242,12 @@ export default async function PropertyDetailPage({ params }: Props) {
                     Get a complete information package — financials, floor plans, due diligence, and tour scheduling.
                   </p>
 
-                  <Button href={mailtoHref} className="w-full">
+                  <Button href={inquirePath} className="w-full">
                     Request Information
                   </Button>
+                  <p className="text-[10.5px] text-charcoal-500 mt-2 text-center leading-relaxed">
+                    Quick form + brief NDA, then full financials &amp; due diligence.
+                  </p>
 
                   <div className="mt-4 pt-4 border-t border-cream-300 text-xs text-charcoal-500 space-y-1">
                     <div className="font-semibold text-charcoal-700">John Mathewson</div>

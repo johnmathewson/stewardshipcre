@@ -58,7 +58,7 @@ function portfolioAsListings(): Listing[] {
 }
 
 export async function FeaturedListingsServer() {
-  let listings: (Listing & { _image?: string | null })[] = []
+  let listings: (Listing & { _image?: string })[] = []
 
   try {
     const live = await fetchFeaturedListings(7)
@@ -71,8 +71,8 @@ export async function FeaturedListingsServer() {
         const sorted = Array.isArray(imgs)
           ? [...imgs].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
           : []
-        const firstUrl = sorted[0]?.url || null
-        return { ...l, _image: firstUrl }
+        const firstUrl = sorted[0]?.url
+        return firstUrl ? { ...l, _image: firstUrl } : { ...l }
       })
     }
   } catch {

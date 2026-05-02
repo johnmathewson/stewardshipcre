@@ -19,15 +19,16 @@ function statusVariant(status: string | null | undefined): 'teal' | 'navy' | 'de
   return 'default'
 }
 
-// Get a display image: use stored image URL if available, otherwise a deterministic Unsplash fallback
+// Display image: use stored CRM image URL if available, otherwise rotate through
+// our local NW-Indiana hero photos (cycle the 4 hero shots for 7 fallback slots).
 const FALLBACK_IMAGES = [
-  'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1280&fit=crop',
-  'https://images.unsplash.com/photo-1565610222536-ef125c59da2e?w=1920&h=1280&fit=crop',
-  'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&h=1280&fit=crop',
-  'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&h=1280&fit=crop',
-  'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=1920&h=1280&fit=crop',
-  'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&h=1280&fit=crop',
-  'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&h=1280&fit=crop',
+  '/hero/01-aerial.jpg',
+  '/hero/02-flex.jpg',
+  '/hero/03-twilight.jpg',
+  '/hero/04-strip.jpg',
+  '/hero/01-aerial.jpg',
+  '/hero/02-flex.jpg',
+  '/hero/03-twilight.jpg',
 ]
 
 function getImage(listing: Listing & { _image?: string }, index: number): string {

@@ -132,8 +132,7 @@ html {
 body {
   font-family: var(--font-body);
   color: var(--color-cream-100);
-  background: linear-gradient(160deg, var(--color-steward-base) 0%, var(--color-steward-dark) 30%, var(--color-steward-mid) 60%, var(--color-steward-base) 100%);
-  background-attachment: fixed;
+  background-color: var(--color-charcoal-950);
   overflow-x: hidden;
 }
 

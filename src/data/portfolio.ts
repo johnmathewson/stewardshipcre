@@ -28,7 +28,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     priceLabel: '$450,000',
     size: '8,500 SF',
     year: '2024',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1280&fit=crop',
+    image: '/hero/01-aerial.jpg',
     outcome: 'Closed at full ask · 3 buyers in 14 days',
   },
   {
@@ -41,7 +41,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     priceLabel: '$275,000',
     size: '12,000 SF',
     year: '2025',
-    image: 'https://images.unsplash.com/photo-1565610222536-ef125c59da2e?w=1920&h=1280&fit=crop',
+    image: '/hero/02-flex.jpg',
   },
   {
     slug: 'downtown-valparaiso-retail',
@@ -53,7 +53,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     priceLabel: '$18 / SF / yr',
     size: '3,200 SF',
     year: '2025',
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&h=1280&fit=crop',
+    image: '/hero/03-twilight.jpg',
   },
   {
     slug: 'michigan-city-office',
@@ -65,7 +65,7 @@ export const PORTFOLIO: PortfolioItem[] = [
     priceLabel: '$22 / SF / yr',
     size: '5,800 SF',
     year: '2025',
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&h=1280&fit=crop',
+    image: '/hero/04-strip.jpg',
   },
   {
     slug: 'crown-point-medical',

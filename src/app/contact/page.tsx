@@ -125,44 +125,50 @@ export default function ContactPage() {
               )}
             </div>
 
-            {/* CALENDAR — right */}
+            {/* DIRECT CONTACT — right */}
             <div className="bg-charcoal-900 p-8 md:p-12 flex flex-col">
               <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral-400 mb-3">
-                Option 02 · Book a call
+                Option 02 · Reach out direct
               </p>
               <h2
                 className="font-display text-cream-50 mb-8"
                 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2rem)' }}
               >
-                15-Min Intro
+                Email · Text · Call
               </h2>
 
-              {/* Calendar embed placeholder — swap with Calendly/SavvyCal iframe when ready */}
               <div className="flex-1 flex flex-col gap-4">
                 <div className="border border-charcoal-800 bg-charcoal-950/40 px-6 py-8 flex-1 flex flex-col justify-center items-center text-center min-h-[280px]">
                   <div className="w-12 h-12 border border-coral-400/40 flex items-center justify-center mb-4">
                     <svg className="w-5 h-5 text-coral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                     </svg>
                   </div>
-                  <p className="text-cream-100 text-base mb-2">Pick a time that works for you</p>
+                  <p className="text-cream-100 text-base mb-2">The fastest way to reach John</p>
                   <p className="text-charcoal-400 text-sm mb-6 max-w-xs">
-                    No pitch, no pressure. We answer your CRE questions and tell you
-                    if we&apos;re a good fit.
+                    Email, text, or call directly. Real responses, usually within
+                    the hour during business days.
                   </p>
-                  <MagneticButton>
+                  <div className="flex flex-col gap-2 w-full max-w-[260px]">
                     <a
-                      href="https://calendly.com/stewardship-cre/intro"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 border border-coral-400 text-coral-400 hover:bg-coral-400 hover:text-charcoal-950 px-7 py-4 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-500"
+                      href="mailto:john@stewardshipcre.com"
+                      className="inline-flex items-center justify-center gap-3 bg-coral-400 hover:bg-coral-300 text-charcoal-950 px-6 py-3.5 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-300"
                     >
-                      Book 15 Minutes
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
+                      Email John
                     </a>
-                  </MagneticButton>
+                    <a
+                      href="sms:+13178041980"
+                      className="inline-flex items-center justify-center gap-3 border border-coral-400/60 text-coral-400 hover:bg-coral-400 hover:text-charcoal-950 px-6 py-3.5 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-300"
+                    >
+                      Text · 317-804-1980
+                    </a>
+                    <a
+                      href="tel:+13178041980"
+                      className="inline-flex items-center justify-center gap-3 text-coral-400 hover:text-coral-300 px-6 py-3 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-300"
+                    >
+                      Call · 317-804-1980
+                    </a>
+                  </div>
                 </div>
 
                 {/* Direct contact info */}

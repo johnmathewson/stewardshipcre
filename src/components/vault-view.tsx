@@ -99,7 +99,7 @@ function VaultViewInner({ slug }: { slug: string }) {
       </Link>
 
       <div className="mt-4 mb-2 inline-block px-3 py-1 rounded-sm text-[10px] tracking-[0.18em] uppercase font-semibold"
-           style={{ background: data.access_level === 'buyer' ? 'rgba(224,122,95,0.18)' : 'rgba(78,205,196,0.18)',
+           style={{ background: data.access_level === 'buyer' ? 'rgba(224,122,95,0.18)' : 'rgba(224,122,95,0.18)',
                     color: data.access_level === 'buyer' ? '#E07A5F' : '#4ECDC4' }}>
         {data.access_level === 'buyer' ? 'Buyer / Investor Access' : 'Tenant Access'}
       </div>

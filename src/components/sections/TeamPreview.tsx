@@ -37,7 +37,7 @@ const TEAM_MEMBERS = [
 export function TeamPreview() {
   return (
     <section className="relative py-section overflow-hidden bg-charcoal-900">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(78,205,196,0.04),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(224,122,95,0.04),transparent_50%)]" />
 
       <Container className="relative z-10">
         {/* Header */}

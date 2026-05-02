@@ -66,7 +66,7 @@ export function CaseStudies() {
 
   return (
     <section ref={sectionRef} className="relative py-section overflow-hidden bg-charcoal-900">
-      <motion.div style={{ y: bgY }} className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(78,205,196,0.05),transparent_60%)]" />
+      <motion.div style={{ y: bgY }} className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(224,122,95,0.05),transparent_60%)]" />
 
       <Container className="relative z-10">
         {/* Header */}

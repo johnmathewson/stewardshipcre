@@ -28,8 +28,8 @@ export function StatsBar() {
       <div className="absolute inset-0 bg-charcoal-900" />
 
       {/* Subtle gradient accents */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(78,205,196,0.06),transparent_50%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(78,205,196,0.04),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(224,122,95,0.06),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(224,122,95,0.04),transparent_50%)]" />
 
       {/* Border lines */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-coral-400/20 to-transparent" />

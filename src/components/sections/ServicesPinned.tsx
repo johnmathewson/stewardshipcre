@@ -233,7 +233,7 @@ export function ServicesPinned() {
     >
       <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
         {/* Background accents */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(78,205,196,0.05),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(224,122,95,0.05),transparent_60%)]" />
 
         {/* Top eyebrow */}
         <div className="pt-32 pb-8 relative z-20">

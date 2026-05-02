@@ -279,7 +279,7 @@ function TrendChart({ trend }: { trend: WeeklyBucket[] }) {
               className="w-full"
               style={{
                 height,
-                background: isLatest ? '#E07A5F' : 'rgba(78,205,196,0.5)',
+                background: isLatest ? '#E07A5F' : 'rgba(224,122,95,0.5)',
                 borderRadius: 1,
                 transition: 'height 0.4s',
               }}

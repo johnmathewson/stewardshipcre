@@ -64,7 +64,7 @@ export function ServicesPreview() {
         style={{ y: bgY }}
         className="absolute inset-[-5%] bg-charcoal-950"
       />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(78,205,196,0.04),transparent_60%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(224,122,95,0.04),transparent_60%)]" />
 
       <Container className="relative z-10">
         {/* Header */}

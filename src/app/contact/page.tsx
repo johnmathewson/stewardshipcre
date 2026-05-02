@@ -24,7 +24,7 @@ export default function ContactPage() {
     <>
       {/* Hero */}
       <section className="relative bg-charcoal-950 pt-40 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(78,205,196,0.06),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(224,122,95,0.06),transparent_60%)]" />
         <Container className="relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}

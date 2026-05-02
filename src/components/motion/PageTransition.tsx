@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 /**
  * Barba-style curtain cover that sweeps across the viewport between route changes.
  * Covers in from bottom, brief hold, then uncovers upward — with a centered
- * teal wordmark during the hold.
+ * coral wordmark during the hold.
  */
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()

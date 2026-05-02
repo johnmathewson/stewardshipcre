@@ -24,7 +24,7 @@ export function FeaturedListings() {
 
   return (
     <section ref={sectionRef} className="py-section bg-charcoal-950 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(78,205,196,0.03),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(224,122,95,0.03),transparent_70%)]" />
 
       <Container className="relative z-10">
         {/* Section header */}

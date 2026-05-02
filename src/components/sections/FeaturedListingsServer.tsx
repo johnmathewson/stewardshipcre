@@ -58,12 +58,22 @@ function portfolioAsListings(): Listing[] {
 }
 
 export async function FeaturedListingsServer() {
-  let listings: Listing[] = []
+  let listings: (Listing & { _image?: string | null })[] = []
 
   try {
     const live = await fetchFeaturedListings(7)
     if (live.length > 0) {
-      listings = live
+      // Map first stored image (sorted by `order`) into _image so the client
+      // component's existing image-resolution path picks up real CRM photos
+      // before falling through to local /hero/* fallbacks.
+      listings = live.map((l) => {
+        const imgs = (l as Listing & { images?: { url?: string; order?: number }[] | null }).images
+        const sorted = Array.isArray(imgs)
+          ? [...imgs].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+          : []
+        const firstUrl = sorted[0]?.url || null
+        return { ...l, _image: firstUrl }
+      })
     }
   } catch {
     // Supabase not configured — fall through to static data

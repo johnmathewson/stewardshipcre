@@ -14,7 +14,7 @@ const TEAM_MEMBERS = [
     title: 'Principal Broker',
     specialties: ['Office', 'Industrial', 'Land'],
     image: '/team/john.jpg',
-    quote: 'I&apos;ve sold the same intersection three times in eight years.',
+    quote: 'Pro formas tell most of the truth. The rest is in how the building&apos;s been treated.',
   },
   {
     slug: 'amanda-mathewson',
@@ -22,7 +22,7 @@ const TEAM_MEMBERS = [
     title: 'Director of Strategy',
     specialties: ['Retail', 'Multifamily'],
     image: '/team/amanda.jpg',
-    quote: 'The best deal is the one your client says yes to twice.',
+    quote: 'The right tenant matters more than the highest rent.',
   },
   {
     slug: 'tim-operations',
@@ -88,7 +88,7 @@ export function TeamPreview() {
                     src={member.image}
                     alt={member.name}
                     className="absolute inset-0 transition-transform duration-[1.4s] ease-out group-hover:scale-[1.04]"
-                    imgClassName="grayscale group-hover:grayscale-0 transition-all duration-700"
+                    imgClassName="grayscale group-hover:grayscale-0 transition-all duration-700 object-[center_15%]"
                     parallaxAmount={0.06}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/85 via-transparent to-transparent pointer-events-none" />

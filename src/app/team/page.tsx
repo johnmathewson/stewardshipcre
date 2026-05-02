@@ -82,7 +82,7 @@ export default function TeamPage() {
                         <img
                           src={member.image}
                           alt={member.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          className="w-full h-full object-cover object-[center_15%] group-hover:scale-105 transition-transform duration-700"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-charcoal-950/40 to-transparent" />
                       </div>

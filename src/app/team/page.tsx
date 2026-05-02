@@ -19,7 +19,7 @@ const TEAM = [
     specialties: ['Office', 'Industrial', 'Land', 'Investment Sales'],
     deals: 200,
     volume: '$50M+',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face',
+    image: '/team/john.jpg',
   },
   {
     slug: 'amanda-mathewson',
@@ -29,7 +29,7 @@ const TEAM = [
     specialties: ['Retail', 'Multifamily', 'Strategy'],
     deals: 85,
     volume: '$20M+',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=500&fit=crop&crop=face',
+    image: '/team/amanda.jpg',
   },
   {
     slug: 'tim-operations',
@@ -39,7 +39,7 @@ const TEAM = [
     specialties: ['Property Management', 'Operations'],
     deals: 50,
     volume: '$10M+',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop&crop=face',
+    image: '/team/tim.jpg',
   },
 ]
 
@@ -51,14 +51,14 @@ export default function TeamPage() {
         <Container>
           <FadeIn>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-px bg-gold-500" />
-              <span className="text-gold-500 text-xs tracking-[0.3em] uppercase font-semibold">Our People</span>
+              <div className="w-12 h-px bg-coral-500" />
+              <span className="text-coral-500 text-xs tracking-[0.3em] uppercase font-semibold">Our People</span>
             </div>
             <h1
               className="font-heading text-cream-100 mb-6"
               style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
             >
-              The <span className="text-gold-500">Team</span>
+              The <span className="text-coral-500">Team</span>
             </h1>
             <p className="text-xl text-charcoal-400 max-w-xl leading-relaxed">
               Experienced professionals committed to stewarding your commercial
@@ -90,16 +90,16 @@ export default function TeamPage() {
 
                     {/* Info */}
                     <div className={`lg:col-span-3 ${i % 2 === 1 ? 'lg:order-1' : ''}`}>
-                      <h2 className="font-heading text-xl tracking-[0.1em] uppercase text-charcoal-900 group-hover:text-gold-600 transition-colors mb-1">
+                      <h2 className="font-heading text-xl tracking-[0.1em] uppercase text-charcoal-900 group-hover:text-coral-500 transition-colors mb-1">
                         {member.name}
                       </h2>
-                      <p className="text-gold-600 text-sm mb-4">{member.title}</p>
+                      <p className="text-coral-500 text-sm mb-4">{member.title}</p>
                       <p className="text-charcoal-600 leading-relaxed mb-6 max-w-lg">{member.bio}</p>
 
                       {/* Specialties */}
                       <div className="flex flex-wrap gap-2 mb-6">
                         {member.specialties.map((s) => (
-                          <span key={s} className="text-[10px] tracking-[0.1em] uppercase text-gold-600 bg-gold-50 px-3 py-1 border border-gold-200">
+                          <span key={s} className="text-[10px] tracking-[0.1em] uppercase text-coral-500 bg-coral-50 px-3 py-1 border border-coral-200">
                             {s}
                           </span>
                         ))}

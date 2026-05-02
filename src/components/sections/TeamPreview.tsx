@@ -13,7 +13,7 @@ const TEAM_MEMBERS = [
     name: 'John Mathewson',
     title: 'Principal Broker',
     specialties: ['Office', 'Industrial', 'Land'],
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=750&fit=crop&crop=face',
+    image: '/team/john.jpg',
     quote: 'I&apos;ve sold the same intersection three times in eight years.',
   },
   {
@@ -21,7 +21,7 @@ const TEAM_MEMBERS = [
     name: 'Amanda Mathewson',
     title: 'Director of Strategy',
     specialties: ['Retail', 'Multifamily'],
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=750&fit=crop&crop=face',
+    image: '/team/amanda.jpg',
     quote: 'The best deal is the one your client says yes to twice.',
   },
   {
@@ -29,7 +29,7 @@ const TEAM_MEMBERS = [
     name: 'Tim',
     title: 'Operations Manager',
     specialties: ['Property Management'],
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=750&fit=crop&crop=face',
+    image: '/team/tim.jpg',
     quote: 'A managed building should never give the owner a 10pm phone call.',
   },
 ]

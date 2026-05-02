@@ -33,7 +33,7 @@ const TEAM = [
   },
   {
     slug: 'tim-operations',
-    name: 'Tim',
+    name: 'Tim Peters',
     title: 'Operations Manager',
     bio: 'Oversees day-to-day property management operations, tenant relations, and maintenance coordination across the portfolio.',
     specialties: ['Property Management', 'Operations'],

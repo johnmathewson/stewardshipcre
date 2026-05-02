@@ -26,7 +26,7 @@ const TEAM_MEMBERS = [
   },
   {
     slug: 'tim-operations',
-    name: 'Tim',
+    name: 'Tim Peters',
     title: 'Operations Manager',
     specialties: ['Property Management'],
     image: '/team/tim.jpg',

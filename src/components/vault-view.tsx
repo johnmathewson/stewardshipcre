@@ -142,6 +142,8 @@ function VaultViewInner({ slug }: { slug: string }) {
                     <a
                       key={doc.id}
                       href={downloadUrl(slug, doc.id, token)}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-3 px-4 py-3 bg-charcoal-900/40 border border-charcoal-800 hover:border-coral-400/40 hover:bg-charcoal-900/60 transition-all rounded-sm no-underline"
                     >
                       <span className="text-2xl flex-shrink-0">{fileIcon(doc.file_type)}</span>

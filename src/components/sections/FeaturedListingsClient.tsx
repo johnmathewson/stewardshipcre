@@ -183,7 +183,7 @@ export function FeaturedListingsClient({ listings }: Props) {
 
         {/* SUPPORTING GRID */}
         {SUPPORTING.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-charcoal-800/50">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-px bg-charcoal-800/50">
             {SUPPORTING.map((item, i) => (
               <motion.div
                 key={item.id}
@@ -191,10 +191,10 @@ export function FeaturedListingsClient({ listings }: Props) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-30px' }}
                 transition={{ delay: i * 0.08, duration: 0.6 }}
-                className="bg-charcoal-900"
+                className="bg-charcoal-900 h-full"
               >
-                <Link href={`/properties/${item.slug}`} className="block group">
-                  <div className="relative h-48 overflow-hidden">
+                <Link href={`/properties/${item.slug}`} className="group flex flex-col h-full">
+                  <div className="relative h-48 overflow-hidden flex-shrink-0">
                     <ImageReveal
                       src={getImage(item, i + 1)}
                       alt={item.address || item.name || 'Listing'}
@@ -206,14 +206,14 @@ export function FeaturedListingsClient({ listings }: Props) {
                       <Badge variant={statusVariant(item.statusLabel)}>{item.statusLabel}</Badge>
                     </div>
                   </div>
-                  <div className="px-5 py-5">
+                  <div className="px-5 py-5 flex flex-col flex-1">
                     <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-coral-400/80 mb-1.5">
                       {item.city?.toUpperCase()}, {item.state} · {item.typeLabel}
                     </p>
                     <h4 className="text-sm text-cream-100 font-medium mb-3 group-hover:text-coral-400 transition-colors duration-500 line-clamp-2">
                       {item.name || item.address}
                     </h4>
-                    <div className="flex items-center justify-between pt-3 border-t border-charcoal-800/80">
+                    <div className="flex items-center justify-between pt-3 mt-auto border-t border-charcoal-800/80">
                       <span className="font-mono text-sm text-coral-400 font-semibold">
                         {item.priceLabel}
                       </span>

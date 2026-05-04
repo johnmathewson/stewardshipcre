@@ -172,14 +172,14 @@ export default async function PropertiesPage({
       {activeListings.length > 0 && (
         <section className="py-section-sm bg-cream-100">
           <Container>
-            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-6">
               {activeListings.map((listing) => {
                 const heroImage = primaryImageUrl(listing)
                 return (
                 <StaggerItem key={listing.id}>
-                  <Link href={`/properties/${listing.slug}`} className="block group">
-                    <Card hover className="overflow-hidden h-full">
-                      <div className="relative h-52 overflow-hidden bg-charcoal-900">
+                  <Link href={`/properties/${listing.slug}`} className="group flex flex-col h-full">
+                    <Card hover className="overflow-hidden h-full flex flex-col">
+                      <div className="relative h-52 overflow-hidden bg-charcoal-900 flex-shrink-0">
                         {heroImage ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
@@ -202,7 +202,7 @@ export default async function PropertiesPage({
                           {listing.typeLabel && <Badge>{listing.typeLabel}</Badge>}
                         </div>
                       </div>
-                      <div className="p-5">
+                      <div className="p-5 flex flex-col flex-1">
                         <h3 className="font-heading text-sm tracking-[0.1em] uppercase text-charcoal-900 mb-1 group-hover:text-coral-500 transition-colors line-clamp-2">
                           {listing.headline || listing.name || listing.address || 'Commercial Property'}
                         </h3>
@@ -228,7 +228,7 @@ export default async function PropertiesPage({
                             ))}
                           </div>
                         )}
-                        <div className="pt-3 border-t border-cream-300">
+                        <div className="pt-3 mt-auto border-t border-cream-300">
                           <span className="font-mono text-lg text-coral-500 font-semibold">
                             {listing.priceLabel}
                           </span>
@@ -272,23 +272,23 @@ export default async function PropertiesPage({
                 Track Record
               </span>
             </div>
-            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-6">
               {closedListings.map((listing) => (
                 <StaggerItem key={listing.id}>
-                  <div className="border border-charcoal-800 bg-charcoal-900 p-5 opacity-80">
+                  <div className="border border-charcoal-800 bg-charcoal-900 p-5 opacity-80 h-full flex flex-col">
                     <div className="flex items-start justify-between gap-3 mb-3">
-                      <h3 className="font-heading text-xs tracking-[0.1em] uppercase text-cream-300">
+                      <h3 className="font-heading text-xs tracking-[0.1em] uppercase text-cream-300 line-clamp-2">
                         {listing.name || listing.address}
                       </h3>
                       <Badge variant="default">{listing.statusLabel}</Badge>
                     </div>
                     <p className="text-xs text-charcoal-500 mb-2">{listing.locationLabel}</p>
                     {listing.typeLabel && <p className="text-xs text-charcoal-600">{listing.typeLabel}</p>}
-                    {listing.priceLabel && listing.priceLabel !== 'Price Upon Request' && (
-                      <p className="font-mono text-sm text-coral-400 font-semibold mt-3">{listing.priceLabel}</p>
-                    )}
                     {listing.description && (
                       <p className="text-xs text-charcoal-500 mt-2 italic line-clamp-2">{listing.description}</p>
+                    )}
+                    {listing.priceLabel && listing.priceLabel !== 'Price Upon Request' && (
+                      <p className="font-mono text-sm text-coral-400 font-semibold mt-auto pt-3">{listing.priceLabel}</p>
                     )}
                   </div>
                 </StaggerItem>

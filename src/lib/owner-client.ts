@@ -9,7 +9,14 @@ const CRM_API_URL =
 
 export interface WeeklyBucket {
   week_start: string
+  // Legacy single-number "views" for CREXi — kept for back-compat + as a
+  // fallback when the new specific fields aren't populated yet. The API
+  // backfills this from page_views > unique_visitors > impressions.
   crexi_views: number
+  // CREXi-native funnel signals (May 2026 dashboard surfaces these distinctly)
+  crexi_impressions: number      // search-result eyeballs
+  crexi_page_views: number       // clicked-into the listing
+  crexi_unique_visitors: number  // deduped page-view audience
   loopnet_views: number
   site_views: number
   // own-site (vault flow) signals
@@ -43,6 +50,9 @@ export interface OwnerProperty {
   this_week: WeeklyBucket
   deltas: {
     crexi_views: number | null
+    crexi_impressions: number | null
+    crexi_page_views: number | null
+    crexi_unique_visitors: number | null
     loopnet_views: number | null
     site_views: number | null
     inquiries: number | null

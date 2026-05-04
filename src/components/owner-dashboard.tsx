@@ -83,11 +83,15 @@ export default function OwnerDashboard({ data }: Props) {
 
 function PropertyCard({ property }: { property: OwnerProperty }) {
   const tw = property.this_week
-  const totalViews = tw.crexi_views + tw.loopnet_views + tw.site_views
+  // Prefer the new specific page_views; fall back to legacy crexi_views if
+  // older data hasn't been re-scraped yet.
+  const crexiViewsForTotal = tw.crexi_page_views || tw.crexi_views
+  const totalViews = crexiViewsForTotal + tw.loopnet_views + tw.site_views
   const totalDelta = useMemo(() => {
     const lastWeek = property.trend[property.trend.length - 2]
     if (!lastWeek) return null
-    const prev = lastWeek.crexi_views + lastWeek.loopnet_views + lastWeek.site_views
+    const prevCrexi = lastWeek.crexi_page_views || lastWeek.crexi_views
+    const prev = prevCrexi + lastWeek.loopnet_views + lastWeek.site_views
     if (prev === 0) return null
     return Math.round(((totalViews - prev) / prev) * 100)
   }, [property.trend, totalViews])
@@ -139,11 +143,42 @@ function PropertyCard({ property }: { property: OwnerProperty }) {
         </div>
       </div>
 
-      {/* Top row: traffic / interest */}
-      <div className="px-6 pt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
-        <StatTile label="CREXi views" value={tw.crexi_views} delta={property.deltas?.crexi_views ?? null} />
-        <StatTile label="LoopNet views" value={tw.loopnet_views} delta={property.deltas?.loopnet_views ?? null} />
-        <StatTile label="Website views" value={tw.site_views} delta={property.deltas?.site_views ?? null} />
+      {/* CREXi reach funnel — Impressions → Page Views → Visitors. The CREXi
+          seller dashboard exposes all three distinctly; we show them so an
+          owner can see WHERE the funnel is leaking (lots of impressions, few
+          clicks = bad photos / pricing; lots of clicks, few visitors = bots). */}
+      <div className="px-6 pt-6">
+        <div className="text-[9.5px] tracking-[0.18em] uppercase text-charcoal-500 mb-3">
+          CREXi reach
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          <StatTile
+            label="Impressions"
+            value={tw.crexi_impressions}
+            delta={property.deltas?.crexi_impressions ?? null}
+          />
+          <StatTile
+            label="Page views"
+            value={tw.crexi_page_views || tw.crexi_views}
+            delta={property.deltas?.crexi_page_views ?? property.deltas?.crexi_views ?? null}
+          />
+          <StatTile
+            label="Visitors"
+            value={tw.crexi_unique_visitors}
+            delta={property.deltas?.crexi_unique_visitors ?? null}
+          />
+        </div>
+      </div>
+
+      {/* Other channels */}
+      <div className="px-6 pt-6">
+        <div className="text-[9.5px] tracking-[0.18em] uppercase text-charcoal-500 mb-3">
+          Other channels
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <StatTile label="LoopNet views" value={tw.loopnet_views} delta={property.deltas?.loopnet_views ?? null} />
+          <StatTile label="Website views" value={tw.site_views} delta={property.deltas?.site_views ?? null} />
+        </div>
       </div>
 
       {/* Second row: deep-funnel engagement signals.
@@ -262,15 +297,16 @@ function StatTile({
 }
 
 function TrendChart({ trend }: { trend: WeeklyBucket[] }) {
-  const max = Math.max(
-    1,
-    ...trend.map((b) => b.crexi_views + b.loopnet_views + b.site_views)
-  )
+  // Use page_views (new) with crexi_views (legacy) fallback so historical
+  // weeks before the May 2026 schema change still chart correctly.
+  const totalFor = (b: WeeklyBucket) =>
+    (b.crexi_page_views || b.crexi_views) + b.loopnet_views + b.site_views
+  const max = Math.max(1, ...trend.map(totalFor))
 
   return (
     <div className="flex items-end gap-1.5" style={{ height: 80 }}>
       {trend.map((b, i) => {
-        const total = b.crexi_views + b.loopnet_views + b.site_views
+        const total = totalFor(b)
         const height = total === 0 ? 2 : Math.max(4, (total / max) * 70)
         const isLatest = i === trend.length - 1
         return (

@@ -246,8 +246,8 @@ export function ServicesPinned() {
                 </span>
               </div>
               <h2
-                className="font-display text-cream-50"
-                style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2rem)' }}
+                className="font-display text-cream-50 whitespace-nowrap"
+                style={{ fontSize: 'clamp(0.95rem, 1.4vw, 1.25rem)' }}
               >
                 Full-Service CRE
               </h2>

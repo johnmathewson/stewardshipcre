@@ -13,7 +13,7 @@ import {
 } from '@/lib/supabase'
 import PageViewTracker from '@/components/page-view-tracker'
 
-export const revalidate = 300
+export const revalidate = 30
 
 interface Props {
   // Next.js 16 made params async — must be awaited inside the function body.

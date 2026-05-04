@@ -14,8 +14,9 @@ export const metadata: Metadata = {
     'Browse available commercial real estate listings — office, retail, industrial, multifamily, and land in Northwest Indiana and Chicagoland.',
 }
 
-// Revalidate every 5 minutes so new listings appear quickly without a full deploy
-export const revalidate = 300
+// Revalidate every 30 seconds so publish_to_website toggles + listing edits
+// surface on the public site within a minute, no deploy needed.
+export const revalidate = 30
 
 // ─── Fallback: convert static portfolio data to the Listing shape ─────────────
 function portfolioToListings(): Listing[] {

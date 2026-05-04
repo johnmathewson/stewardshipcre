@@ -4,7 +4,7 @@ import { Container } from '@/components/layout/Container'
 import { fetchListingBySlug } from '@/lib/supabase'
 import InquireFlow from '@/components/inquire-flow'
 
-export const revalidate = 300
+export const revalidate = 30
 
 interface Props {
   params: Promise<{ slug: string }>

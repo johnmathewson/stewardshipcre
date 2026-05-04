@@ -12,8 +12,8 @@ import { fetchFeaturedListings, type Listing } from '@/lib/supabase'
 import { PORTFOLIO } from '@/data/portfolio'
 import { FeaturedListingsClient } from './FeaturedListingsClient'
 
-// Revalidate every 5 minutes
-export const revalidate = 300
+// Revalidate every 30 seconds so publish_to_website toggles surface quickly.
+export const revalidate = 30
 
 function portfolioAsListings(): Listing[] {
   return PORTFOLIO.map((p, i) => ({

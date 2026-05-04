@@ -176,7 +176,8 @@ export default function InquireFlow({ slug, propertyName, propertyLocation }: Pr
         </p>
 
         <div
-          className="bg-charcoal-900/60 border border-charcoal-800 rounded-sm p-5 text-charcoal-200 text-sm leading-relaxed whitespace-pre-line mb-6"
+          data-lenis-prevent
+          className="bg-charcoal-900/60 border border-charcoal-800 rounded-sm p-5 text-charcoal-200 text-sm leading-relaxed whitespace-pre-line mb-6 overscroll-contain"
           style={{ maxHeight: '60vh', overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}
         >
           {submission.nda.body_md}

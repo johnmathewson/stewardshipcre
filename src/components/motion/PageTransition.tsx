@@ -41,15 +41,26 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
           exit={{ y: '0%' }}
           transition={{ duration: 0.8, ease: [0.77, 0, 0.175, 1] }}
         >
-          <motion.span
-            className="font-heading text-coral-400 text-xl md:text-2xl tracking-[0.35em]"
+          <motion.div
+            className="flex flex-col items-center gap-3"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 0, y: -20 }}
             exit={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            STEWARDSHIP
-          </motion.span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/logo-light-256.png"
+              alt=""
+              aria-hidden="true"
+              className="h-12 md:h-16 w-auto opacity-95"
+              width={56}
+              height={48}
+            />
+            <span className="font-heading text-coral-400 text-xl md:text-2xl tracking-[0.35em]">
+              STEWARDSHIP
+            </span>
+          </motion.div>
         </motion.div>
       </AnimatePresence>
     </>

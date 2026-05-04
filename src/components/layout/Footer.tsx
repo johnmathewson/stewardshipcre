@@ -42,12 +42,23 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-6 group">
-              <span className="font-display text-xl tracking-[0.3em] text-coral-400 font-semibold block">
-                STEWARDSHIP
-              </span>
-              <span className="text-[10px] tracking-[0.35em] text-charcoal-500 block mt-1 uppercase group-hover:text-coral-400/50 transition-colors duration-500 font-mono">
-                Commercial Real Estate
+            <Link href="/" className="inline-flex items-center gap-3 mb-6 group">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/brand/logo-light-256.png"
+                alt=""
+                aria-hidden="true"
+                className="h-10 w-auto opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+                width={46}
+                height={40}
+              />
+              <span className="flex flex-col">
+                <span className="font-display text-xl tracking-[0.3em] text-coral-400 font-semibold leading-none">
+                  STEWARDSHIP
+                </span>
+                <span className="text-[10px] tracking-[0.35em] text-charcoal-500 mt-1 uppercase group-hover:text-coral-400/50 transition-colors duration-500 font-mono">
+                  Commercial Real Estate
+                </span>
               </span>
             </Link>
             <p className="text-sm text-charcoal-500 leading-relaxed max-w-sm mb-6">

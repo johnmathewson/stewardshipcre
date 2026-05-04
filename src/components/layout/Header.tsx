@@ -37,13 +37,25 @@ export function Header() {
         }`}
       >
         <div className="max-w-[1400px] mx-auto px-6 lg:px-8 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="group flex flex-col">
-            <span className="font-display text-coral-400 text-lg tracking-[0.3em] font-semibold leading-none">
-              STEWARDSHIP
-            </span>
-            <span className="text-[10px] tracking-[0.35em] text-charcoal-400 uppercase mt-1 group-hover:text-coral-400/60 transition-colors duration-500 font-mono">
-              Commercial Real Estate
+          {/* Brand lockup: S mark + wordmark. Mark uses the white-on-transparent
+              variant so it sits cleanly on the cinematic charcoal background and
+              the pre-scroll transparent header alike. */}
+          <Link href="/" className="group flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/logo-light-256.png"
+              alt="Stewardship"
+              className="h-9 w-auto opacity-90 group-hover:opacity-100 transition-opacity duration-500"
+              width={42}
+              height={36}
+            />
+            <span className="flex flex-col">
+              <span className="font-display text-coral-400 text-lg tracking-[0.3em] font-semibold leading-none">
+                STEWARDSHIP
+              </span>
+              <span className="text-[10px] tracking-[0.35em] text-charcoal-400 uppercase mt-1 group-hover:text-coral-400/60 transition-colors duration-500 font-mono">
+                Commercial Real Estate
+              </span>
             </span>
           </Link>
 

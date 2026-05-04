@@ -10,16 +10,19 @@ export const metadata: Metadata = {
   description: 'Meet the Stewardship CRE team — experienced commercial real estate professionals serving Northwest Indiana.',
 }
 
+// `published: false` hides a member from the public site without deleting
+// the record — flip back to true when ready to introduce them publicly.
 const TEAM = [
   {
     slug: 'john-mathewson',
     name: 'John Mathewson',
-    title: 'Principal Broker',
+    title: 'Founder & Principal Broker',
     bio: 'Founder of Stewardship Asset Group with deep expertise in commercial brokerage, investment analysis, and property management across Northwest Indiana.',
     specialties: ['Office', 'Industrial', 'Land', 'Investment Sales'],
     deals: 200,
     volume: '$50M+',
     image: '/team/john.jpg',
+    published: true,
   },
   {
     slug: 'amanda-mathewson',
@@ -30,6 +33,7 @@ const TEAM = [
     deals: 85,
     volume: '$20M+',
     image: '/team/amanda.jpg',
+    published: false,
   },
   {
     slug: 'tim-operations',
@@ -40,8 +44,9 @@ const TEAM = [
     deals: 50,
     volume: '$10M+',
     image: '/team/tim.jpg',
+    published: false,
   },
-]
+].filter((m) => m.published)
 
 export default function TeamPage() {
   return (

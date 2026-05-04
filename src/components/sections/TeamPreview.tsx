@@ -7,14 +7,17 @@ import { Button } from '@/components/ui/Button'
 import { ImageReveal } from '@/components/motion/ImageReveal'
 import { WordFade } from '@/components/motion/WordFade'
 
+// `published: false` hides a member from the public site without deleting
+// the record — flip back to true when ready to introduce them publicly.
 const TEAM_MEMBERS = [
   {
     slug: 'john-mathewson',
     name: 'John Mathewson',
-    title: 'Principal Broker',
+    title: 'Founder & Principal Broker',
     specialties: ['Office', 'Industrial', 'Land'],
     image: '/team/john.jpg',
     quote: 'Pro formas tell most of the truth. The rest is in how the building&apos;s been treated.',
+    published: true,
   },
   {
     slug: 'amanda-mathewson',
@@ -23,6 +26,7 @@ const TEAM_MEMBERS = [
     specialties: ['Retail', 'Multifamily'],
     image: '/team/amanda.jpg',
     quote: 'The right tenant matters more than the highest rent.',
+    published: false,
   },
   {
     slug: 'tim-operations',
@@ -31,8 +35,9 @@ const TEAM_MEMBERS = [
     specialties: ['Property Management'],
     image: '/team/tim.jpg',
     quote: 'A managed building should never give the owner a 10pm phone call.',
+    published: false,
   },
-]
+].filter((m) => m.published)
 
 export function TeamPreview() {
   return (
@@ -71,8 +76,15 @@ export function TeamPreview() {
           </Button>
         </motion.div>
 
-        {/* Team Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Team Grid — collapses to a centered single column when only one
+            published member, so a solo card doesn't sit in 1/3 of an empty row. */}
+        <div
+          className={
+            TEAM_MEMBERS.length === 1
+              ? 'grid grid-cols-1 max-w-sm mx-auto gap-8'
+              : 'grid grid-cols-1 md:grid-cols-3 gap-8'
+          }
+        >
           {TEAM_MEMBERS.map((member, i) => (
             <motion.div
               key={member.slug}

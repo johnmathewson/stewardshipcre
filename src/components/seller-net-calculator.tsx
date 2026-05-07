@@ -653,16 +653,14 @@ function SellerNetTotals({
       <Row label="Offer price" value={fmtMoneyExact(offerPrice)} />
       <Row label={commissionLabel} value={'-' + fmtMoneyExact(totals.commission)} muted />
 
-      {inputs.line_items
-        .filter((li) => li.amount !== 0)
-        .map((li, i) => (
-          <Row
-            key={i}
-            label={li.label || (li.sign === 'credit' ? 'Credit' : 'Debit')}
-            value={(li.sign === 'credit' ? '+' : '-') + fmtMoneyExact(li.amount)}
-            muted
-          />
-        ))}
+      {inputs.line_items.map((li, i) => (
+        <Row
+          key={i}
+          label={li.label || (li.sign === 'credit' ? 'Credit' : 'Debit')}
+          value={(li.sign === 'credit' ? '+' : '-') + fmtMoneyExact(li.amount)}
+          muted
+        />
+      ))}
 
       {(totals.total_capital > 0 || totals.total_preferred > 0) && (
         <>

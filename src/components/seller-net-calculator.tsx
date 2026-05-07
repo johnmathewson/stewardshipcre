@@ -780,8 +780,11 @@ function SavedOffersStrip({
             const isConfirming = o.id === confirmDelete
             // Print/PDF route lives on the CRM. We deep-link in a new tab; the
             // page auto-fires the print dialog so the recipient can save as PDF.
+            // Print/PDF route lives at /print/* (outside /cre-os/) so it
+            // scrolls naturally and works without a CRM session. Same
+            // share-by-link security model as the magic links themselves.
             const pdfUrl = property.slug
-              ? `${CRM_BASE}/cre-os/properties/${property.slug}/offers/${o.id}/print`
+              ? `${CRM_BASE}/print/seller-net/${property.slug}/${o.id}`
               : null
             return (
               <div

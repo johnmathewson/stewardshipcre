@@ -33,6 +33,8 @@ export interface SellerNetTotals {
   commission: number
   adjustments: number
   net_proceeds: number
+  total_capital: number
+  total_preferred: number
   partners_due: number
   net_after_partners: number
   partner_breakdown: Array<{
@@ -42,8 +44,10 @@ export interface SellerNetTotals {
     owed: number
     residual_share: number
     total_distribution: number
+    ownership_pct: number
   }>
   sponsor_residual: number
+  sponsor_pct: number
 }
 
 const num = (v: any): number => {
@@ -78,10 +82,12 @@ export function computeSellerNet(inputs: SellerNetInputs): SellerNetTotals {
     }
   })
 
-  const partners_due = breakdown.reduce((s, p) => s + p.owed, 0)
+  const total_capital = breakdown.reduce((s, p) => s + p.capital, 0)
+  const total_preferred = breakdown.reduce((s, p) => s + p.preferred_return, 0)
+  const partners_due = total_capital + total_preferred
   const net_after_partners = net_proceeds - partners_due
   const totalOwnership = breakdown.reduce((s, p) => s + p.ownership_pct, 0)
-  const sponsorPct = Math.max(0, 100 - totalOwnership)
+  const sponsor_pct = Math.max(0, 100 - totalOwnership)
 
   const partner_breakdown = breakdown.map((p) => {
     const residual_share = (net_after_partners * p.ownership_pct) / 100
@@ -92,18 +98,22 @@ export function computeSellerNet(inputs: SellerNetInputs): SellerNetTotals {
       owed: p.owed,
       residual_share,
       total_distribution: p.owed + residual_share,
+      ownership_pct: p.ownership_pct,
     }
   })
 
-  const sponsor_residual = (net_after_partners * sponsorPct) / 100
+  const sponsor_residual = (net_after_partners * sponsor_pct) / 100
 
   return {
     commission,
     adjustments,
     net_proceeds,
+    total_capital,
+    total_preferred,
     partners_due,
     net_after_partners,
     partner_breakdown,
     sponsor_residual,
+    sponsor_pct,
   }
 }

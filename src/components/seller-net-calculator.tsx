@@ -538,7 +538,7 @@ function PartnerRow({
   onDelete,
 }: {
   partner: SellerNetPartner
-  computed?: { capital: number; preferred_return: number; owed: number; total_distribution: number }
+  computed?: { capital: number; preferred_return: number; owed: number; residual_share: number; total_distribution: number }
   onChange: (next: SellerNetPartner) => void
   onDelete: () => void
 }) {
@@ -596,7 +596,7 @@ function PartnerRow({
           ×
         </button>
       </div>
-      {computed && (computed.capital > 0 || computed.preferred_return > 0) && (
+      {computed && (computed.capital > 0 || computed.preferred_return > 0 || partner.ownership_pct > 0) && (
         <div className="mt-2 pt-2 border-t border-white/[0.05] text-[10.5px] text-charcoal-400 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-1">
           <span>
             Capital back:{' '}
@@ -607,8 +607,8 @@ function PartnerRow({
             <span className="font-mono text-cream-200">{fmtMoneyExact(computed.preferred_return)}</span>
           </span>
           <span>
-            Owed:{' '}
-            <span className="font-mono text-cream-200">{fmtMoneyExact(computed.owed)}</span>
+            Residual share:{' '}
+            <span className="font-mono text-cream-200">{fmtMoneyExact(computed.residual_share)}</span>
           </span>
           <span>
             Total dist:{' '}

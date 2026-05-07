@@ -69,6 +69,33 @@ export interface OwnerProperty {
 
 export type PortalAudience = 'owner' | 'investor'
 
+export interface SavedOffer {
+  id: string
+  property_id: string
+  title: string
+  buyer_name: string | null
+  offer_date: string | null
+  offer_price: number
+  commission_pct: number | null
+  commission_amount: number | null
+  line_items: Array<{ label: string; amount: number; sign: 'credit' | 'debit' }>
+  partners: Array<{
+    name: string
+    capital: number
+    pref_pct: number
+    hold_years: number
+    ownership_pct: number
+  }>
+  computed_commission: number | null
+  computed_adjustments: number | null
+  computed_net_proceeds: number | null
+  computed_partners_due: number | null
+  computed_net_after_partners: number | null
+  notes: string | null
+  created_at: string
+  updated_at: string
+}
+
 export interface OwnerDashboardData {
   label: string | null
   /** 'owner' (seller) or 'investor' (buyer/LP). Pre-May-2026 tokens predate
@@ -77,6 +104,8 @@ export interface OwnerDashboardData {
   expires_at: string
   properties: OwnerProperty[]
   week_starting: string
+  /** Seller-net offer scenarios saved for any of these properties. */
+  offers: SavedOffer[]
 }
 
 /**
@@ -92,10 +121,12 @@ export async function fetchOwnerDashboard(token: string): Promise<{ ok: true; da
     const body = await res.json().catch(() => ({}))
     if (!res.ok) return { ok: false, error: body?.error || `HTTP ${res.status}`, status: res.status }
     // Default to 'owner' for tokens issued before audience was tracked.
+    // Default offers to [] for backwards-compat with older API responses.
     const raw = body as Partial<OwnerDashboardData>
     const data: OwnerDashboardData = {
       ...(raw as OwnerDashboardData),
       audience: raw.audience === 'investor' ? 'investor' : 'owner',
+      offers: Array.isArray(raw.offers) ? raw.offers : [],
     }
     return { ok: true, data }
   } catch (err: any) {
@@ -116,5 +147,63 @@ export async function logPageView(slug: string) {
     })
   } catch {
     // Silent — analytics shouldn't break the page
+  }
+}
+
+// ── Seller-net offer CRUD ─────────────────────────────────────────────────
+// Owner-portal callers pass the same magic-link token they used to fetch
+// the dashboard. The CRM enforces that the token has access to the
+// property_id on the offer.
+
+export interface OfferDraft {
+  property_id: string
+  title: string
+  buyer_name?: string | null
+  offer_date?: string | null
+  offer_price: number
+  commission_pct?: number | null
+  commission_amount?: number | null
+  line_items?: SavedOffer['line_items']
+  partners?: SavedOffer['partners']
+  notes?: string | null
+}
+
+export async function createOffer(token: string, draft: OfferDraft): Promise<SavedOffer> {
+  const res = await fetch(`${CRM_API_URL}/api/public/owner/${encodeURIComponent(token)}/offers`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(draft),
+  })
+  const body = await res.json().catch(() => ({}))
+  if (!res.ok) throw new Error(body?.error || `HTTP ${res.status}`)
+  return body.offer as SavedOffer
+}
+
+export async function updateOffer(
+  token: string,
+  offerId: string,
+  patch: Partial<OfferDraft>
+): Promise<SavedOffer> {
+  const res = await fetch(
+    `${CRM_API_URL}/api/public/owner/${encodeURIComponent(token)}/offers/${encodeURIComponent(offerId)}`,
+    {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(patch),
+    }
+  )
+  const body = await res.json().catch(() => ({}))
+  if (!res.ok) throw new Error(body?.error || `HTTP ${res.status}`)
+  return body.offer as SavedOffer
+}
+
+export async function deleteOffer(token: string, offerId: string): Promise<void> {
+  const res = await fetch(
+    `${CRM_API_URL}/api/public/owner/${encodeURIComponent(token)}/offers/${encodeURIComponent(offerId)}`,
+    { method: 'DELETE' }
+  )
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body?.error || `HTTP ${res.status}`)
   }
 }

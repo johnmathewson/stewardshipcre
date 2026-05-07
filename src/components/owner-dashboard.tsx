@@ -1,10 +1,14 @@
 'use client'
 
-import { useMemo } from 'react'
-import type { OwnerDashboardData, OwnerProperty, WeeklyBucket } from '@/lib/owner-client'
+import { useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import type { OwnerDashboardData, OwnerProperty, WeeklyBucket, SavedOffer } from '@/lib/owner-client'
+import SellerNetCalculator from './seller-net-calculator'
 
 interface Props {
   data: OwnerDashboardData
+  /** Magic-link token — needed by the offer-CRUD inside SellerNetCalculator. */
+  token: string
 }
 
 function fmtNum(n: number): string {
@@ -32,7 +36,8 @@ function fmtTimeAgo(iso: string | null): string {
   return `${d}d ago`
 }
 
-export default function OwnerDashboard({ data }: Props) {
+export default function OwnerDashboard({ data, token }: Props) {
+  const router = useRouter()
   return (
     <div>
       <header className="mb-10">
@@ -58,7 +63,13 @@ export default function OwnerDashboard({ data }: Props) {
 
       <div className="space-y-10">
         {data.properties.map((p) => (
-          <PropertyCard key={p.id} property={p} />
+          <PropertyCard
+            key={p.id}
+            property={p}
+            offers={data.offers}
+            token={token}
+            onChanged={() => router.refresh()}
+          />
         ))}
       </div>
 
@@ -81,7 +92,17 @@ export default function OwnerDashboard({ data }: Props) {
   )
 }
 
-function PropertyCard({ property }: { property: OwnerProperty }) {
+function PropertyCard({
+  property,
+  offers,
+  token,
+  onChanged,
+}: {
+  property: OwnerProperty
+  offers: SavedOffer[]
+  token: string
+  onChanged: () => void
+}) {
   const tw = property.this_week
   // Prefer the new specific page_views; fall back to legacy crexi_views if
   // older data hasn't been re-scraped yet.
@@ -143,72 +164,71 @@ function PropertyCard({ property }: { property: OwnerProperty }) {
         </div>
       </div>
 
-      {/* CREXi reach funnel — Impressions → Page Views → Visitors. The CREXi
-          seller dashboard exposes all three distinctly; we show them so an
-          owner can see WHERE the funnel is leaking (lots of impressions, few
-          clicks = bad photos / pricing; lots of clicks, few visitors = bots). */}
+      {/* Condensed reach + engagement.
+          Was 3 blocks (CREXi reach × 3 tiles, Other channels × 2 tiles,
+          Engagement × 4 tiles = 9 tiles across 3 rows). Now 2 rows of 4 tiles
+          each — same information, half the vertical space. CREXi page views
+          + visitors fold into one "page views" tile; impressions stays
+          standalone since it's the top-of-funnel signal. */}
       <div className="px-6 pt-6">
         <div className="text-[9.5px] tracking-[0.18em] uppercase text-charcoal-500 mb-3">
-          CREXi reach
+          Reach this week
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <StatTile
-            label="Impressions"
+            label="CREXi impressions"
             value={tw.crexi_impressions}
             delta={property.deltas?.crexi_impressions ?? null}
           />
           <StatTile
-            label="Page views"
+            label="CREXi views"
             value={tw.crexi_page_views || tw.crexi_views}
             delta={property.deltas?.crexi_page_views ?? property.deltas?.crexi_views ?? null}
+            sublabel={tw.crexi_unique_visitors ? `${fmtNum(tw.crexi_unique_visitors)} unique` : undefined}
           />
           <StatTile
-            label="Visitors"
-            value={tw.crexi_unique_visitors}
-            delta={property.deltas?.crexi_unique_visitors ?? null}
+            label="LoopNet views"
+            value={tw.loopnet_views}
+            delta={property.deltas?.loopnet_views ?? null}
+          />
+          <StatTile
+            label="Website views"
+            value={tw.site_views}
+            delta={property.deltas?.site_views ?? null}
           />
         </div>
       </div>
 
-      {/* Other channels */}
-      <div className="px-6 pt-6">
+      <div className="px-6 pt-5 pb-1">
         <div className="text-[9.5px] tracking-[0.18em] uppercase text-charcoal-500 mb-3">
-          Other channels
+          Buyer engagement
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <StatTile label="LoopNet views" value={tw.loopnet_views} delta={property.deltas?.loopnet_views ?? null} />
-          <StatTile label="Website views" value={tw.site_views} delta={property.deltas?.site_views ?? null} />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <StatTile
+            label="Inquiries"
+            value={tw.inquiries + tw.crexi_leads}
+            delta={property.deltas?.crexi_leads ?? property.deltas?.inquiries ?? null}
+            accent="coral"
+          />
+          <StatTile
+            label="OMs opened"
+            value={tw.om_downloads + tw.crexi_opened_oms}
+            delta={property.deltas?.crexi_opened_oms ?? property.deltas?.om_downloads ?? null}
+            accent="coral"
+          />
+          <StatTile
+            label="NDAs executed"
+            value={tw.nda_signatures + tw.crexi_executed_cas}
+            delta={property.deltas?.crexi_executed_cas ?? null}
+            accent="coral"
+          />
+          <StatTile
+            label="Offers"
+            value={tw.crexi_offers}
+            delta={property.deltas?.crexi_offers ?? null}
+            accent="coral"
+          />
         </div>
-      </div>
-
-      {/* Second row: deep-funnel engagement signals.
-          CREXi seller dashboard surfaces Leads / Opened OMs / Executed CAs / Offers —
-          these merge with own-site vault-flow numbers where they're the same thing. */}
-      <div className="p-6 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatTile
-          label="Inquiries"
-          value={tw.inquiries + tw.crexi_leads}
-          delta={property.deltas?.crexi_leads ?? property.deltas?.inquiries ?? null}
-          accent="coral"
-        />
-        <StatTile
-          label="OMs opened"
-          value={tw.om_downloads + tw.crexi_opened_oms}
-          delta={property.deltas?.crexi_opened_oms ?? property.deltas?.om_downloads ?? null}
-          accent="coral"
-        />
-        <StatTile
-          label="NDAs executed"
-          value={tw.nda_signatures + tw.crexi_executed_cas}
-          delta={property.deltas?.crexi_executed_cas ?? null}
-          accent="coral"
-        />
-        <StatTile
-          label="Offers"
-          value={tw.crexi_offers}
-          delta={property.deltas?.crexi_offers ?? null}
-          accent="coral"
-        />
       </div>
 
       {/* Trend chart */}
@@ -216,6 +236,14 @@ function PropertyCard({ property }: { property: OwnerProperty }) {
         <div className="text-[9.5px] tracking-[0.18em] uppercase text-charcoal-500 mb-3">8-week trend</div>
         <TrendChart trend={property.trend} />
       </div>
+
+      {/* Seller-net analysis — collapsed by default; opens to a full calc */}
+      <SellerNetCalculator
+        token={token}
+        property={property}
+        allOffers={offers}
+        onChanged={onChanged}
+      />
 
       {/* Recent inquiries */}
       {property.recent_inquiries.length > 0 && (
@@ -273,11 +301,14 @@ function StatTile({
   value,
   delta,
   accent,
+  sublabel,
 }: {
   label: string
   value: number
   delta: number | null
   accent?: 'coral' | undefined
+  /** Optional second-line context, e.g. "1.2k unique" under page views. */
+  sublabel?: string
 }) {
   const d = fmtDelta(delta)
   const valueColor = accent === 'coral' ? '#E07A5F' : '#F0EDE4'
@@ -287,11 +318,16 @@ function StatTile({
       <div className="font-mono text-2xl font-semibold leading-none" style={{ color: valueColor }}>
         {fmtNum(value)}
       </div>
-      {d.label !== '—' && d.label !== 'flat' && (
-        <div className="text-[10px] mt-1" style={{ color: d.positive ? '#6BCB77' : '#E07A5F' }}>
-          {d.label}
-        </div>
-      )}
+      <div className="mt-1 flex items-center gap-2 flex-wrap">
+        {d.label !== '—' && d.label !== 'flat' && (
+          <span className="text-[10px]" style={{ color: d.positive ? '#6BCB77' : '#E07A5F' }}>
+            {d.label}
+          </span>
+        )}
+        {sublabel && (
+          <span className="text-[10px] text-charcoal-500">{sublabel}</span>
+        )}
+      </div>
     </div>
   )
 }

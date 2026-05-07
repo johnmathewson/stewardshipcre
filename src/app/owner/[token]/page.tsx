@@ -50,7 +50,7 @@ export default async function OwnerPage({ params }: Props) {
   return (
     <section className="bg-charcoal-950 min-h-screen pt-24 pb-24">
       <Container className="max-w-[1100px]">
-        <OwnerDashboard data={result.data} />
+        <OwnerDashboard data={result.data} token={token} />
       </Container>
     </section>
   )

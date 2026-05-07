@@ -21,7 +21,7 @@
  *     saving. Defaults to a sensible composite if blank.
  */
 
-import { useMemo, useState, useEffect } from 'react'
+import { useMemo, useState, useEffect, useRef } from 'react'
 import {
   computeSellerNet,
   type SellerNetInputs,
@@ -32,9 +32,17 @@ import {
   createOffer,
   updateOffer,
   deleteOffer,
+  uploadOfferAttachment,
+  deleteOfferAttachment,
   type OwnerProperty,
   type SavedOffer,
+  type OfferAttachment,
 } from '@/lib/owner-client'
+
+const CRM_BASE =
+  process.env.NEXT_PUBLIC_CRM_API_URL ||
+  process.env.CRM_API_URL ||
+  'https://stewardship-crm.netlify.app'
 
 interface Props {
   token: string
@@ -228,6 +236,9 @@ export default function SellerNetCalculator({ token, property, allOffers, onChan
           onConfirmDelete={remove}
           onCancelDelete={() => setConfirmDelete(null)}
           busy={busy}
+          token={token}
+          property={property}
+          onChanged={onChanged}
         />
       )}
 
@@ -689,6 +700,9 @@ function SavedOffersStrip({
   onConfirmDelete,
   onCancelDelete,
   busy,
+  token,
+  property,
+  onChanged,
 }: {
   offers: SavedOffer[]
   editingId: string | null
@@ -698,83 +712,176 @@ function SavedOffersStrip({
   onConfirmDelete: (id: string) => void
   onCancelDelete: () => void
   busy: boolean
+  token: string
+  property: OwnerProperty
+  onChanged: () => void
 }) {
   return (
-    <div className="overflow-x-auto">
-      <div className="flex gap-2 min-w-max pb-1">
-        {offers.map((o) => {
-          const isEditing = o.id === editingId
-          const isConfirming = o.id === confirmDelete
-          return (
-            <div
-              key={o.id}
-              className={`min-w-[220px] rounded-sm border p-3 transition-colors ${
-                isEditing
-                  ? 'border-coral-400/40 bg-coral-400/[0.06]'
-                  : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04]'
-              }`}
-            >
-              <div className="text-[10px] font-mono tracking-[0.16em] uppercase text-charcoal-500 mb-1">
-                {new Date(o.offer_date || o.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-              </div>
-              <div className="text-[12.5px] text-cream-100 font-medium leading-snug truncate">{o.title}</div>
-              {o.buyer_name && (
-                <div className="text-[10.5px] text-charcoal-400 truncate">{o.buyer_name}</div>
-              )}
-              <div className="mt-2 grid grid-cols-2 gap-x-2 text-[10.5px]">
-                <span className="text-charcoal-400">Offer</span>
-                <span className="font-mono text-cream-100 text-right">{fmtMoney(o.offer_price)}</span>
-                <span className="text-charcoal-400">Net</span>
-                <span className="font-mono text-coral-400 text-right font-semibold">
-                  {fmtMoney(o.computed_net_proceeds ?? 0)}
-                </span>
-                {(o.computed_partners_due ?? 0) > 0 && (
-                  <>
-                    <span className="text-charcoal-400">After partners</span>
-                    <span className="font-mono text-cream-200 text-right">
-                      {fmtMoney(o.computed_net_after_partners ?? 0)}
-                    </span>
-                  </>
+    <div className="space-y-2">
+      <div className="overflow-x-auto">
+        <div className="flex gap-2 min-w-max pb-1">
+          {offers.map((o) => {
+            const isEditing = o.id === editingId
+            const isConfirming = o.id === confirmDelete
+            // Print/PDF route lives on the CRM. We deep-link in a new tab; the
+            // page auto-fires the print dialog so the recipient can save as PDF.
+            const pdfUrl = property.slug
+              ? `${CRM_BASE}/cre-os/properties/${property.slug}/offers/${o.id}/print`
+              : null
+            return (
+              <div
+                key={o.id}
+                className={`min-w-[240px] rounded-sm border p-3 transition-colors ${
+                  isEditing
+                    ? 'border-coral-400/40 bg-coral-400/[0.06]'
+                    : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04]'
+                }`}
+              >
+                <div className="text-[10px] font-mono tracking-[0.16em] uppercase text-charcoal-500 mb-1">
+                  {new Date(o.offer_date || o.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                </div>
+                <div className="text-[12.5px] text-cream-100 font-medium leading-snug truncate">{o.title}</div>
+                {o.buyer_name && (
+                  <div className="text-[10.5px] text-charcoal-400 truncate">{o.buyer_name}</div>
                 )}
-              </div>
-              <div className="mt-3 flex items-center gap-1 justify-end">
-                {isConfirming ? (
-                  <>
-                    <button
-                      onClick={() => onConfirmDelete(o.id)}
-                      disabled={busy}
-                      className="text-[9.5px] font-mono uppercase tracking-[0.18em] text-coral-400 hover:text-coral-300 disabled:opacity-50"
-                    >
-                      Confirm
-                    </button>
-                    <button
-                      onClick={onCancelDelete}
-                      className="text-[9.5px] font-mono uppercase tracking-[0.18em] text-charcoal-400 hover:text-cream-100"
-                    >
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => onLoad(o)}
-                      className="text-[9.5px] font-mono uppercase tracking-[0.18em] text-coral-400 hover:text-coral-300"
-                    >
-                      {isEditing ? 'Editing' : 'Open'}
-                    </button>
-                    <button
-                      onClick={() => onDelete(o.id)}
-                      className="text-[9.5px] font-mono uppercase tracking-[0.18em] text-charcoal-500 hover:text-coral-400"
-                    >
-                      Delete
-                    </button>
-                  </>
+                <div className="mt-2 grid grid-cols-2 gap-x-2 text-[10.5px]">
+                  <span className="text-charcoal-400">Offer</span>
+                  <span className="font-mono text-cream-100 text-right">{fmtMoney(o.offer_price)}</span>
+                  <span className="text-charcoal-400">Net</span>
+                  <span className="font-mono text-coral-400 text-right font-semibold">
+                    {fmtMoney(o.computed_net_proceeds ?? 0)}
+                  </span>
+                  {(o.computed_partners_due ?? 0) > 0 && (
+                    <>
+                      <span className="text-charcoal-400">After partners</span>
+                      <span className="font-mono text-cream-200 text-right">
+                        {fmtMoney(o.computed_net_after_partners ?? 0)}
+                      </span>
+                    </>
+                  )}
+                </div>
+
+                {/* Attachments inline — owners often want to grab the LOI fast */}
+                {(o.attachments?.length ?? 0) > 0 && (
+                  <div className="mt-2 pt-2 border-t border-white/[0.06] space-y-1">
+                    {o.attachments!.slice(0, 3).map((a) => (
+                      <a
+                        key={a.id}
+                        href={a.signed_url ?? '#'}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-1.5 text-[10.5px] hover:text-coral-300"
+                        title={a.file_name}
+                      >
+                        <span className="text-coral-400 font-mono text-[9px] uppercase tracking-[0.16em] shrink-0">
+                          {a.doc_type === 'loi' ? 'LOI' : a.doc_type === 'addendum' ? 'ADD' : a.doc_type === 'financing' ? 'FIN' : 'DOC'}
+                        </span>
+                        <span className="truncate text-charcoal-200">{a.file_name}</span>
+                      </a>
+                    ))}
+                    {(o.attachments?.length ?? 0) > 3 && (
+                      <span className="text-[9.5px] text-charcoal-500">+ {o.attachments!.length - 3} more</span>
+                    )}
+                  </div>
                 )}
+
+                <AttachmentUploader offerId={o.id} token={token} onUploaded={onChanged} />
+
+                <div className="mt-2 flex items-center gap-1 justify-end flex-wrap">
+                  {isConfirming ? (
+                    <>
+                      <button
+                        onClick={() => onConfirmDelete(o.id)}
+                        disabled={busy}
+                        className="text-[9.5px] font-mono uppercase tracking-[0.18em] text-coral-400 hover:text-coral-300 disabled:opacity-50"
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        onClick={onCancelDelete}
+                        className="text-[9.5px] font-mono uppercase tracking-[0.18em] text-charcoal-400 hover:text-cream-100"
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      {pdfUrl && (
+                        <a
+                          href={pdfUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[9.5px] font-mono uppercase tracking-[0.18em] text-coral-400 hover:text-coral-300"
+                          title="Branded PDF summary — opens in a new tab and auto-prints."
+                        >
+                          PDF
+                        </a>
+                      )}
+                      <button
+                        onClick={() => onLoad(o)}
+                        className="text-[9.5px] font-mono uppercase tracking-[0.18em] text-coral-400 hover:text-coral-300"
+                      >
+                        {isEditing ? 'Editing' : 'Open'}
+                      </button>
+                      <button
+                        onClick={() => onDelete(o.id)}
+                        className="text-[9.5px] font-mono uppercase tracking-[0.18em] text-charcoal-500 hover:text-coral-400"
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
+    </div>
+  )
+}
+
+/** Inline file picker inside each offer card. Tiny so it fits the card width. */
+function AttachmentUploader({
+  offerId,
+  token,
+  onUploaded,
+}: {
+  offerId: string
+  token: string
+  onUploaded: () => void
+}) {
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  async function pick(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0]
+    if (!f) return
+    setBusy(true)
+    setError(null)
+    try {
+      await uploadOfferAttachment(token, offerId, f, 'loi')
+      onUploaded()
+    } catch (err: any) {
+      setError(err?.message || String(err))
+    } finally {
+      setBusy(false)
+      if (inputRef.current) inputRef.current.value = ''
+    }
+  }
+
+  return (
+    <div className="mt-2">
+      <button
+        onClick={() => inputRef.current?.click()}
+        disabled={busy}
+        className="text-[9.5px] font-mono uppercase tracking-[0.18em] text-coral-400 hover:text-coral-300 disabled:opacity-50"
+      >
+        {busy ? 'Uploading…' : '+ Upload LOI / file'}
+      </button>
+      <input ref={inputRef} type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onChange={pick} className="hidden" />
+      {error && <div className="mt-1 text-[9.5px] text-coral-400">{error}</div>}
     </div>
   )
 }

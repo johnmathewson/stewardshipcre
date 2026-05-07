@@ -69,6 +69,16 @@ export interface OwnerProperty {
 
 export type PortalAudience = 'owner' | 'investor'
 
+export interface OfferAttachment {
+  id: string
+  file_name: string
+  file_size: number | null
+  mime_type: string | null
+  doc_type: 'loi' | 'addendum' | 'financing' | 'other'
+  uploaded_at: string
+  signed_url: string | null
+}
+
 export interface SavedOffer {
   id: string
   property_id: string
@@ -92,6 +102,8 @@ export interface SavedOffer {
   computed_partners_due: number | null
   computed_net_after_partners: number | null
   notes: string | null
+  /** Files attached to this offer — buyer LOI, addenda, financing pre-qual. */
+  attachments?: OfferAttachment[]
   created_at: string
   updated_at: string
 }
@@ -200,6 +212,40 @@ export async function updateOffer(
 export async function deleteOffer(token: string, offerId: string): Promise<void> {
   const res = await fetch(
     `${CRM_API_URL}/api/public/owner/${encodeURIComponent(token)}/offers/${encodeURIComponent(offerId)}`,
+    { method: 'DELETE' }
+  )
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body?.error || `HTTP ${res.status}`)
+  }
+}
+
+// ── Offer attachments ─────────────────────────────────────────────────────
+export async function uploadOfferAttachment(
+  token: string,
+  offerId: string,
+  file: File,
+  docType: OfferAttachment['doc_type'] = 'loi'
+): Promise<OfferAttachment> {
+  const fd = new FormData()
+  fd.append('file', file)
+  fd.append('doc_type', docType)
+  const res = await fetch(
+    `${CRM_API_URL}/api/public/owner/${encodeURIComponent(token)}/offers/${encodeURIComponent(offerId)}/attachments`,
+    { method: 'POST', body: fd }
+  )
+  const body = await res.json().catch(() => ({}))
+  if (!res.ok) throw new Error(body?.error || `HTTP ${res.status}`)
+  return body.attachment as OfferAttachment
+}
+
+export async function deleteOfferAttachment(
+  token: string,
+  offerId: string,
+  attachmentId: string
+): Promise<void> {
+  const res = await fetch(
+    `${CRM_API_URL}/api/public/owner/${encodeURIComponent(token)}/offers/${encodeURIComponent(offerId)}/attachments/${encodeURIComponent(attachmentId)}`,
     { method: 'DELETE' }
   )
   if (!res.ok) {

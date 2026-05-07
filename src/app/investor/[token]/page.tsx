@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { Container } from '@/components/layout/Container'
 import { fetchOwnerDashboard } from '@/lib/owner-client'
-import OwnerDashboard from '@/components/owner-dashboard'
+import InvestorDashboard from '@/components/investor-dashboard'
 
 export const metadata: Metadata = {
-  title: 'Owner Dashboard · Stewardship CRE',
+  title: 'Investor Dashboard · Stewardship CRE',
   robots: { index: false, follow: false },
 }
 
@@ -13,14 +13,21 @@ interface Props {
   params: Promise<{ token: string }>
 }
 
-export default async function OwnerPage({ params }: Props) {
+/**
+ * Investor magic-link dashboard. Same data feed as the owner dashboard
+ * (one shared API endpoint, /api/public/owner/[token] on CRM) but rendered
+ * with buyer-side framing: "Properties you're tracking" instead of "Your
+ * listings", market activity instead of seller funnel, contact CTA instead
+ * of inquiry recap.
+ *
+ * If the token was provisioned as an owner link, redirect to /owner/[token].
+ */
+export default async function InvestorPage({ params }: Props) {
   const { token } = await params
   const result = await fetchOwnerDashboard(token)
 
-  // If the token's actually for an investor, send them to /investor/[token]
-  // so the framing matches what John provisioned.
-  if (result.ok && result.data.audience === 'investor') {
-    redirect(`/investor/${token}`)
+  if (result.ok && result.data.audience === 'owner') {
+    redirect(`/owner/${token}`)
   }
 
   if (!result.ok) {
@@ -50,7 +57,7 @@ export default async function OwnerPage({ params }: Props) {
   return (
     <section className="bg-charcoal-950 min-h-screen pt-24 pb-24">
       <Container className="max-w-[1100px]">
-        <OwnerDashboard data={result.data} />
+        <InvestorDashboard data={result.data} />
       </Container>
     </section>
   )

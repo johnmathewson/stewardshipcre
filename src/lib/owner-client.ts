@@ -67,13 +67,23 @@ export interface OwnerProperty {
   latest_metric_scrape: string | null
 }
 
+export type PortalAudience = 'owner' | 'investor'
+
 export interface OwnerDashboardData {
   label: string | null
+  /** 'owner' (seller) or 'investor' (buyer/LP). Pre-May-2026 tokens predate
+   *  the field and are treated as 'owner'. */
+  audience: PortalAudience
   expires_at: string
   properties: OwnerProperty[]
   week_starting: string
 }
 
+/**
+ * Fetches the magic-link dashboard payload from the CRM. Same endpoint
+ * regardless of audience — the response carries `audience` so the page
+ * can redirect to the correct route (/owner/* vs /investor/*).
+ */
 export async function fetchOwnerDashboard(token: string): Promise<{ ok: true; data: OwnerDashboardData } | { ok: false; error: string; status: number }> {
   try {
     const res = await fetch(`${CRM_API_URL}/api/public/owner/${encodeURIComponent(token)}`, {
@@ -81,7 +91,13 @@ export async function fetchOwnerDashboard(token: string): Promise<{ ok: true; da
     })
     const body = await res.json().catch(() => ({}))
     if (!res.ok) return { ok: false, error: body?.error || `HTTP ${res.status}`, status: res.status }
-    return { ok: true, data: body as OwnerDashboardData }
+    // Default to 'owner' for tokens issued before audience was tracked.
+    const raw = body as Partial<OwnerDashboardData>
+    const data: OwnerDashboardData = {
+      ...(raw as OwnerDashboardData),
+      audience: raw.audience === 'investor' ? 'investor' : 'owner',
+    }
+    return { ok: true, data }
   } catch (err: any) {
     return { ok: false, error: err?.message || String(err), status: 0 }
   }

@@ -167,7 +167,12 @@ export async function fetchPublishedListings(filters?: {
       publish_to_website, your_role
     `)
     .eq('publish_to_website', true)
-    .not('status', 'in', '("sold","leased","off_market")')
+    // Exclude cold-inventory prospects (status='prospect') in addition
+    // to terminal states. Even though publish_to_website should already
+    // be false on prospects, the column default is TRUE — so this
+    // belt-and-suspenders filter prevents leakage if any cold row ever
+    // slips through.
+    .not('status', 'in', '("sold","leased","off_market","prospect","idea","dead")')
     .order('status', { ascending: true })
     .order('asking_price', { ascending: false })
 
@@ -222,12 +227,15 @@ export async function fetchClosedTransactions(): Promise<Listing[]> {
 export async function fetchListingBySlug(slug: string): Promise<Listing | null> {
   if (!supabase) return null
 
-  // Primary: query by slug column.
+  // Primary: query by slug column. Also block cold-inventory prospects
+  // from being viewable via /properties/[slug] even if someone has the
+  // direct URL.
   const { data, error } = await supabase
     .from('properties')
     .select('*')
     .eq('slug', slug)
     .eq('publish_to_website', true)
+    .neq('status', 'prospect')
     .maybeSingle()
 
   if (!error && data) return enrichListing(data as Listing)
@@ -240,6 +248,7 @@ export async function fetchListingBySlug(slug: string): Promise<Listing | null> 
       .select('*')
       .ilike('id', `${tail}%`)
       .eq('publish_to_website', true)
+      .neq('status', 'prospect')
       .maybeSingle()
     if (legacy) return enrichListing(legacy as Listing)
   }

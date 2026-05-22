@@ -288,6 +288,23 @@ export default function InquireFlow({ slug, propertyName, propertyLocation }: Pr
             <input value={form.company} onChange={e => set('company', e.target.value)} className="form-input" autoComplete="organization" />
           </Field>
         </Row>
+        {/* SMS consent disclosure — required for A2P 10DLC. This is the
+            point-of-collection language the campaign registration's
+            "how do users consent" description references. */}
+        <p className="text-[11px] leading-relaxed text-charcoal-500 -mt-2">
+          By providing your phone number, you agree to receive conversational
+          and customer-care text messages from Stewardship CRE about the
+          listing(s) you inquired about. Message frequency varies. Message and
+          data rates may apply. Reply STOP to opt out, HELP for help. See our{' '}
+          <a href="/privacy" className="text-coral-400 hover:underline" target="_blank" rel="noopener noreferrer">
+            Privacy Policy
+          </a>{' '}
+          and{' '}
+          <a href="/terms" className="text-coral-400 hover:underline" target="_blank" rel="noopener noreferrer">
+            Terms
+          </a>
+          . Consent is not a condition of any service.
+        </p>
         <Field label="Title / role at company">
           <input value={form.title} onChange={e => set('title', e.target.value)} className="form-input" autoComplete="organization-title" />
         </Field>

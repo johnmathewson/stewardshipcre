@@ -8,7 +8,7 @@ import { MagneticButton } from '@/components/motion/MagneticButton'
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
   const [pending, setPending] = useState(false)
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -100,6 +100,32 @@ export default function ContactPage() {
                     placeholder="john@company.com"
                     required
                   />
+                  <div>
+                    <MinimalInput
+                      label="Phone (optional)"
+                      type="tel"
+                      value={form.phone}
+                      onChange={(v) => setForm({ ...form, phone: v })}
+                      placeholder="(317) 000-0000"
+                    />
+                    {/* SMS consent — required for A2P 10DLC compliance.
+                        Must appear adjacent to the phone field and match the
+                        opt-in language submitted to Twilio / TCR. */}
+                    <p className="mt-2 text-[11px] text-charcoal-500 leading-relaxed">
+                      By providing your phone number, you agree to receive
+                      conversational and customer-care texts from Stewardship CRE
+                      about the listing(s) you inquired about. Msg frequency
+                      varies. Msg &amp; data rates may apply. Reply STOP to opt
+                      out, HELP for help.{' '}
+                      <a href="/privacy" className="underline hover:text-coral-400 transition-colors">
+                        Privacy Policy
+                      </a>
+                      {' '}·{' '}
+                      <a href="/terms" className="underline hover:text-coral-400 transition-colors">
+                        Terms
+                      </a>
+                    </p>
+                  </div>
                   <MinimalTextarea
                     label="What do you need?"
                     value={form.message}

@@ -146,6 +146,17 @@ export function enrichListing(listing: Listing): Listing {
 // ─── Data Fetching ────────────────────────────────────────────────────────────
 
 /**
+ * The ONLY statuses allowed to appear on the public site.
+ *
+ * This is an allow-list on purpose. A property is published only when its
+ * status is explicitly listed here AND publish_to_website is true. Any other
+ * CRM pipeline stage (prospecting, pitched, idea, dead, off_market, etc.)
+ * can never leak publicly — even brand-new stage names we haven't seen yet.
+ * Closed deals (sold/leased) are handled separately by fetchClosedTransactions.
+ */
+const PUBLIC_LISTING_STATUSES = ['listed', 'for_lease', 'pre_listing', 'under_contract'] as const
+
+/**
  * Fetch all active, website-published listings from the CRM.
  * Used by the /properties page (server component).
  */
@@ -167,12 +178,11 @@ export async function fetchPublishedListings(filters?: {
       publish_to_website, your_role
     `)
     .eq('publish_to_website', true)
-    // Exclude cold-inventory prospects (status='prospect') in addition
-    // to terminal states. Even though publish_to_website should already
-    // be false on prospects, the column default is TRUE — so this
-    // belt-and-suspenders filter prevents leakage if any cold row ever
-    // slips through.
-    .not('status', 'in', '("sold","leased","off_market","prospect","idea","dead")')
+    // Allow-list: only explicitly-public statuses ever appear. This is
+    // belt-and-suspenders alongside publish_to_website (whose column default
+    // is TRUE), so no CRM pipeline stage can leak even if its publish flag
+    // was left on.
+    .in('status', PUBLIC_LISTING_STATUSES)
     .order('status', { ascending: true })
     .order('asking_price', { ascending: false })
 
@@ -227,15 +237,15 @@ export async function fetchClosedTransactions(): Promise<Listing[]> {
 export async function fetchListingBySlug(slug: string): Promise<Listing | null> {
   if (!supabase) return null
 
-  // Primary: query by slug column. Also block cold-inventory prospects
-  // from being viewable via /properties/[slug] even if someone has the
-  // direct URL.
+  // Primary: query by slug column. Same allow-list as the listings page so a
+  // non-public pipeline record can't be opened via a direct /properties/[slug]
+  // URL even if someone has the link.
   const { data, error } = await supabase
     .from('properties')
     .select('*')
     .eq('slug', slug)
     .eq('publish_to_website', true)
-    .neq('status', 'prospect')
+    .in('status', PUBLIC_LISTING_STATUSES)
     .maybeSingle()
 
   if (!error && data) return enrichListing(data as Listing)
@@ -248,7 +258,7 @@ export async function fetchListingBySlug(slug: string): Promise<Listing | null> 
       .select('*')
       .ilike('id', `${tail}%`)
       .eq('publish_to_website', true)
-      .neq('status', 'prospect')
+      .in('status', PUBLIC_LISTING_STATUSES)
       .maybeSingle()
     if (legacy) return enrichListing(legacy as Listing)
   }

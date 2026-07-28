@@ -23,6 +23,15 @@ export interface QuestionnairePayload {
   budget_range?: string
   timeline?: string
   geographic_focus?: string
+  /**
+   * A2P 10DLC express written consent. TRUE only when the visitor actively
+   * ticked the SMS checkbox — never defaulted to true, never inferred from
+   * the presence of a phone number. `sms_consent_text` is the verbatim label
+   * shown at the moment of consent so the record survives future copy edits.
+   */
+  sms_consent?: boolean
+  sms_consent_text?: string
+  sms_consent_source?: 'web_form'
 }
 
 export interface QuestionnaireResponse {

@@ -8,6 +8,7 @@ import {
   signNda,
   type QuestionnaireResponse,
 } from '@/lib/vault-client'
+import { SMS_CONSENT_TEXT } from '@/lib/sms-consent'
 
 const LEAD_TYPES = [
   { id: 'buyer', label: 'Buyer / Investor' },
@@ -62,6 +63,8 @@ export default function InquireFlow({ slug, propertyName, propertyLocation }: Pr
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [submission, setSubmission] = useState<QuestionnaireResponse | null>(null)
+  // A2P 10DLC: starts false, only ever set by an explicit user tick.
+  const [smsConsent, setSmsConsent] = useState(false)
 
   // NDA step state
   const [typedName, setTypedName] = useState('')
@@ -100,6 +103,11 @@ export default function InquireFlow({ slug, propertyName, propertyLocation }: Pr
         budget_range: form.budget_range || undefined,
         timeline: form.timeline || undefined,
         geographic_focus: form.geographic_focus.trim() || undefined,
+        // Only send consent when a phone number was actually supplied AND
+        // the box was ticked. Consent without a number is meaningless.
+        sms_consent: Boolean(smsConsent && form.phone.trim()),
+        sms_consent_text: smsConsent && form.phone.trim() ? SMS_CONSENT_TEXT : undefined,
+        sms_consent_source: smsConsent && form.phone.trim() ? 'web_form' : undefined,
       })
       setSubmission(res)
       // Pre-fill the NDA signer with what they just gave us
@@ -288,23 +296,29 @@ export default function InquireFlow({ slug, propertyName, propertyLocation }: Pr
             <input value={form.company} onChange={e => set('company', e.target.value)} className="form-input" autoComplete="organization" />
           </Field>
         </Row>
-        {/* SMS consent disclosure — required for A2P 10DLC. This is the
-            point-of-collection language the campaign registration's
-            "how do users consent" description references. */}
-        <p className="text-[11px] leading-relaxed text-charcoal-500 -mt-2">
-          By providing your phone number, you agree to receive conversational
-          and customer-care text messages from Stewardship CRE about the
-          listing(s) you inquired about. Message frequency varies. Message and
-          data rates may apply. Reply STOP to opt out, HELP for help. See our{' '}
-          <a href="/privacy" className="text-coral-400 hover:underline" target="_blank" rel="noopener noreferrer">
-            Privacy Policy
-          </a>{' '}
-          and{' '}
-          <a href="/terms" className="text-coral-400 hover:underline" target="_blank" rel="noopener noreferrer">
-            Terms
-          </a>
-          . Consent is not a condition of any service.
-        </p>
+        {/* SMS consent — A2P 10DLC express written consent.
+            MUST be an unchecked checkbox requiring an affirmative tick.
+            Do NOT add `defaultChecked`, and do NOT make it required — a
+            pre-checked or mandatory box fails TCR vetting (30925). */}
+        <label className="flex gap-2.5 items-start text-[11px] leading-relaxed text-charcoal-500 -mt-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={smsConsent}
+            onChange={e => setSmsConsent(e.target.checked)}
+            className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-coral-400 cursor-pointer"
+          />
+          <span>
+            {SMS_CONSENT_TEXT}{' '}
+            <a href="/privacy" className="text-coral-400 hover:underline" target="_blank" rel="noopener noreferrer">
+              Privacy Policy
+            </a>{' '}
+            and{' '}
+            <a href="/terms" className="text-coral-400 hover:underline" target="_blank" rel="noopener noreferrer">
+              Terms
+            </a>
+            .
+          </span>
+        </label>
         <Field label="Title / role at company">
           <input value={form.title} onChange={e => set('title', e.target.value)} className="form-input" autoComplete="organization-title" />
         </Field>

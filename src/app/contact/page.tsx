@@ -4,11 +4,19 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Container } from '@/components/layout/Container'
 import { MagneticButton } from '@/components/motion/MagneticButton'
+import { SMS_CONSENT_TEXT } from '@/lib/sms-consent'
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
   const [pending, setPending] = useState(false)
-  const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
+  // smsConsent starts false and is only ever set by an explicit user tick.
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+    smsConsent: false,
+  })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -108,23 +116,30 @@ export default function ContactPage() {
                       onChange={(v) => setForm({ ...form, phone: v })}
                       placeholder="(317) 000-0000"
                     />
-                    {/* SMS consent — required for A2P 10DLC compliance.
-                        Must appear adjacent to the phone field and match the
-                        opt-in language submitted to Twilio / TCR. */}
-                    <p className="mt-2 text-[11px] text-charcoal-500 leading-relaxed">
-                      By providing your phone number, you agree to receive
-                      conversational and customer-care texts from Stewardship CRE
-                      about the listing(s) you inquired about. Msg frequency
-                      varies. Msg &amp; data rates may apply. Reply STOP to opt
-                      out, HELP for help.{' '}
-                      <a href="/privacy" className="underline hover:text-coral-400 transition-colors">
-                        Privacy Policy
-                      </a>
-                      {' '}·{' '}
-                      <a href="/terms" className="underline hover:text-coral-400 transition-colors">
-                        Terms
-                      </a>
-                    </p>
+                    {/* SMS consent — A2P 10DLC express written consent.
+                        MUST be an unchecked checkbox requiring an affirmative
+                        tick, adjacent to the phone field, matching the opt-in
+                        language submitted to Twilio / TCR verbatim.
+                        Do NOT add `defaultChecked` and do NOT mark required —
+                        a pre-checked or mandatory box fails vetting (30925). */}
+                    <label className="mt-2 flex gap-2.5 items-start text-[11px] text-charcoal-500 leading-relaxed cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={form.smsConsent}
+                        onChange={(e) => setForm({ ...form, smsConsent: e.target.checked })}
+                        className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-coral-400 cursor-pointer"
+                      />
+                      <span>
+                        {SMS_CONSENT_TEXT}{' '}
+                        <a href="/privacy" className="underline hover:text-coral-400 transition-colors">
+                          Privacy Policy
+                        </a>
+                        {' '}·{' '}
+                        <a href="/terms" className="underline hover:text-coral-400 transition-colors">
+                          Terms
+                        </a>
+                      </span>
+                    </label>
                   </div>
                   <MinimalTextarea
                     label="What do you need?"
@@ -211,8 +226,8 @@ export default function ContactPage() {
                     <p className="font-mono text-[9px] tracking-[0.3em] uppercase text-charcoal-500 mb-1.5">
                       Phone
                     </p>
-                    <a href="tel:+12195550100" className="text-sm text-cream-100 hover:text-coral-400 transition-colors">
-                      (219) 555-0100
+                    <a href="tel:+13178041980" className="text-sm text-cream-100 hover:text-coral-400 transition-colors">
+                      (317) 804-1980
                     </a>
                   </div>
                 </div>

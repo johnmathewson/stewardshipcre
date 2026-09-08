@@ -130,7 +130,7 @@ function PropertyCard({ property }: { property: OwnerProperty }) {
     `Interest in ${property.headline || property.name}`
   )
   const ctaBody = encodeURIComponent(
-    `Hi John,\n\nI'd like to learn more about ${property.headline || property.name}` +
+    `Hello,\n\nI'd like to learn more about ${property.headline || property.name}` +
     (property.address ? ` at ${[property.address, property.city, property.state].filter(Boolean).join(', ')}` : '') +
     `.\n\nThanks,`
   )
@@ -265,7 +265,7 @@ function PropertyCard({ property }: { property: OwnerProperty }) {
           </div>
           <div className="text-cream-100 text-sm leading-snug">
             {isClosed
-              ? 'This deal closed. Browse other listings or talk to John about similar inventory.'
+              ? 'This deal closed. Browse other listings or talk to us about similar inventory.'
               : isUnderContract
                 ? 'Backup offers welcome. Indicate interest and we’ll let you know if the deal falls out.'
                 : qualifiedNow >= 3

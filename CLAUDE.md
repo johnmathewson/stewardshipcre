@@ -185,8 +185,9 @@ lead_messages
 ## Reference assets in this repo
 
 - `PROJECT.md` — full architectural deep-dive (component inventory, motion system, design tokens, tech debt)
-- `public/banner-john.html` — John's personal-brand banner for CREXi/LinkedIn (2000×500 + 1584×396). Open in Chrome, use DevTools "Capture node screenshot" to export PNG.
-- `public/lead-pipeline-map.html` — visual architecture map for the inbound lead pipeline. Same brand system.
+- `_reference/banner-john.html` — personal-brand banner generator for CREXi/LinkedIn (2000×500 + 1584×396). Moved out of `public/` in Sept 2026 so it is no longer served by the site. Open in Chrome, use DevTools "Capture node screenshot" to export PNG.
+- `_reference/lead-pipeline-map.html` — visual architecture map for the inbound lead pipeline. Internal doc; moved out of `public/` in Sept 2026.
+- **Name policy (Sept 2026):** the public site does not name the principal anywhere — pages, SEO layer, metadata, mailto links, or served assets. Contact points are `inquiries@stewardshipcre.com` and the firm name. Keep it that way when adding content.
 - `src/data/portfolio.ts` — static listing data (placeholder Unsplash; replace with real photos in Phase 1)
 - `src/components/sections/` — composed homepage sections (HeroSlideshow, FeaturedListings, CaseStudies, ServicesPinned, etc.)
 

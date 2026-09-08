@@ -19,7 +19,7 @@ export function Input({ label, error, className, id, ...props }: InputProps) {
         id={inputId}
         className={cn(
           'w-full px-4 py-3 bg-cream-100 border border-cream-300 text-charcoal-800 text-sm',
-          'placeholder:text-charcoal-400 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500',
+          'placeholder:text-charcoal-400 focus:outline-none focus:border-coral-400 focus:ring-1 focus:ring-coral-400',
           'transition-all duration-300',
           error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
           className,

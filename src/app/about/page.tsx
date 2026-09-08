@@ -45,14 +45,14 @@ export default function AboutPage() {
         <Container>
           <FadeIn>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-px bg-gold-500" />
-              <span className="text-gold-500 text-xs tracking-[0.3em] uppercase font-semibold">About Us</span>
+              <div className="w-12 h-px bg-coral-400" />
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold">About Us</span>
             </div>
             <h1
               className="font-heading text-cream-100 mb-6 max-w-3xl"
               style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
             >
-              Built on <span className="text-gold-500">Stewardship</span>,
+              Built on <span className="text-coral-400">Stewardship</span>,
               Driven by Results
             </h1>
             <p className="text-xl text-charcoal-400 max-w-2xl leading-relaxed">
@@ -103,8 +103,8 @@ export default function AboutPage() {
         <Container>
           <FadeIn>
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-px bg-gold-500" />
-              <span className="text-gold-500 text-xs tracking-[0.3em] uppercase font-semibold">Core Values</span>
+              <div className="w-12 h-px bg-coral-400" />
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold">Core Values</span>
             </div>
             <h2 className="font-heading text-cream-100 mb-12" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
               What Guides Us
@@ -114,8 +114,8 @@ export default function AboutPage() {
           <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {VALUES.map((value) => (
               <StaggerItem key={value.title}>
-                <div className="border border-charcoal-800 p-8 hover:border-gold-500/30 transition-colors duration-500">
-                  <h3 className="font-heading text-sm tracking-[0.15em] uppercase text-gold-500 mb-3">
+                <div className="border border-charcoal-800 p-8 hover:border-coral-400/30 transition-colors duration-500">
+                  <h3 className="font-heading text-sm tracking-[0.15em] uppercase text-coral-400 mb-3">
                     {value.title}
                   </h3>
                   <p className="text-charcoal-400 leading-relaxed">{value.description}</p>
@@ -136,15 +136,15 @@ export default function AboutPage() {
           </FadeIn>
 
           <div className="relative">
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gold-500/20 -translate-x-1/2" />
+            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-coral-400/20 -translate-x-1/2" />
             {TIMELINE.map((item, i) => (
               <FadeIn key={item.year} delay={i * 0.1} direction={i % 2 === 0 ? 'right' : 'left'}>
                 <div className={`flex items-center gap-6 mb-12 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                   <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'} pl-16 md:pl-0`}>
-                    <span className="font-mono text-2xl text-gold-500 font-bold">{item.year}</span>
+                    <span className="font-mono text-2xl text-coral-400 font-bold">{item.year}</span>
                     <p className="text-charcoal-600 mt-1">{item.event}</p>
                   </div>
-                  <div className="absolute left-8 md:relative md:left-auto w-4 h-4 bg-gold-500 rotate-45 shrink-0" />
+                  <div className="absolute left-8 md:relative md:left-auto w-4 h-4 bg-coral-400 rotate-45 shrink-0" />
                   <div className="flex-1 hidden md:block" />
                 </div>
               </FadeIn>
@@ -154,7 +154,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="py-20 bg-forest-600">
+      <section className="py-20 bg-charcoal-900">
         <Container>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             {[

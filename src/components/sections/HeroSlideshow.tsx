@@ -287,7 +287,7 @@ export function HeroSlideshow() {
       {/* Marquee */}
       <div className="absolute bottom-0 left-0 right-0 bg-charcoal-950/90 border-t border-white/5 py-4 z-20">
         <Marquee
-          items={['Office', 'Retail', 'Industrial', 'Multifamily', 'Land', 'Mixed-Use', 'Investment Sales', 'Consulting']}
+          items={['Office', 'Retail', 'Industrial', 'Multifamily', 'Land', 'Mixed-Use', 'Master Lease', 'Investment Sales', 'Consulting']}
           className="text-[11px] tracking-[0.25em] uppercase text-charcoal-500 font-mono"
         />
       </div>

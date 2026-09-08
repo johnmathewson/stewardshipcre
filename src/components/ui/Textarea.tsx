@@ -19,7 +19,7 @@ export function Textarea({ label, error, className, id, ...props }: TextareaProp
         id={textareaId}
         className={cn(
           'w-full px-4 py-3 bg-cream-100 border border-cream-300 text-charcoal-800 text-sm',
-          'placeholder:text-charcoal-400 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500',
+          'placeholder:text-charcoal-400 focus:outline-none focus:border-coral-400 focus:ring-1 focus:ring-coral-400',
           'transition-all duration-300 resize-none min-h-[120px]',
           error && 'border-red-500',
           className,

@@ -120,7 +120,7 @@ function VaultViewInner({ slug }: { slug: string }) {
           <div className="text-4xl mb-3 opacity-40">📂</div>
           <div className="text-cream-200 text-sm mb-1">Documents are being prepared</div>
           <p className="text-charcoal-500 text-xs">
-            John will email you the package directly within a few hours.
+            Our team will email you the package directly within a few hours.
           </p>
         </div>
       ) : (

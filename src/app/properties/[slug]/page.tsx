@@ -258,8 +258,8 @@ export default async function PropertyDetailPage({ params }: Props) {
                   </p>
 
                   <div className="mt-4 pt-4 border-t border-cream-300 text-xs text-charcoal-500 space-y-1">
-                    <div className="font-semibold text-charcoal-700">John Mathewson</div>
-                    <div>Stewardship CRE</div>
+                    <div className="font-semibold text-charcoal-700">Stewardship CRE</div>
+                    <div>Listing Brokerage · Northwest Indiana &amp; Chicagoland</div>
                     <a
                       href="mailto:inquiries@stewardshipcre.com"
                       className="text-coral-500 hover:underline"

@@ -40,7 +40,7 @@ export default async function InvestorPage({ params }: Props) {
           </h1>
           <p className="text-charcoal-400 text-sm mb-6">
             {result.status === 401
-              ? 'This dashboard link is no longer active. Reach out to John at Stewardship CRE for a fresh one.'
+              ? 'This dashboard link is no longer active. Reach out to Stewardship CRE for a fresh one.'
               : `Something went wrong: ${result.error}`}
           </p>
           <a

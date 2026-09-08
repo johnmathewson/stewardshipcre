@@ -158,7 +158,7 @@ export default function InquireFlow({ slug, propertyName, propertyLocation }: Pr
         </Link>
         <h1 className="font-heading text-3xl mt-4 mb-3">Thanks — we'll reach out directly</h1>
         <p className="text-charcoal-300 text-sm leading-relaxed">
-          Seller inquiries are routed straight to John Mathewson. He'll be in touch within
+          Seller inquiries go straight to our principal broker. We'll be in touch within
           one business day to discuss your property and any potential listing fit.
         </p>
         <div className="mt-8 text-xs text-charcoal-500">

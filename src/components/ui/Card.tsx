@@ -15,7 +15,7 @@ export function Card({ children, className, hover = false, dark = false }: CardP
         dark
           ? 'bg-charcoal-800 border-charcoal-700'
           : 'bg-white border-cream-300',
-        hover && 'hover:border-gold-500/40 hover:shadow-xl hover:-translate-y-1',
+        hover && 'hover:border-coral-400/40 hover:shadow-xl hover:-translate-y-1',
         className,
       )}
     >

@@ -9,16 +9,8 @@ import { WordFade } from '@/components/motion/WordFade'
 
 // `published: false` hides a member from the public site without deleting
 // the record — flip back to true when ready to introduce them publicly.
+// With nobody published the section renders nothing (see early return).
 const TEAM_MEMBERS = [
-  {
-    slug: 'john-mathewson',
-    name: 'John Mathewson',
-    title: 'Founder & Principal Broker',
-    specialties: ['Office', 'Industrial', 'Land'],
-    image: '/team/john.jpg',
-    quote: 'Pro formas tell most of the truth. The rest is in how the building&apos;s been treated.',
-    published: true,
-  },
   {
     slug: 'amanda-mathewson',
     name: 'Amanda Mathewson',
@@ -40,6 +32,8 @@ const TEAM_MEMBERS = [
 ].filter((m) => m.published)
 
 export function TeamPreview() {
+  if (TEAM_MEMBERS.length === 0) return null
+
   return (
     <section className="relative py-section overflow-hidden bg-charcoal-900">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(224,122,95,0.04),transparent_50%)]" />

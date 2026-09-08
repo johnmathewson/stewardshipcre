@@ -60,14 +60,14 @@ export default function InsightsPage() {
         <Container>
           <FadeIn>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-px bg-gold-500" />
-              <span className="text-gold-500 text-xs tracking-[0.3em] uppercase font-semibold">Insights</span>
+              <div className="w-12 h-px bg-coral-400" />
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold">Insights</span>
             </div>
             <h1
               className="font-heading text-cream-100 mb-6"
               style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
             >
-              Market <span className="text-gold-500">Intelligence</span>
+              Market <span className="text-coral-400">Intelligence</span>
             </h1>
             <p className="text-xl text-charcoal-400 max-w-xl leading-relaxed">
               Data-driven market reports, research articles, and deal spotlights
@@ -86,7 +86,7 @@ export default function InsightsPage() {
                 key={cat}
                 className={`px-4 py-2 text-xs tracking-[0.1em] uppercase font-semibold transition-all duration-300 ${
                   i === 0
-                    ? 'bg-gold-500 text-charcoal-950'
+                    ? 'bg-coral-400 text-charcoal-950'
                     : 'text-charcoal-400 hover:text-cream-100 border border-charcoal-700 hover:border-charcoal-500'
                 }`}
               >
@@ -122,7 +122,7 @@ export default function InsightsPage() {
                         <span className="w-1 h-1 bg-charcoal-400 rounded-full" />
                         <span>{post.readTime}</span>
                       </div>
-                      <h2 className="font-heading text-sm tracking-[0.08em] uppercase text-charcoal-900 group-hover:text-gold-600 transition-colors mb-2 leading-snug">
+                      <h2 className="font-heading text-sm tracking-[0.08em] uppercase text-charcoal-900 group-hover:text-coral-500 transition-colors mb-2 leading-snug">
                         {post.title}
                       </h2>
                       <p className="text-sm text-charcoal-500 leading-relaxed line-clamp-2">

@@ -8,7 +8,7 @@ import { CTASection } from '@/components/sections/CTASection'
 
 export const metadata: Metadata = {
   title: 'Services',
-  description: 'Full-service commercial real estate solutions — brokerage, investment sales, consulting, and property management.',
+  description: 'Full-service commercial real estate solutions — brokerage, master lease, investment sales, consulting, and property management.',
 }
 
 const SERVICES = [
@@ -28,6 +28,25 @@ const SERVICES = [
     icon: (
       <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 7.5h.008v.008h-.008v-.008z" />
+      </svg>
+    ),
+  },
+  {
+    id: 'master-lease',
+    title: 'Master Lease',
+    subtitle: 'Lease-Up Without the Carry',
+    description: 'For owners holding vacancy they don’t want to carry — a recent acquisition, an underperforming building, an asset that needs a rent roll before it can refinance or sell. Stewardship signs a master lease on the facility, becomes your single tenant of record at a fixed rent, and brings its own tenant relationships and leasing team to fill the space. The lease-up risk moves to us. The income starts for you.',
+    features: [
+      'Fixed Rent From Signing',
+      'Single Tenant of Record',
+      'Tenant Sourcing From Our Own Relationships',
+      'Sublease Structuring & TI Coordination',
+      'Management Through Stabilization',
+      'Exit-Ready Rent Roll for Refi or Sale',
+    ],
+    icon: (
+      <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
       </svg>
     ),
   },
@@ -107,18 +126,18 @@ export default function ServicesPage() {
         <Container>
           <FadeIn>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-px bg-gold-500" />
-              <span className="text-gold-500 text-xs tracking-[0.3em] uppercase font-semibold">Services</span>
+              <div className="w-12 h-px bg-coral-400" />
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold">Services</span>
             </div>
             <h1
               className="font-heading text-cream-100 mb-6 max-w-3xl"
               style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
             >
-              Full-Spectrum <span className="text-gold-500">CRE Solutions</span>
+              Full-Spectrum <span className="text-coral-400">CRE Solutions</span>
             </h1>
             <p className="text-xl text-charcoal-400 max-w-2xl leading-relaxed">
-              From acquisition to disposition, leasing to management — we provide
-              strategic guidance across the entire commercial real estate lifecycle.
+              From acquisition to disposition, leasing to management — and a master
+              lease when a building needs filling without the owner carrying it.
             </p>
           </FadeIn>
         </Container>
@@ -133,7 +152,7 @@ export default function ServicesPage() {
                 <div id={service.id} className="scroll-mt-24">
                   <div className={`grid lg:grid-cols-2 gap-12 items-start ${i % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
                     <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
-                      <div className="text-gold-500 mb-4">{service.icon}</div>
+                      <div className="text-coral-400 mb-4">{service.icon}</div>
                       <span className="text-xs tracking-[0.2em] uppercase text-charcoal-500 mb-2 block">
                         {service.subtitle}
                       </span>
@@ -155,7 +174,7 @@ export default function ServicesPage() {
                         <ul className="space-y-4">
                           {service.features.map((feature) => (
                             <li key={feature} className="flex items-start gap-3">
-                              <div className="w-1.5 h-1.5 bg-gold-500 rotate-45 mt-2 shrink-0" />
+                              <div className="w-1.5 h-1.5 bg-coral-400 rotate-45 mt-2 shrink-0" />
                               <span className="text-charcoal-700">{feature}</span>
                             </li>
                           ))}
@@ -175,7 +194,7 @@ export default function ServicesPage() {
         <Container>
           <FadeIn>
             <div className="text-center mb-12">
-              <span className="text-gold-500 text-xs tracking-[0.3em] uppercase font-semibold block mb-4">
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold block mb-4">
                 Property Types
               </span>
               <h2 className="font-heading text-cream-100 mb-4" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
@@ -187,8 +206,8 @@ export default function ServicesPage() {
           <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {PROPERTY_TYPES.map((type) => (
               <StaggerItem key={type.name}>
-                <div className="border border-charcoal-800 p-6 hover:border-gold-500/30 transition-all duration-500 group">
-                  <h3 className="font-heading text-sm tracking-[0.15em] uppercase text-cream-100 group-hover:text-gold-500 transition-colors mb-2">
+                <div className="border border-charcoal-800 p-6 hover:border-coral-400/30 transition-all duration-500 group">
+                  <h3 className="font-heading text-sm tracking-[0.15em] uppercase text-cream-100 group-hover:text-coral-400 transition-colors mb-2">
                     {type.name}
                   </h3>
                   <p className="text-sm text-charcoal-500">{type.description}</p>

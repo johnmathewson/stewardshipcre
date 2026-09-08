@@ -8,7 +8,6 @@ import { MagneticButton } from '@/components/motion/MagneticButton'
 const NAV_LINKS = [
   { label: 'Properties', href: '/properties' },
   { label: 'Services', href: '/services' },
-  { label: 'Team', href: '/team' },
   { label: 'Insights', href: '/insights' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },

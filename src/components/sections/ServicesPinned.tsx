@@ -53,6 +53,19 @@ const SERVICES = [
       'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=800&fit=crop',
     bullets: ['Asset management', 'Tenant relations', 'Lease administration'],
   },
+  {
+    number: '05',
+    title: 'Master Lease',
+    description:
+      'We become the tenant of record on your facility, bring our own tenant relationships to fill it, and pay you fixed rent while we do. The lease-up risk moves to us.',
+    image:
+      'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&h=800&fit=crop',
+    bullets: [
+      'Newly acquired & underperforming assets',
+      'Fixed rent · one counterparty',
+      'Our tenants, our lease-up, our management',
+    ],
+  },
 ]
 
 /**
@@ -227,7 +240,7 @@ export function ServicesPinned() {
     <section
       ref={ref}
       className="relative bg-charcoal-950"
-      // 60vh per slide ≈ 240vh for 4 services. Faster to scroll through,
+      // 60vh per slide ≈ 300vh for 5 services. Faster to scroll through,
       // respects user time, still feels cinematic.
       style={{ height: `${SERVICES.length * 60}vh` }}
     >

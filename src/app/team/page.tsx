@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { Container } from '@/components/layout/Container'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { StaggerChildren, StaggerItem } from '@/components/motion/StaggerChildren'
@@ -12,18 +13,9 @@ export const metadata: Metadata = {
 
 // `published: false` hides a member from the public site without deleting
 // the record — flip back to true when ready to introduce them publicly.
+// When nobody is published, /team redirects to /about (see below) and the
+// Team link is intentionally absent from the header, footer, and sitemap.
 const TEAM = [
-  {
-    slug: 'john-mathewson',
-    name: 'John Mathewson',
-    title: 'Founder & Principal Broker',
-    bio: 'Founder of Stewardship Asset Group with deep expertise in commercial brokerage, investment analysis, and property management across Northwest Indiana.',
-    specialties: ['Office', 'Industrial', 'Land', 'Investment Sales'],
-    deals: 200,
-    volume: '$50M+',
-    image: '/team/john.jpg',
-    published: true,
-  },
   {
     slug: 'amanda-mathewson',
     name: 'Amanda Mathewson',
@@ -49,6 +41,9 @@ const TEAM = [
 ].filter((m) => m.published)
 
 export default function TeamPage() {
+  // No published members → send visitors to the firm story, not an empty grid.
+  if (TEAM.length === 0) redirect('/about')
+
   return (
     <>
       {/* Hero */}

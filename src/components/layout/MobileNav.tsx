@@ -41,7 +41,7 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                 <Link
                   href={link.href}
                   onClick={onClose}
-                  className="font-heading text-2xl md:text-3xl tracking-[0.2em] uppercase text-cream-200 hover:text-gold-500 transition-colors duration-300"
+                  className="font-heading text-2xl md:text-3xl tracking-[0.2em] uppercase text-cream-200 hover:text-coral-400 transition-colors duration-300"
                 >
                   {link.label}
                 </Link>
@@ -57,7 +57,7 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
               <Link
                 href="/contact"
                 onClick={onClose}
-                className="bg-gold-500 hover:bg-gold-600 text-charcoal-950 px-8 py-3 text-sm tracking-[0.15em] uppercase font-semibold transition-all duration-300"
+                className="bg-coral-400 hover:bg-coral-500 text-charcoal-950 px-8 py-3 text-sm tracking-[0.15em] uppercase font-semibold transition-all duration-300"
               >
                 Get Started
               </Link>

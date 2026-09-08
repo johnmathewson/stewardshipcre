@@ -14,13 +14,13 @@ const FOOTER_LINKS = {
   ],
   Company: [
     { href: '/about', label: 'About Us' },
-    { href: '/team', label: 'Our Team' },
     { href: '/services', label: 'Services' },
     { href: '/insights', label: 'Insights' },
     { href: '/contact', label: 'Contact' },
   ],
   Services: [
     { href: '/services#brokerage', label: 'Brokerage' },
+    { href: '/services#master-lease', label: 'Master Lease' },
     { href: '/services#consulting', label: 'Consulting' },
     { href: '/services#management', label: 'Property Management' },
     { href: '/services#investment', label: 'Investment Sales' },

@@ -18,7 +18,7 @@ export default async function OwnerPage({ params }: Props) {
   const result = await fetchOwnerDashboard(token)
 
   // If the token's actually for an investor, send them to /investor/[token]
-  // so the framing matches what John provisioned.
+  // so the framing matches how the link was provisioned.
   if (result.ok && result.data.audience === 'investor') {
     redirect(`/investor/${token}`)
   }
@@ -33,7 +33,7 @@ export default async function OwnerPage({ params }: Props) {
           </h1>
           <p className="text-charcoal-400 text-sm mb-6">
             {result.status === 401
-              ? 'This dashboard link is no longer active. Reach out to John at Stewardship CRE for a fresh one.'
+              ? 'This dashboard link is no longer active. Reach out to Stewardship CRE for a fresh one.'
               : `Something went wrong: ${result.error}`}
           </p>
           <a

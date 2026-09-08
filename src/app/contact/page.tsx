@@ -97,7 +97,7 @@ export default function ContactPage() {
                     label="Your name"
                     value={form.name}
                     onChange={(v) => setForm({ ...form, name: v })}
-                    placeholder="John Smith"
+                    placeholder="Full name"
                     required
                   />
                   <MinimalInput
@@ -105,7 +105,7 @@ export default function ContactPage() {
                     type="email"
                     value={form.email}
                     onChange={(v) => setForm({ ...form, email: v })}
-                    placeholder="john@company.com"
+                    placeholder="you@company.com"
                     required
                   />
                   <div>
@@ -185,17 +185,17 @@ export default function ContactPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                     </svg>
                   </div>
-                  <p className="text-cream-100 text-base mb-2">The fastest way to reach John</p>
+                  <p className="text-cream-100 text-base mb-2">The fastest way to reach us</p>
                   <p className="text-charcoal-400 text-sm mb-6 max-w-xs">
                     Email, text, or call directly. Real responses, usually within
                     the hour during business days.
                   </p>
                   <div className="flex flex-col gap-2 w-full max-w-[260px]">
                     <a
-                      href="mailto:john@stewardshipcre.com"
+                      href="mailto:inquiries@stewardshipcre.com"
                       className="inline-flex items-center justify-center gap-3 bg-coral-400 hover:bg-coral-300 text-charcoal-950 px-6 py-3.5 text-xs tracking-[0.2em] uppercase font-semibold transition-all duration-300"
                     >
-                      Email John
+                      Email Us
                     </a>
                     <a
                       href="sms:+13178041980"

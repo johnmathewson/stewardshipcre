@@ -8,6 +8,22 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# regiondevelopment.co is a secondary domain that 301s to the canonical
+# stewardshipcre.com so search engines see one site, not a duplicate.
+# Requires the domain to be added as a domain alias on the Netlify site
+# (Domain management → Add domain alias) so Netlify provisions its TLS cert.
+[[redirects]]
+  from = "https://regiondevelopment.co/*"
+  to = "https://stewardshipcre.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.regiondevelopment.co/*"
+  to = "https://stewardshipcre.com/:splat"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/fonts/*"
   [headers.values]

@@ -32,11 +32,11 @@ const VALUES = [
 // Rebrand framing: the company predates the Stewardship name. The 2026 entry
 // is the public brand launch, not a founding. Years confirmed by the principal.
 const TIMELINE = [
-  { year: '2015', event: 'Founded in Northwest Indiana as a privately held commercial real estate investment and operating company.' },
+  { year: '2015', event: 'Founded in Northwest Indiana as Region Development — a privately held commercial real estate investment and operating company.' },
   { year: '2016', event: 'Portfolio grows across the region. The tenant relationships behind today’s master-lease work begin here.' },
   { year: '2018', event: 'Brokerage practice opens to outside clients — investment sales, leasing, and landlord representation.' },
   { year: '2019', event: 'Third-party property management launched for owners across Lake, Porter, and LaPorte counties.' },
-  { year: '2026', event: 'Public launch of the Stewardship brand. Brokerage, master lease, and management brought under one name and one standard.' },
+  { year: '2026', event: 'Region Development becomes Stewardship. Public launch of the brand, with brokerage, master lease, and management brought under one name and one standard.' },
 ]
 
 export default function AboutPage() {

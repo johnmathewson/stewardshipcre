@@ -43,7 +43,7 @@ const ORG_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'RealEstateAgent',
   name: 'Stewardship CRE',
-  alternateName: 'Stewardship Commercial Real Estate',
+  alternateName: ['Stewardship Commercial Real Estate', 'Region Development'],
   url: 'https://stewardshipcre.com',
   logo: 'https://stewardshipcre.com/brand/logo-dark-256.png',
   foundingDate: '2015',

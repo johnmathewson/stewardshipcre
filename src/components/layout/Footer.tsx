@@ -61,6 +61,9 @@ export function Footer() {
                 </span>
               </span>
             </Link>
+            <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-coral-400/70 mb-4">
+              Est. 2015 · Northwest Indiana
+            </p>
             <p className="text-sm text-charcoal-500 leading-relaxed max-w-sm mb-6">
               Full-service commercial real estate brokerage serving Northwest Indiana
               and the greater Chicagoland area. Office, retail, industrial, multifamily,

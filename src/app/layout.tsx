@@ -37,6 +37,33 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400', '500', '600', '700'],
 })
 
+// Organization schema — gives search engines the founding date and the
+// parent-company relationship so the rebrand reads as continuity, not a startup.
+const ORG_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'RealEstateAgent',
+  name: 'Stewardship CRE',
+  alternateName: 'Stewardship Commercial Real Estate',
+  url: 'https://stewardshipcre.com',
+  logo: 'https://stewardshipcre.com/brand/logo-dark-256.png',
+  foundingDate: '2015',
+  email: 'inquiries@stewardshipcre.com',
+  telephone: '+1-317-804-1980',
+  areaServed: [
+    'Northwest Indiana',
+    'Lake County, Indiana',
+    'Porter County, Indiana',
+    'LaPorte County, Indiana',
+    'Chicagoland',
+  ],
+  parentOrganization: {
+    '@type': 'Organization',
+    name: 'Stewardship Asset Group',
+    url: 'https://stewardshipassetgroup.com',
+  },
+  sameAs: ['https://www.linkedin.com/company/stewardship-asset-group'],
+}
+
 export const metadata: Metadata = {
   title: {
     default: 'Stewardship CRE | Commercial Real Estate Brokerage',
@@ -64,6 +91,10 @@ export default function RootLayout({
       className={`${cinzel.variable} ${dmSans.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="grain-overlay">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_SCHEMA) }}
+        />
         <SmoothScroll>
           <ScrollProgress />
           <Header />

@@ -29,12 +29,14 @@ const VALUES = [
   },
 ]
 
+// Rebrand framing: the company predates the Stewardship name. The 2026 entry
+// is the public brand launch, not a founding. Years confirmed by the principal.
 const TIMELINE = [
-  { year: '2015', event: 'Stewardship Asset Group founded in Northwest Indiana' },
-  { year: '2018', event: 'Expanded into commercial brokerage services' },
-  { year: '2020', event: 'Launched property management division' },
-  { year: '2023', event: 'Surpassed $50M in total transaction volume' },
-  { year: '2026', event: 'Stewardship CRE established as dedicated brokerage brand' },
+  { year: '2015', event: 'Founded in Northwest Indiana as a privately held commercial real estate investment and operating company.' },
+  { year: '2016', event: 'Portfolio grows across the region. The tenant relationships behind today’s master-lease work begin here.' },
+  { year: '2018', event: 'Brokerage practice opens to outside clients — investment sales, leasing, and landlord representation.' },
+  { year: '2019', event: 'Third-party property management launched for owners across Lake, Porter, and LaPorte counties.' },
+  { year: '2026', event: 'Public launch of the Stewardship brand. Brokerage, master lease, and management brought under one name and one standard.' },
 ]
 
 export default function AboutPage() {
@@ -46,7 +48,7 @@ export default function AboutPage() {
           <FadeIn>
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-px bg-coral-400" />
-              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold">About Us</span>
+              <span className="text-coral-400 text-xs tracking-[0.3em] uppercase font-semibold">About Us · Since 2015</span>
             </div>
             <h1
               className="font-heading text-cream-100 mb-6 max-w-3xl"
@@ -130,9 +132,14 @@ export default function AboutPage() {
       <section className="py-section bg-cream-100">
         <Container narrow>
           <FadeIn>
-            <h2 className="font-heading text-charcoal-900 text-center mb-16" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+            <h2 className="font-heading text-charcoal-900 text-center mb-4" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
               Our Journey
             </h2>
+            <p className="text-center text-charcoal-600 max-w-xl mx-auto mb-16 leading-relaxed">
+              The name is new. The work isn&apos;t. Stewardship went public as a brand in
+              2026 — the company, the portfolio, and the relationships behind it go back
+              to 2015.
+            </p>
           </FadeIn>
 
           <div className="relative">

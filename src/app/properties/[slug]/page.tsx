@@ -257,6 +257,17 @@ export default async function PropertyDetailPage({ params }: Props) {
                     Quick form + brief NDA, then full financials &amp; due diligence.
                   </p>
 
+                  {(listing.transaction_type === 'lease' || listing.transaction_type === 'sale_or_lease') && (
+                    <div className="mt-4">
+                      <Button href={`/properties/${slug}/apply`} variant="outline" className="w-full">
+                        Apply to Lease
+                      </Button>
+                      <p className="text-[10.5px] text-charcoal-500 mt-2 text-center leading-relaxed">
+                        Ready to move forward? Submit an application and financials online.
+                      </p>
+                    </div>
+                  )}
+
                   <div className="mt-4 pt-4 border-t border-cream-300 text-xs text-charcoal-500 space-y-1">
                     <div className="font-semibold text-charcoal-700">Stewardship CRE</div>
                     <div>Listing Brokerage · Northwest Indiana &amp; Chicagoland</div>

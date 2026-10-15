@@ -17,6 +17,7 @@ const FOOTER_LINKS = {
     { href: '/services', label: 'Services' },
     { href: '/insights', label: 'Insights' },
     { href: '/contact', label: 'Contact' },
+    { href: '/lease-application', label: 'Lease Application' },
   ],
   Services: [
     { href: '/services#brokerage', label: 'Brokerage' },

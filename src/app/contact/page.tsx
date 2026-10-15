@@ -9,6 +9,7 @@ import { SMS_CONSENT_TEXT } from '@/lib/sms-consent'
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
   const [pending, setPending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   // smsConsent starts false and is only ever set by an explicit user tick.
   const [form, setForm] = useState({
     name: '',
@@ -16,16 +17,30 @@ export default function ContactPage() {
     phone: '',
     message: '',
     smsConsent: false,
+    website: '',
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setPending(true)
-    // TODO: wire to /api/contact when backend is ready
-    setTimeout(() => {
-      setPending(false)
+    setError(null)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setError(body?.error || 'Something went wrong. Please email inquiries@stewardshipcre.com.')
+        return
+      }
       setSubmitted(true)
-    }, 600)
+    } catch {
+      setError('Something went wrong. Please email inquiries@stewardshipcre.com.')
+    } finally {
+      setPending(false)
+    }
   }
 
   return (
@@ -149,6 +164,27 @@ export default function ContactPage() {
                     rows={4}
                     required
                   />
+
+                  {/* Honeypot — hidden from humans, bots tend to fill it. */}
+                  <div className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden" aria-hidden="true">
+                    <label>
+                      Website
+                      <input
+                        type="text"
+                        name="website"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={form.website}
+                        onChange={(e) => setForm({ ...form, website: e.target.value })}
+                      />
+                    </label>
+                  </div>
+
+                  {error && (
+                    <p role="alert" className="text-coral-400 text-sm border-l-2 border-coral-400 pl-4">
+                      {error}
+                    </p>
+                  )}
 
                   <MagneticButton>
                     <button

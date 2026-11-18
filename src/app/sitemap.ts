@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { readdirSync, statSync, existsSync } from 'fs'
 import path from 'path'
+import { LISTINGS_ON_SITE } from '@/lib/site-flags'
 
 const SITE_URL = 'https://stewardshipcre.com'
 
@@ -9,7 +10,7 @@ const APP_ROUTES: MetadataRoute.Sitemap = [
   { url: `${SITE_URL}/`, changeFrequency: 'weekly', priority: 1.0 },
   { url: `${SITE_URL}/about`, changeFrequency: 'monthly', priority: 0.7 },
   { url: `${SITE_URL}/services`, changeFrequency: 'monthly', priority: 0.7 },
-  { url: `${SITE_URL}/properties`, changeFrequency: 'weekly', priority: 0.8 },
+  ...(LISTINGS_ON_SITE ? [{ url: `${SITE_URL}/properties`, changeFrequency: 'weekly' as const, priority: 0.8 }] : []),
   { url: `${SITE_URL}/insights`, changeFrequency: 'weekly', priority: 0.7 },
   { url: `${SITE_URL}/contact`, changeFrequency: 'monthly', priority: 0.6 },
   { url: `${SITE_URL}/lease-application`, changeFrequency: 'yearly', priority: 0.4 },

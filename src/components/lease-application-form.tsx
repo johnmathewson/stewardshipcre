@@ -15,6 +15,7 @@ import {
   type DocType,
   type Progress,
 } from '@/lib/lease-application-client'
+import { LISTINGS_ON_SITE } from '@/lib/site-flags'
 
 const AUTHORIZATION_TEXT =
   'I/we certify that the information in this application is true and complete. I/we authorize the Landlord or its ' +
@@ -196,7 +197,7 @@ export default function LeaseApplicationForm({ propertySlug, propertyName, prope
             <a className="underline" href="mailto:inquiries@stewardshipcre.com">inquiries@stewardshipcre.com</a>.
           </p>
         )}
-        <Link href={propertySlug ? `/properties/${propertySlug}` : '/properties'} className="text-coral-400 text-xs tracking-[0.18em] uppercase">
+        <Link href={LISTINGS_ON_SITE ? (propertySlug ? `/properties/${propertySlug}` : '/properties') : '/'} className="text-coral-400 text-xs tracking-[0.18em] uppercase">
           ← Back to {propertySlug ? 'the listing' : 'listings'}
         </Link>
       </div>
@@ -213,7 +214,7 @@ export default function LeaseApplicationForm({ propertySlug, propertyName, prope
   return (
     <div className="lease-app text-cream-100">
       {propertySlug && (
-        <Link href={`/properties/${propertySlug}`} className="text-coral-400 text-xs tracking-[0.18em] uppercase no-underline">
+        <Link href={LISTINGS_ON_SITE ? `/properties/${propertySlug}` : '/'} className="text-coral-400 text-xs tracking-[0.18em] uppercase no-underline">
           ← Back to listing
         </Link>
       )}

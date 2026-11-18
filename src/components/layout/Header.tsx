@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MagneticButton } from '@/components/motion/MagneticButton'
+import { LISTINGS_ON_SITE } from '@/lib/site-flags'
 
 const NAV_LINKS = [
-  { label: 'Properties', href: '/properties' },
+  ...(LISTINGS_ON_SITE ? [{ label: 'Properties', href: '/properties' }] : []),
   { label: 'Services', href: '/services' },
   { label: 'Insights', href: '/insights' },
   { label: 'About', href: '/about' },

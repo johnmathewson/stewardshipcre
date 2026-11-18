@@ -7,14 +7,15 @@ import { MasterLease } from '@/components/sections/MasterLease'
 import { CaseStudies } from '@/components/sections/CaseStudies'
 import { TeamPreview } from '@/components/sections/TeamPreview'
 import { CTASection } from '@/components/sections/CTASection'
+import { LISTINGS_ON_SITE } from '@/lib/site-flags'
 
 export default function HomePage() {
   return (
     <>
       <HeroSlideshow />
-      <PropertySearch />
+      {LISTINGS_ON_SITE && <PropertySearch />}
       <LiveStats />
-      <FeaturedListings />
+      {LISTINGS_ON_SITE && <FeaturedListings />}
       <CaseStudies />
       <ServicesPinned />
       <MasterLease />

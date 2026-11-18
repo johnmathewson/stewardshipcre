@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
 import { MagneticButton } from '@/components/motion/MagneticButton'
+import { LISTINGS_ON_SITE } from '@/lib/site-flags'
 
 export function CTASection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -85,11 +86,13 @@ export function CTASection() {
                 Schedule a Consultation
               </Button>
             </MagneticButton>
-            <MagneticButton>
-              <Button href="/properties" variant="ghost" size="lg">
-                Browse Properties
-              </Button>
-            </MagneticButton>
+            {LISTINGS_ON_SITE && (
+              <MagneticButton>
+                <Button href="/properties" variant="ghost" size="lg">
+                  Browse Properties
+                </Button>
+              </MagneticButton>
+            )}
           </motion.div>
         </motion.div>
       </Container>

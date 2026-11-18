@@ -1,5 +1,6 @@
 import { Container } from '@/components/layout/Container'
 import { Button } from '@/components/ui/Button'
+import { LISTINGS_ON_SITE } from '@/lib/site-flags'
 
 export default function NotFound() {
   return (
@@ -16,7 +17,7 @@ export default function NotFound() {
         </p>
         <div className="flex items-center justify-center gap-4">
           <Button href="/">Back to Home</Button>
-          <Button href="/properties" variant="ghost">View Properties</Button>
+          {LISTINGS_ON_SITE && <Button href="/properties" variant="ghost">View Properties</Button>}
         </div>
       </Container>
     </section>

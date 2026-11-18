@@ -5,13 +5,6 @@ import { motion } from 'framer-motion'
 import { Container } from './Container'
 
 const FOOTER_LINKS = {
-  Properties: [
-    { href: '/properties?type=office', label: 'Office' },
-    { href: '/properties?type=retail', label: 'Retail' },
-    { href: '/properties?type=industrial', label: 'Industrial' },
-    { href: '/properties?type=multifamily', label: 'Multifamily' },
-    { href: '/properties?type=land', label: 'Land' },
-  ],
   Company: [
     { href: '/about', label: 'About Us' },
     { href: '/services', label: 'Services' },

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { MagneticButton } from '@/components/motion/MagneticButton'
 import { Marquee } from '@/components/motion/Marquee'
 import { HERO_SLIDES } from '@/data/portfolio'
+import { LISTINGS_ON_SITE } from '@/lib/site-flags'
 
 const SLIDE_MS = 6500
 
@@ -187,7 +188,7 @@ export function HeroSlideshow() {
             transition={{ duration: 0.8, delay: 1.6 }}
             className="flex flex-wrap gap-4"
           >
-            <MagneticButton>
+            {LISTINGS_ON_SITE && <MagneticButton>
               <Link
                 href="/properties"
                 className="group inline-flex items-center gap-3 bg-coral-400 hover:bg-coral-300 text-charcoal-950 px-8 py-4 text-sm tracking-[0.15em] uppercase font-semibold transition-all duration-500 hover:shadow-lg hover:shadow-coral-400/20"
@@ -197,7 +198,7 @@ export function HeroSlideshow() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
-            </MagneticButton>
+            </MagneticButton>}
             <MagneticButton>
               <Link
                 href="/contact"
@@ -218,7 +219,7 @@ export function HeroSlideshow() {
         className="absolute bottom-28 right-6 lg:right-8 z-20 hidden md:block"
       >
         <Link
-          href={`/properties/${slide.slug}`}
+          href={LISTINGS_ON_SITE ? `/properties/${slide.slug}` : '/contact'}
           className="block group"
         >
           <AnimatePresence mode="wait">

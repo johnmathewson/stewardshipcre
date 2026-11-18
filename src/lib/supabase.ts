@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { LISTINGS_ON_SITE } from '@/lib/site-flags'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
@@ -165,6 +166,7 @@ export async function fetchPublishedListings(filters?: {
   transactionType?: string
   status?: string
 }): Promise<Listing[]> {
+  if (!LISTINGS_ON_SITE) return []
   if (!supabase) return []
   let query = supabase
     .from('properties')
@@ -235,6 +237,7 @@ export async function fetchClosedTransactions(): Promise<Listing[]> {
  * Falls back to legacy id-prefix matching for any pre-migration links.
  */
 export async function fetchListingBySlug(slug: string): Promise<Listing | null> {
+  if (!LISTINGS_ON_SITE) return null
   if (!supabase) return null
 
   // Primary: query by slug column. Same allow-list as the listings page so a
@@ -270,6 +273,7 @@ export async function fetchListingBySlug(slug: string): Promise<Listing | null> 
  * Fetch featured listings for the homepage (active, website-published, highest price first).
  */
 export async function fetchFeaturedListings(limit = 7): Promise<Listing[]> {
+  if (!LISTINGS_ON_SITE) return []
   if (!supabase) return []
   const { data, error } = await supabase
     .from('properties')

@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react'
 import type { OwnerDashboardData, OwnerProperty, WeeklyBucket } from '@/lib/owner-client'
+import { LISTINGS_ON_SITE } from '@/lib/site-flags'
 
 /**
  * InvestorDashboard — buyer/LP-facing view of the same magic-link data
@@ -280,7 +281,7 @@ function PropertyCard({ property }: { property: OwnerProperty }) {
           >
             Indicate interest
           </a>
-          {property.slug && (
+          {LISTINGS_ON_SITE && property.slug && (
             <a
               href={`/properties/${property.slug}`}
               className="px-3.5 py-2 rounded-sm border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] text-charcoal-200 text-[11px] font-mono uppercase tracking-[0.18em] transition-colors"
